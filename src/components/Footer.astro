@@ -1,0 +1,70 @@
+---
+import Logo from './Logo.astro';
+import { site } from '../data/site';
+
+const year = new Date().getFullYear();
+---
+
+<footer class="mt-24 border-t border-line bg-surface">
+  <div class="fl-container py-14">
+    <div class="flex flex-col gap-10 md:flex-row md:items-start md:justify-between">
+      <div class="max-w-sm">
+        <Logo />
+        <p class="mt-4 text-sm leading-relaxed text-muted">{site.tagline}</p>
+        <a
+          href={`mailto:${site.email}`}
+          class="mt-4 inline-block rounded-lg text-sm font-semibold text-accent underline decoration-accent/40 underline-offset-4 transition-colors hover:decoration-accent"
+        >
+          {site.email}
+        </a>
+      </div>
+
+      <div class="grid grid-cols-2 gap-x-10 gap-y-8 sm:gap-x-16">
+        <div>
+          <h2 class="font-display text-xs font-semibold tracking-widest text-ink uppercase">
+            Sitio
+          </h2>
+          <ul class="mt-4 space-y-2.5">
+            {
+              site.nav.map((item) => (
+                <li>
+                  <a
+                    href={item.href}
+                    class="rounded text-sm text-muted transition-colors hover:text-ink"
+                  >
+                    {item.label}
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+
+        <div>
+          <h2 class="font-display text-xs font-semibold tracking-widest text-ink uppercase">
+            Redes
+          </h2>
+          <ul class="mt-4 space-y-2.5">
+            {
+              site.social.map((item) => (
+                <li>
+                  <a
+                    href={item.url}
+                    rel="me noopener"
+                    class="rounded text-sm text-muted transition-colors hover:text-ink"
+                  >
+                    {item.label}
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <p class="mt-12 border-t border-line pt-6 text-xs text-muted">
+      © {year} {site.name}. Todos los derechos reservados.
+    </p>
+  </div>
+</footer>

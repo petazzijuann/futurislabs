@@ -1,0 +1,123 @@
+---
+import { Font, getImage } from 'astro:assets';
+import { site } from '../data/site';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  /** Meta description. Conviene que no pase de ~160 caracteres. */
+  description: string;
+  /** Texto más largo para las tarjetas de redes sociales. */
+  socialDescription?: string;
+  /** Portada de la página. Se rasteriza a JPEG 1200x630 para Open Graph. */
+  ogImage?: ImageMetadata;
+  ogType?: 'website' | 'article' | 'product';
+  /** Objeto JSON-LD que se inyecta en el head. */
+  jsonLd?: Record<string, unknown>;
+  noindex?: boolean;
+}
+
+const {
+  title,
+  description,
+  socialDescription = description,
+  ogImage,
+  ogType = 'website',
+  jsonLd,
+  noindex = false,
+} = Astro.props;
+
+/** Canonical siempre absoluta y con barra final. */
+const path = Astro.url.pathname.endsWith('/') ? Astro.url.pathname : `${Astro.url.pathname}/`;
+const canonical = new URL(path, Astro.site ?? site.url).href;
+
+const fullTitle = title === site.name ? title : `${title} — ${site.name}`;
+
+const ogSource = ogImage ?? (await import('../assets/og-default.svg')).default;
+const og = await getImage({
+  src: ogSource,
+  format: 'jpeg',
+  width: 1200,
+  height: 630,
+  fit: 'cover',
+  quality: 82,
+});
+const ogUrl = new URL(og.src, Astro.site ?? site.url).href;
+---
+
+<!doctype html>
+<html lang="es" class="scroll-pt-24">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
+
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/favicon.svg" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <meta name="theme-color" content="#f7f6f2" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0b0f10" media="(prefers-color-scheme: dark)" />
+    <meta name="generator" content={Astro.generator} />
+
+    <!-- Orden de los botones de pago: si la visita parece de Argentina,
+         el pago en pesos se muestra primero. Se marca antes de pintar
+         para que no se vea un salto. Sin JS se ven los dos botones. -->
+    <script is:inline>
+      try {
+        var tz = Intl.DateTimeFormat().resolvedOptions().timeZone || '';
+        var isAr = tz.indexOf('America/Argentina') === 0 || navigator.language === 'es-AR';
+        document.documentElement.dataset.region = isAr ? 'ar' : 'intl';
+      } catch (e) {
+        document.documentElement.dataset.region = 'intl';
+      }
+    </script>
+
+    {/* Solo se precargan los pesos que se usan arriba de todo. */}
+    <Font cssVariable="--fl-font-display" preload={[{ weight: 600, subset: 'latin' }]} />
+    <Font cssVariable="--fl-font-sans" preload={[{ weight: 400, subset: 'latin' }]} />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content={ogType} />
+    <meta property="og:site_name" content={site.name} />
+    <meta property="og:locale" content="es_ES" />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={socialDescription} />
+    <meta property="og:image" content={ogUrl} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={title} />
+
+    <!-- Twitter card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content={site.twitterHandle} />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={socialDescription} />
+    <meta name="twitter:image" content={ogUrl} />
+
+    {
+      jsonLd && (
+        <script type="application/ld+json" is:inline set:html={JSON.stringify(jsonLd)} />
+      )
+    }
+  </head>
+
+  <body>
+    <a
+      href="#contenido"
+      class="fl-btn fl-btn-primary sr-only focus:not-sr-only focus:absolute focus:top-3 focus:left-3 focus:z-[60]"
+    >
+      Saltar al contenido
+    </a>
+    <Header />
+    <main id="contenido">
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>

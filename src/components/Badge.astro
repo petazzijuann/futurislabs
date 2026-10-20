@@ -1,0 +1,21 @@
+---
+/** Etiqueta chica para modelo de pago, estado y categoría. */
+interface Props {
+  tone?: 'neutral' | 'accent' | 'signal';
+  class?: string;
+}
+
+const { tone = 'neutral', class: className = '' } = Astro.props;
+
+const tones = {
+  neutral: 'bg-surface-2 text-muted border-line',
+  accent: 'bg-accent-soft text-accent border-accent/25',
+  signal: 'bg-signal text-signal-ink border-signal',
+} as const;
+---
+
+<span
+  class={`inline-flex items-center rounded-full border px-2.5 py-1 font-display text-[0.6875rem] font-semibold tracking-wide uppercase ${tones[tone]} ${className}`}
+>
+  <slot />
+</span>

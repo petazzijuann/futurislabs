@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-label="Ideas y Guiones para Redes">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0e1618"/>
+      <stop offset="1" stop-color="#132224"/>
+    </linearGradient>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M40 0H0V40" fill="none" stroke="#f7f6f2" stroke-opacity="0.05" stroke-width="1"/>
+    </pattern>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <rect width="1200" height="630" fill="url(#grid)"/>
+  <circle cx="1065" cy="112" r="210" fill="#07706b" fill-opacity="0.22"/>
+  <circle cx="1150" cy="560" r="120" fill="#c8e64a" fill-opacity="0.1"/>
+  <rect x="72" y="92" width="96" height="96" rx="24" fill="#07706b"/>
+  <g transform="translate(96 116)" fill="none" stroke="#f7f6f2" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+    
+    <rect x="6" y="10" width="36" height="24" rx="3" />
+    <path d="M21 18l8 4-8 4v-8Z" />
+    <path d="M16 40h16" />
+  </g>
+  <text x="196" y="152" font-family="'Space Grotesk', 'Inter', ui-sans-serif, system-ui, -apple-system, sans-serif" font-size="26" font-weight="600" letter-spacing="3.2" fill="#2fc9b8">CONTENIDO</text>
+  <text x="72" y="285.2" font-family="'Space Grotesk', 'Inter', ui-sans-serif, system-ui, -apple-system, sans-serif" font-size="80" font-weight="700" letter-spacing="-1.6" fill="#f7f6f2">Ideas y Guiones para</text>
+  <text x="72" y="374.8" font-family="'Space Grotesk', 'Inter', ui-sans-serif, system-ui, -apple-system, sans-serif" font-size="80" font-weight="700" letter-spacing="-1.6" fill="#f7f6f2">Redes</text>
+  <rect x="72" y="492" width="12" height="52" rx="6" fill="#c8e64a"/>
+  <text x="104" y="520" font-family="'Space Grotesk', 'Inter', ui-sans-serif, system-ui, -apple-system, sans-serif" font-size="27" font-weight="600" fill="#f7f6f2" fill-opacity="0.92">Futurislabs</text>
+  <text x="104" y="552" font-family="'Space Grotesk', 'Inter', ui-sans-serif, system-ui, -apple-system, sans-serif" font-size="22" font-weight="500" fill="#f7f6f2" fill-opacity="0.55">Suscripción</text>
+</svg>

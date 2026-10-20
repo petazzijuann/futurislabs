@@ -1,0 +1,248 @@
+@import 'tailwindcss';
+
+/* ===========================================================================
+   FUTURISLABS — TOKENS DE DISEÑO
+   Este es el único archivo que necesitas tocar para cambiar la identidad
+   visual del sitio: colores, tipografías, radios y sombras.
+   ---------------------------------------------------------------------------
+   Paleta: papel cálido + verde "laboratorio" como acento principal
+   + citrón como color de señal (solo para destacar, nunca para texto chico).
+   =========================================================================== */
+
+:root {
+  /* --- Modo claro ------------------------------------------------------- */
+  --fl-paper: #f7f6f2; /* fondo de la página */
+  --fl-surface: #ffffff; /* tarjetas y bloques */
+  --fl-surface-2: #efede6; /* bloques secundarios */
+  --fl-line: #dedbd2; /* bordes suaves */
+  --fl-line-strong: #8a8678; /* bordes de controles (contraste 3:1) */
+  --fl-ink: #14181a; /* texto principal */
+  --fl-muted: #575e63; /* texto secundario */
+
+  --fl-accent: #07706b; /* acento principal */
+  --fl-accent-hover: #055a56;
+  --fl-accent-ink: #ffffff; /* texto sobre el acento */
+  --fl-accent-soft: #dff0ee; /* fondo suave del acento */
+
+  --fl-signal: #c8e64a; /* citrón: badges y highlights */
+  --fl-signal-ink: #14181a; /* texto sobre el citrón */
+
+  --fl-ring: #07706b; /* anillo de foco */
+
+  /* --- Radios y sombras ------------------------------------------------- */
+  --fl-radius: 0.875rem;
+  --fl-radius-lg: 1.25rem;
+  --fl-shadow: 0 1px 2px rgb(20 24 26 / 0.04), 0 1px 3px rgb(20 24 26 / 0.06);
+  --fl-shadow-lift: 0 10px 20px -8px rgb(20 24 26 / 0.16), 0 2px 6px rgb(20 24 26 / 0.08);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    /* --- Modo oscuro ---------------------------------------------------- */
+    --fl-paper: #0b0f10;
+    --fl-surface: #14191b;
+    --fl-surface-2: #1c2224;
+    --fl-line: #2a3134;
+    --fl-line-strong: #667377;
+    --fl-ink: #f2f3f0;
+    --fl-muted: #a2acb0;
+
+    --fl-accent: #2fc9b8;
+    --fl-accent-hover: #55dcca;
+    --fl-accent-ink: #06231f;
+    --fl-accent-soft: #102c2a;
+
+    --fl-signal: #c8e64a;
+    --fl-signal-ink: #14181a;
+
+    --fl-ring: #2fc9b8;
+
+    --fl-shadow: 0 1px 2px rgb(0 0 0 / 0.4);
+    --fl-shadow-lift: 0 12px 24px -10px rgb(0 0 0 / 0.7), 0 2px 6px rgb(0 0 0 / 0.4);
+  }
+}
+
+/* Puentes hacia Tailwind: aquí los tokens se vuelven utilidades
+   (bg-paper, text-ink, border-line, font-display, etc.). */
+@theme inline {
+  --color-paper: var(--fl-paper);
+  --color-surface: var(--fl-surface);
+  --color-surface-2: var(--fl-surface-2);
+  --color-line: var(--fl-line);
+  --color-line-strong: var(--fl-line-strong);
+  --color-ink: var(--fl-ink);
+  --color-muted: var(--fl-muted);
+  --color-accent: var(--fl-accent);
+  --color-accent-hover: var(--fl-accent-hover);
+  --color-accent-ink: var(--fl-accent-ink);
+  --color-accent-soft: var(--fl-accent-soft);
+  --color-signal: var(--fl-signal);
+  --color-signal-ink: var(--fl-signal-ink);
+
+  --font-display: var(--fl-font-display), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--fl-font-sans), ui-sans-serif, system-ui, sans-serif;
+
+  --radius-card: var(--fl-radius);
+  --radius-card-lg: var(--fl-radius-lg);
+
+  --shadow-card: var(--fl-shadow);
+  --shadow-lift: var(--fl-shadow-lift);
+}
+
+/* ===========================================================================
+   BASE
+   =========================================================================== */
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+
+  body {
+    background-color: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  /* Foco siempre visible y con buen contraste. */
+  :focus-visible {
+    outline: 2px solid var(--fl-ring);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  ::selection {
+    background-color: var(--color-accent);
+    color: var(--color-accent-ink);
+  }
+
+  img,
+  svg,
+  video {
+    max-width: 100%;
+    height: auto;
+  }
+
+  /* Ancla con offset para que el header fijo no tape los títulos. */
+  :target {
+    scroll-margin-top: 6rem;
+  }
+}
+
+/* ===========================================================================
+   COMPONENTES REUTILIZABLES
+   =========================================================================== */
+
+@layer components {
+  .fl-container {
+    width: 100%;
+    max-width: 75rem;
+    margin-inline: auto;
+    padding-inline: 1.25rem;
+  }
+
+  @media (min-width: 768px) {
+    .fl-container {
+      padding-inline: 2rem;
+    }
+  }
+
+  .fl-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    border-radius: 0.75rem;
+    padding: 0.75rem 1.25rem;
+    font-size: 0.9375rem;
+    font-weight: 600;
+    line-height: 1.2;
+    text-align: center;
+    transition:
+      background-color 0.18s ease,
+      border-color 0.18s ease,
+      color 0.18s ease,
+      transform 0.18s ease;
+  }
+
+  .fl-btn:active {
+    transform: translateY(1px);
+  }
+
+  .fl-btn-primary {
+    background-color: var(--color-accent);
+    color: var(--color-accent-ink);
+  }
+
+  .fl-btn-primary:hover {
+    background-color: var(--color-accent-hover);
+  }
+
+  .fl-btn-secondary {
+    background-color: transparent;
+    color: var(--color-ink);
+    border: 1px solid var(--color-line-strong);
+  }
+
+  .fl-btn-secondary:hover {
+    background-color: var(--color-surface-2);
+    border-color: var(--color-ink);
+  }
+
+  .fl-card {
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-card-lg);
+    box-shadow: var(--shadow-card);
+  }
+
+  .fl-eyebrow {
+    font-family: var(--font-display);
+    font-size: 0.8125rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+  }
+
+  .fl-prose-lead {
+    font-size: 1.0625rem;
+    line-height: 1.7;
+    color: var(--color-muted);
+  }
+
+  @media (min-width: 768px) {
+    .fl-prose-lead {
+      font-size: 1.125rem;
+    }
+  }
+}

@@ -1,0 +1,223 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Library from '../components/Library.astro';
+import MicroappCard from '../components/MicroappCard.astro';
+import FaqList from '../components/FaqList.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import { generalFaqs, site } from '../data/site';
+import { microapps } from '../data/microapps';
+import { sortedMicroapps } from '../lib/library';
+import { clampText } from '../lib/format';
+
+const apps = sortedMicroapps();
+const highlight = apps[0]!;
+const available = microapps.filter((app) => app.status === 'disponible').length;
+const cheapest = Math.min(...microapps.map((app) => app.priceUsd));
+
+const steps = [
+  {
+    title: 'Eliges la herramienta',
+    text: 'Entras a la biblioteca, ves qué resuelve cada microapp y abres la que te hace falta. Varias tienen demo para probar antes de pagar.',
+  },
+  {
+    title: 'Pagas una vez o te suscribes',
+    text: 'Las microapps de pago único se compran una sola vez y son tuyas. Las que necesitan funcionar de forma continua van por suscripción mensual.',
+  },
+  {
+    title: 'La usas desde el navegador',
+    text: 'Recibes tu acceso y la abres en la computadora o en el celular. No hay instalación, ni actualizaciones, ni nada que configurar.',
+  },
+];
+
+const reasons = [
+  {
+    title: 'Tus datos quedan en tu dispositivo',
+    text: 'La mayoría de las microapps trabajan dentro de tu navegador. Lo que escribes no viaja a ningún servidor nuestro.',
+    icon: '<path d="M12 3 4.5 6v6c0 4.2 3 7.8 7.5 9 4.5-1.2 7.5-4.8 7.5-9V6L12 3Z"/><path d="m8.8 12 2.3 2.3 4.1-4.6"/>',
+  },
+  {
+    title: 'No instalas nada',
+    text: 'Son páginas web. Se abren con un enlace y funcionan igual en Windows, Mac, Android o iPhone.',
+    icon: '<rect x="3" y="4.5" width="18" height="15" rx="2.5"/><path d="M3 9h18M6.8 6.8h.01M9.6 6.8h.01"/>',
+  },
+  {
+    title: 'Funciona en el celular',
+    text: 'Pensadas primero para la pantalla chica, porque muchas se usan en el mostrador, en la obra o visitando a un cliente.',
+    icon: '<rect x="6.5" y="2.5" width="11" height="19" rx="2.5"/><path d="M10.5 18.5h3"/>',
+  },
+  {
+    title: 'Pago único de verdad',
+    text: 'En las microapps de pago único no hay suscripción ni cargos que aparecen después. Las compras una vez y las usas siempre.',
+    icon: '<path d="M13.4 3H20v6.6l-9.3 9.3a2 2 0 0 1-2.8 0l-4-4a2 2 0 0 1 0-2.8L13.4 3Z"/><path d="M16.5 7.5h.01"/>',
+  },
+];
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: site.name,
+  url: site.url,
+  description: site.description,
+  inLanguage: 'es',
+  publisher: {
+    '@type': 'Organization',
+    name: site.name,
+    url: site.url,
+    email: site.email,
+    sameAs: site.social.map((item) => item.url),
+  },
+};
+---
+
+<BaseLayout
+  title="Biblioteca de microapps para tu negocio"
+  description={clampText(site.description)}
+  socialDescription={site.description}
+  jsonLd={jsonLd}
+>
+  <!-- ============================ HERO ============================ -->
+  <section class="relative overflow-hidden border-b border-line">
+    <div
+      aria-hidden="true"
+      class="pointer-events-none absolute inset-0 -z-10 opacity-[0.55] [background-image:linear-gradient(to_right,var(--color-line)_1px,transparent_1px),linear-gradient(to_bottom,var(--color-line)_1px,transparent_1px)] [background-size:56px_56px] [mask-image:radial-gradient(ellipse_80%_60%_at_50%_0%,black,transparent)]"
+    >
+    </div>
+
+    <div class="fl-container grid items-center gap-12 py-20 md:py-28 lg:grid-cols-[1.1fr_0.9fr] lg:gap-16">
+      <div>
+        <p class="fl-eyebrow">Biblioteca de microapps</p>
+        <h1 class="mt-4 text-4xl leading-[1.08] sm:text-5xl lg:text-[3.5rem]">
+          Herramientas simples para resolver problemas concretos de tu negocio.
+        </h1>
+        <p class="fl-prose-lead mt-6 max-w-xl">
+          Futurislabs hace microapps: herramientas web pequeñas y directas que abres en el navegador y
+          usas al instante. Nada de instalaciones, nada de sistemas enormes con funciones que no vas
+          a aprovechar.
+        </p>
+
+        <div class="mt-8 flex flex-col gap-3 sm:flex-row">
+          <a href="#microapps" class="fl-btn fl-btn-primary px-5 py-3.5 text-base">
+            Ver microapps
+          </a>
+          <a href="#como-funciona" class="fl-btn fl-btn-secondary px-5 py-3.5 text-base">
+            Cómo funciona
+          </a>
+        </div>
+
+        <dl class="mt-12 grid max-w-lg grid-cols-3 gap-6 border-t border-line pt-6">
+          <div>
+            <dt class="text-xs font-medium tracking-wide text-muted uppercase">En la biblioteca</dt>
+            <dd class="mt-1 font-display text-2xl font-semibold text-ink">{microapps.length}</dd>
+          </div>
+          <div>
+            <dt class="text-xs font-medium tracking-wide text-muted uppercase">Ya disponibles</dt>
+            <dd class="mt-1 font-display text-2xl font-semibold text-ink">{available}</dd>
+          </div>
+          <div>
+            <dt class="text-xs font-medium tracking-wide text-muted uppercase">Desde</dt>
+            <dd class="mt-1 font-display text-2xl font-semibold text-ink">USD {cheapest}</dd>
+          </div>
+        </dl>
+      </div>
+
+      <div class="lg:pl-4">
+        <p class="mb-4 font-display text-xs font-semibold tracking-widest text-muted uppercase">
+          Destacada
+        </p>
+        <MicroappCard app={highlight} eager />
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================== BIBLIOTECA ========================= -->
+  <Library />
+
+  <!-- ======================== CÓMO FUNCIONA ======================== -->
+  <section id="como-funciona" class="scroll-mt-24 border-y border-line bg-surface">
+    <div class="fl-container py-20 md:py-28">
+      <SectionHeading
+        eyebrow="Cómo funciona"
+        title="Tres pasos y la estás usando"
+        lead="Sin reuniones, sin demos agendadas y sin un vendedor llamándote por teléfono."
+      />
+
+      <ol class="mt-12 grid gap-6 md:grid-cols-3">
+        {
+          steps.map((step, index) => (
+            <li class="fl-card flex flex-col p-6">
+              <span
+                class="flex size-10 items-center justify-center rounded-xl bg-accent-soft font-display text-base font-bold text-accent"
+                aria-hidden="true"
+              >
+                {index + 1}
+              </span>
+              <h3 class="mt-5 font-display text-lg font-semibold text-ink">{step.title}</h3>
+              <p class="mt-2.5 text-[0.9375rem] leading-relaxed text-muted">{step.text}</p>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  <!-- ====================== POR QUÉ FUTURISLABS ===================== -->
+  <section class="fl-container py-20 md:py-28">
+    <SectionHeading
+      eyebrow={`Por qué ${site.name}`}
+      title="Herramientas pequeñas, decisiones claras"
+      lead="No vendemos una plataforma que tengas que adoptar. Vendemos la herramienta puntual que te saca el problema de encima."
+    />
+
+    <ul class="mt-12 grid gap-6 sm:grid-cols-2">
+      {
+        reasons.map((reason) => (
+          <li class="fl-card flex gap-4 p-6">
+            <svg
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+              class="mt-0.5 size-6 shrink-0 text-accent"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.6"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              set:html={reason.icon}
+            />
+            <div>
+              <h3 class="font-display text-lg font-semibold text-ink">{reason.title}</h3>
+              <p class="mt-2 text-[0.9375rem] leading-relaxed text-muted">{reason.text}</p>
+            </div>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+
+  <!-- ========================== PREGUNTAS ========================== -->
+  <section id="preguntas" class="scroll-mt-24 border-t border-line bg-surface">
+    <div class="fl-container py-20 md:py-28">
+      <SectionHeading
+        eyebrow="Preguntas"
+        title="Lo que nos preguntan seguido"
+        lead="Si te queda alguna duda, escríbenos y te contestamos una persona, no un bot."
+      />
+      <div class="mt-12 max-w-3xl">
+        <FaqList faqs={generalFaqs} />
+      </div>
+
+      <div class="fl-card mt-10 flex max-w-3xl flex-col gap-5 p-7 sm:flex-row sm:items-center sm:justify-between">
+        <div>
+          <h3 class="font-display text-lg font-semibold text-ink">
+            ¿Necesitas una herramienta que no está?
+          </h3>
+          <p class="mt-1.5 text-[0.9375rem] text-muted">
+            Cuéntanos qué problema tienes que resolver. Si le sirve a más gente, la construimos.
+          </p>
+        </div>
+        <a href={`mailto:${site.email}`} class="fl-btn fl-btn-primary shrink-0">
+          Escribirnos
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

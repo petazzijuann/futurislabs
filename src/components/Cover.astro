@@ -1,0 +1,51 @@
+---
+import { Image } from 'astro:assets';
+
+/**
+ * Imagen de portada o captura.
+ * Los archivos SVG se sirven tal cual (ya son livianos y vectoriales).
+ * Los PNG / JPG / WEBP se optimizan en varios tamaños para el celular.
+ */
+interface Props {
+  src: ImageMetadata;
+  alt: string;
+  widths?: number[];
+  sizes?: string;
+  loading?: 'eager' | 'lazy';
+  class?: string;
+}
+
+const {
+  src,
+  alt,
+  widths = [480, 768, 1200],
+  sizes = '(min-width: 1024px) 560px, 100vw',
+  loading = 'lazy',
+  class: className = '',
+} = Astro.props;
+
+const isSvg = src.format === 'svg';
+---
+
+{
+  isSvg ? (
+    <Image
+      src={src}
+      alt={alt}
+      format="svg"
+      loading={loading}
+      decoding="async"
+      class={className}
+    />
+  ) : (
+    <Image
+      src={src}
+      alt={alt}
+      widths={widths}
+      sizes={sizes}
+      loading={loading}
+      decoding="async"
+      class={className}
+    />
+  )
+}

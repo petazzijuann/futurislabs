@@ -1,0 +1,389 @@
+---
+import type { GetStaticPaths } from 'astro';
+import { getImage } from 'astro:assets';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Badge from '../components/Badge.astro';
+import Cover from '../components/Cover.astro';
+import CheckoutButtons from '../components/CheckoutButtons.astro';
+import FaqList from '../components/FaqList.astro';
+import MicroappCard from '../components/MicroappCard.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import { microapps, type Microapp } from '../data/microapps';
+import { relatedMicroapps } from '../lib/library';
+import { microappImage, microappImages } from '../lib/images';
+import { clampText, formatArs, formatUsd, modelLabel } from '../lib/format';
+import { site } from '../data/site';
+
+/** Una página por cada objeto de src/data/microapps.ts */
+export const getStaticPaths = (() =>
+  microapps.map((app) => ({
+    params: { slug: app.slug },
+    props: { app },
+  }))) satisfies GetStaticPaths;
+
+interface Props {
+  app: Microapp;
+}
+
+const { app } = Astro.props;
+
+const cover = microappImage(app.image);
+const shots = microappImages(app.screenshots);
+const related = relatedMicroapps(app, 3);
+const soon = app.status === 'proximamente';
+const priceUsd = formatUsd(app);
+const priceArs = formatArs(app);
+const canonical = new URL(`/${app.slug}/`, Astro.site ?? site.url).href;
+
+const ogImage = await getImage({
+  src: cover,
+  format: 'jpeg',
+  width: 1200,
+  height: 630,
+  fit: 'cover',
+  quality: 82,
+});
+const ogUrl = new URL(ogImage.src, Astro.site ?? site.url).href;
+
+const offer = (currency: 'USD' | 'ARS', price: number, url?: string) => ({
+  '@type': 'Offer',
+  price,
+  priceCurrency: currency,
+  availability: soon
+    ? 'https://schema.org/PreOrder'
+    : 'https://schema.org/InStock',
+  url: url ?? canonical,
+  ...(app.model === 'suscripcion'
+    ? {
+        priceSpecification: {
+          '@type': 'UnitPriceSpecification',
+          price,
+          priceCurrency: currency,
+          billingDuration: 1,
+          billingIncrement: 1,
+          unitCode: 'MON',
+        },
+      }
+    : {}),
+});
+
+const offers = [
+  offer('USD', app.priceUsd, app.checkoutUsd),
+  ...(app.priceArs !== undefined ? [offer('ARS', app.priceArs, app.checkoutArs)] : []),
+];
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'SoftwareApplication',
+      name: app.name,
+      url: canonical,
+      description: app.description,
+      applicationCategory: 'BusinessApplication',
+      applicationSubCategory: app.category,
+      operatingSystem: 'Web',
+      image: ogUrl,
+      inLanguage: 'es',
+      offers,
+      publisher: {
+        '@type': 'Organization',
+        name: site.name,
+        url: site.url,
+      },
+    },
+    {
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Microapps', item: `${site.url}/#microapps` },
+        { '@type': 'ListItem', position: 2, name: app.name, item: canonical },
+      ],
+    },
+    ...(app.faqs?.length
+      ? [
+          {
+            '@type': 'FAQPage',
+            mainEntity: app.faqs.map((faq) => ({
+              '@type': 'Question',
+              name: faq.q,
+              acceptedAnswer: { '@type': 'Answer', text: faq.a },
+            })),
+          },
+        ]
+      : []),
+  ],
+};
+---
+
+<BaseLayout
+  title={app.name}
+  description={clampText(`${app.tagline} ${app.description}`)}
+  socialDescription={app.description}
+  ogImage={cover}
+  ogType="product"
+  jsonLd={jsonLd}
+>
+  <!-- ============================ HERO ============================ -->
+  <section class="border-b border-line">
+    <div class="fl-container py-10 md:py-14">
+      <a
+        href="/#microapps"
+        class="inline-flex items-center gap-1.5 rounded-lg text-sm font-medium text-muted transition-colors hover:text-ink"
+      >
+        <svg
+          viewBox="0 0 16 16"
+          aria-hidden="true"
+          class="size-4"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.8"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="M13 8H3M7 4 3 8l4 4" />
+        </svg>
+        Volver a la biblioteca
+      </a>
+
+      <!-- En celular: texto, portada y recién después el precio.
+           En pantalla grande: texto y precio a la izquierda, portada a la derecha. -->
+      <div class="mt-8 grid items-start gap-8 lg:grid-cols-2 lg:gap-14">
+        <div class="lg:col-start-1 lg:row-start-1">
+          <div class="flex flex-wrap items-center gap-2">
+            <Badge tone="accent">{modelLabel[app.model]}</Badge>
+            <Badge>{app.category}</Badge>
+            {soon && <Badge tone="signal">Próximamente</Badge>}
+          </div>
+
+          <h1 class="mt-5 text-3xl leading-[1.12] sm:text-4xl lg:text-[2.75rem]">{app.name}</h1>
+          <p class="mt-4 font-display text-lg font-medium text-accent">{app.tagline}</p>
+          <p class="fl-prose-lead mt-5">{app.description}</p>
+
+        </div>
+
+        <div class="lg:col-start-2 lg:row-start-1 lg:row-span-2 lg:self-center">
+          <div class="overflow-hidden rounded-card-lg border border-line bg-surface shadow-card">
+            <Cover
+              src={cover}
+              alt={`Vista de ${app.name}`}
+              loading="eager"
+              sizes="(min-width: 1024px) 580px, 100vw"
+              class="aspect-[1200/630] w-full object-cover"
+            />
+          </div>
+        </div>
+
+        <div class="lg:col-start-1 lg:row-start-2">
+          <div class="border-t border-line pt-6">
+            <p class="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+              <span class="font-display text-3xl font-bold text-ink">{priceUsd}</span>
+              {
+                priceArs && (
+                  <span class="text-sm text-muted">o {priceArs} en pesos argentinos</span>
+                )
+              }
+            </p>
+            <p class="mt-1.5 text-sm text-muted">
+              {
+                app.model === 'pago-unico'
+                  ? 'Pago único. Sin suscripción ni cargos posteriores.'
+                  : 'Suscripción mensual. La cancelas cuando quieras.'
+              }
+            </p>
+
+            <div class="mt-6">
+              <CheckoutButtons app={app} />
+            </div>
+          </div>
+
+          <p class="mt-6 text-sm leading-relaxed text-muted">
+            <span class="font-semibold text-ink">Para quién es:</span> {app.audience}
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================== PROBLEMA Y SOLUCIÓN ===================== -->
+  <section class="fl-container py-20 md:py-24">
+    <div class="grid gap-10 lg:grid-cols-2 lg:gap-16">
+      <div>
+        <p class="fl-eyebrow">El problema</p>
+        <h2 class="mt-3 text-2xl md:text-3xl">{app.problem.title}</h2>
+        <ul class="mt-7 space-y-4">
+          {
+            app.problem.points.map((point) => (
+              <li class="flex gap-3 text-[0.9375rem] leading-relaxed text-muted">
+                <svg
+                  viewBox="0 0 16 16"
+                  aria-hidden="true"
+                  class="mt-1 size-4 shrink-0 text-muted"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                >
+                  <path d="M4 4l8 8M12 4l-8 8" />
+                </svg>
+                <span>{point}</span>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+
+      <div class="fl-card p-7 md:p-9">
+        <p class="fl-eyebrow">La solución</p>
+        <h2 class="mt-3 font-display text-2xl leading-snug font-semibold text-ink">
+          Así lo resuelve esta microapp
+        </h2>
+        <p class="mt-4 text-[0.9375rem] leading-relaxed text-muted">{app.description}</p>
+        <ul class="mt-6 space-y-3 border-t border-line pt-6">
+          {
+            app.features.slice(0, 4).map((feature) => (
+              <li class="flex gap-3 text-[0.9375rem] font-medium text-ink">
+                <svg
+                  viewBox="0 0 16 16"
+                  aria-hidden="true"
+                  class="mt-0.5 size-4 shrink-0 text-accent"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="M3 8.5l3.5 3.5L13 4.5" />
+                </svg>
+                <span>{feature.title}</span>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================== FEATURES ========================== -->
+  <section class="border-y border-line bg-surface">
+    <div class="fl-container py-20 md:py-24">
+      <SectionHeading eyebrow="Qué incluye" title={`Todo lo que hace ${app.name}`} />
+
+      <ul class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {
+          app.features.map((feature) => (
+            <li class="rounded-card-lg border border-line bg-paper p-6">
+              <h3 class="font-display text-base font-semibold text-ink">{feature.title}</h3>
+              <p class="mt-2.5 text-[0.9375rem] leading-relaxed text-muted">{feature.text}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <!-- ======================== CÓMO FUNCIONA ======================== -->
+  {
+    app.steps?.length && (
+      <section class="fl-container py-20 md:py-24">
+        <SectionHeading eyebrow="Cómo funciona" title="Así la usas" />
+        <ol class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          {app.steps.map((step, index) => (
+            <li class="flex flex-col gap-4 border-t-2 border-accent/30 pt-5">
+              <span class="font-display text-sm font-bold text-accent">
+                Paso {index + 1}
+              </span>
+              <p class="text-[0.9375rem] leading-relaxed text-ink">{step}</p>
+            </li>
+          ))}
+        </ol>
+      </section>
+    )
+  }
+
+  <!-- =========================== CAPTURAS ========================== -->
+  {
+    shots.length > 0 && (
+      <section class="border-y border-line bg-surface">
+        <div class="fl-container py-20 md:py-24">
+          <SectionHeading
+            eyebrow="Capturas"
+            title="Cómo se ve"
+            lead="Las pantallas reales de la herramienta, sin maquillaje."
+          />
+          <div class="mt-12 grid gap-6 lg:grid-cols-2">
+            {shots.map((shot, index) => (
+              <figure class="overflow-hidden rounded-card-lg border border-line bg-paper shadow-card">
+                <Cover
+                  src={shot}
+                  alt={`Captura ${index + 1} de ${app.name}`}
+                  sizes="(min-width: 1024px) 560px, 100vw"
+                  class="w-full object-cover"
+                />
+              </figure>
+            ))}
+          </div>
+        </div>
+      </section>
+    )
+  }
+
+  <!-- ========================== PREGUNTAS ========================== -->
+  {
+    app.faqs?.length && (
+      <section class="fl-container py-20 md:py-24">
+        <SectionHeading eyebrow="Preguntas" title={`Dudas sobre ${app.name}`} />
+        <div class="mt-12 max-w-3xl">
+          <FaqList faqs={app.faqs} />
+        </div>
+      </section>
+    )
+  }
+
+  <!-- ========================== CTA FINAL ========================== -->
+  <section class="fl-container pb-20 md:pb-24">
+    <div
+      class="rounded-card-lg border border-accent/25 bg-accent-soft p-8 md:p-12"
+    >
+      <div class="flex flex-col gap-8 lg:flex-row lg:items-center lg:justify-between">
+        <div class="max-w-xl">
+          <h2 class="text-2xl md:text-3xl">
+            {soon ? `${app.name} está en camino` : `Empieza a usar ${app.name} hoy`}
+          </h2>
+          <p class="mt-3 text-[0.9375rem] leading-relaxed text-muted">
+            {
+              soon
+                ? 'Déjanos tu mail y te avisamos el día que esté lista, con un descuento de lanzamiento.'
+                : app.model === 'pago-unico'
+                  ? `${priceUsd}, pago único. La compras una vez y la usas siempre, sin cargos mensuales.`
+                  : `${priceUsd}. Cancelas cuando quieras, sin llamadas ni formularios.`
+            }
+          </p>
+        </div>
+        <div class="shrink-0">
+          <CheckoutButtons app={app} size="cta" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================== MÁS MICROAPPS ======================== -->
+  {
+    related.length > 0 && (
+      <section class="border-t border-line bg-surface">
+        <div class="fl-container py-20 md:py-24">
+          <SectionHeading
+            eyebrow="Más microapps"
+            title="Otras herramientas que te pueden servir"
+          />
+          <ul class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {related.map((other) => (
+              <li>
+                <MicroappCard app={other} />
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+    )
+  }
+</BaseLayout>

@@ -1,0 +1,35 @@
+---
+import Logo from './Logo.astro';
+import { site } from '../data/site';
+---
+
+<header
+  class="sticky top-0 z-50 border-b border-line bg-paper/85 backdrop-blur-md supports-[backdrop-filter]:bg-paper/70"
+>
+  <div class="fl-container flex h-16 items-center justify-between gap-4">
+    <a
+      href="/"
+      class="rounded-lg transition-opacity hover:opacity-80"
+      aria-label={`${site.name}, ir al inicio`}
+    >
+      <Logo />
+    </a>
+
+    <nav aria-label="Navegación principal">
+      <ul class="flex items-center gap-1 sm:gap-2">
+        {
+          site.nav.map((item, index) => (
+            <li class={index === 0 ? '' : 'hidden sm:block'}>
+              <a
+                href={item.href}
+                class="block rounded-lg px-2.5 py-2 text-[0.8125rem] font-medium text-muted transition-colors hover:bg-surface-2 hover:text-ink sm:px-3 sm:text-sm"
+              >
+                {item.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+  </div>
+</header>

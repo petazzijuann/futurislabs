@@ -1,0 +1,39 @@
+---
+/**
+ * Isotipo + wordmark de Futurislabs.
+ * El isotipo es un matraz de laboratorio dibujado con geometría simple.
+ * Los trazos usan `currentColor`, así que hereda el color del contexto.
+ */
+interface Props {
+  /** Solo el isotipo, sin el nombre. */
+  iconOnly?: boolean;
+  class?: string;
+}
+
+const { iconOnly = false, class: className = '' } = Astro.props;
+---
+
+<span class={`inline-flex items-center gap-2.5 ${className}`}>
+  <svg
+    viewBox="0 0 24 24"
+    aria-hidden="true"
+    focusable="false"
+    class="size-7 shrink-0 text-accent"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="1.7"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  >
+    <path d="M8.2 2.9h7.6" />
+    <path d="M9.9 2.9v5.7L4.6 18.4a2.1 2.1 0 0 0 1.9 3.1h11a2.1 2.1 0 0 0 1.9-3.1L14.1 8.6V2.9" />
+    <path d="M6.6 15.4h10.8" stroke="var(--fl-signal)" stroke-width="2.1" />
+  </svg>
+  {
+    !iconOnly && (
+      <span class="font-display text-[1.0625rem] font-bold tracking-tight text-ink">
+        Futuris<span class="text-accent">labs</span>
+      </span>
+    )
+  }
+</span>

@@ -1,0 +1,27 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import MicroappCard from '../components/MicroappCard.astro';
+import { sortedMicroapps } from '../lib/library';
+
+const suggestions = sortedMicroapps().slice(0, 3);
+---
+
+<BaseLayout
+  title="Página no encontrada"
+  description="La página que buscas no existe o cambió de dirección."
+  noindex
+>
+  <section class="fl-container py-24 md:py-32">
+    <p class="fl-eyebrow">Error 404</p>
+    <h1 class="mt-3 text-3xl md:text-4xl">Esta página no existe</h1>
+    <p class="fl-prose-lead mt-4 max-w-xl">
+      Puede que el enlace esté mal escrito o que la microapp haya cambiado de dirección. Estas son
+      las más buscadas de la biblioteca.
+    </p>
+    <a href="/" class="fl-btn fl-btn-primary mt-8">Ir al inicio</a>
+
+    <ul class="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      {suggestions.map((app) => <li><MicroappCard app={app} /></li>)}
+    </ul>
+  </section>
+</BaseLayout>

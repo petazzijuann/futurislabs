@@ -1,0 +1,103 @@
+---
+import type { Microapp } from '../data/microapps';
+import { site } from '../data/site';
+import { formatArs, formatUsd, notifyMailto } from '../lib/format';
+
+/**
+ * Botones de compra de una microapp.
+ *
+ * - Si falta el link de checkout de una moneda, ese botón no se muestra.
+ * - Si la visita parece de Argentina, el botón en pesos va primero
+ *   (el reordenamiento lo hace CSS a partir de `data-region` en <html>,
+ *   que se marca en BaseLayout antes de pintar la página).
+ * - Sin JavaScript se ven los dos botones, en orden USD y luego pesos.
+ * - Si la microapp es "proximamente", en lugar de comprar se ofrece un aviso.
+ */
+interface Props {
+  app: Microapp;
+  /** `hero` usa botones grandes; `cta` los repite al final de la página. */
+  size?: 'hero' | 'cta';
+}
+
+const { app, size = 'hero' } = Astro.props;
+
+const soon = app.status === 'proximamente';
+const priceUsd = formatUsd(app);
+const priceArs = formatArs(app);
+const showUsd = !soon && !!app.checkoutUsd;
+const showArs = !soon && !!app.checkoutArs && !!priceArs;
+const big = size === 'hero' ? 'px-5 py-3.5 text-base' : '';
+---
+
+<div class="flex flex-col items-stretch gap-3 sm:items-start">
+  {
+    soon ? (
+      <a href={notifyMailto(app, site.email)} class={`fl-btn fl-btn-primary ${big}`}>
+        Avísame cuando salga
+      </a>
+    ) : (
+      <div data-checkout class="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+        {showUsd && (
+          <a
+            data-currency="usd"
+            href={app.checkoutUsd}
+            rel="noopener"
+            class={`fl-btn fl-btn-primary flex-col gap-0.5 ${big}`}
+          >
+            <span>Pagar en USD</span>
+            <span class="text-[0.8125rem] font-medium opacity-90">{priceUsd}</span>
+          </a>
+        )}
+        {showArs && (
+          <a
+            data-currency="ars"
+            href={app.checkoutArs}
+            rel="noopener"
+            class={`fl-btn fl-btn-primary flex-col gap-0.5 ${big}`}
+          >
+            <span>Pagar en pesos argentinos</span>
+            <span class="text-[0.8125rem] font-medium opacity-90">{priceArs}</span>
+          </a>
+        )}
+      </div>
+    )
+  }
+
+  {
+    app.demoUrl && (
+      <a href={app.demoUrl} rel="noopener" class={`fl-btn fl-btn-secondary ${big}`}>
+        Probar demo gratis
+      </a>
+    )
+  }
+
+  {
+    !soon && app.appUrl && (
+      <p class="text-sm text-muted">
+        ¿Ya la compraste?{' '}
+        <a
+          href={app.appUrl}
+          rel="noopener"
+          class="rounded font-semibold text-accent underline decoration-accent/40 underline-offset-4 hover:decoration-accent"
+        >
+          Abre la herramienta
+        </a>
+      </p>
+    )
+  }
+
+  {
+    soon && (
+      <p class="text-sm text-muted">
+        Está en desarrollo. Te escribimos al mail el día que esté lista, sin spam.
+      </p>
+    )
+  }
+</div>
+
+<style>
+  /* Visita desde Argentina: el pago en pesos va primero. */
+  :root[data-region='ar'] [data-currency='ars'] {
+    order: -1;
+  }
+</style>

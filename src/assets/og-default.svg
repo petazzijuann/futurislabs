@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-label="Futurislabs">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0e1618"/>
+      <stop offset="1" stop-color="#132224"/>
+    </linearGradient>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M40 0H0V40" fill="none" stroke="#f7f6f2" stroke-opacity="0.05" stroke-width="1"/>
+    </pattern>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <rect width="1200" height="630" fill="url(#grid)"/>
+  <circle cx="1060" cy="110" r="220" fill="#07706b" fill-opacity="0.22"/>
+  <circle cx="1140" cy="560" r="130" fill="#c8e64a" fill-opacity="0.1"/>
+  <g transform="translate(72 86) scale(4)" fill="none" stroke="#2fc9b8" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M8.2 2.9h7.6"/>
+    <path d="M9.9 2.9v5.7L4.6 18.4a2.1 2.1 0 0 0 1.9 3.1h11a2.1 2.1 0 0 0 1.9-3.1L14.1 8.6V2.9"/>
+    <path d="M6.6 15.4h10.8" stroke="#c8e64a" stroke-width="2.1"/>
+  </g>
+  <text x="188" y="152" font-family="'Space Grotesk','Inter',ui-sans-serif,system-ui,sans-serif" font-size="46" font-weight="700" letter-spacing="-1" fill="#f7f6f2">Futurislabs</text>
+  <text x="72" y="304" font-family="'Space Grotesk','Inter',ui-sans-serif,system-ui,sans-serif" font-size="74" font-weight="700" letter-spacing="-2" fill="#f7f6f2">Herramientas simples</text>
+  <text x="72" y="388" font-family="'Space Grotesk','Inter',ui-sans-serif,system-ui,sans-serif" font-size="74" font-weight="700" letter-spacing="-2" fill="#f7f6f2">para problemas</text>
+  <text x="72" y="472" font-family="'Space Grotesk','Inter',ui-sans-serif,system-ui,sans-serif" font-size="74" font-weight="700" letter-spacing="-2" fill="#2fc9b8">concretos</text>
+  <rect x="72" y="534" width="12" height="44" rx="6" fill="#c8e64a"/>
+  <text x="104" y="566" font-family="'Space Grotesk','Inter',ui-sans-serif,system-ui,sans-serif" font-size="24" font-weight="500" fill="#f7f6f2" fill-opacity="0.6">Biblioteca de microapps para tu negocio</text>
+</svg>
