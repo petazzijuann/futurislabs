@@ -63,6 +63,8 @@ export const microapps: Microapp[] = [
     model: 'pago-unico',
     priceUsd: 12,
     priceArs: 14900,
+    checkoutUsd:
+      'https://futurislabs.lemonsqueezy.com/checkout/buy/e9985b8c-1fe2-49fe-a0cb-f14b0c6efaf2',
     appUrl: 'https://costos.futurislabs.net',
     demoUrl: 'https://costos.futurislabs.net/?demo',
     image: 'costos.svg',
