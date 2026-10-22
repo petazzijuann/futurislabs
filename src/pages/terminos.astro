@@ -1,0 +1,153 @@
+---
+import LegalLayout from '../layouts/LegalLayout.astro';
+import { site, legal } from '../data/site';
+---
+
+<LegalLayout
+  title="Términos y condiciones"
+  lead="Las reglas de uso de las microapps de Futurislabs: qué compras, qué puedes esperar de nosotros y qué esperamos de ti."
+>
+  <h2>1. Quiénes somos</h2>
+  <p>
+    {site.name} es un proyecto operado por {legal.operator}, con domicilio en {legal.city},{' '}
+    {legal.country}. Para cualquier consulta sobre estos términos puedes escribir a{' '}
+    <a href={`mailto:${site.email}`}>{site.email}</a>.
+  </p>
+  <p>
+    Al comprar o usar cualquier microapp de {site.name} aceptas estos términos. Si no estás de
+    acuerdo con alguno de los puntos, lo mejor es no usar el servicio.
+  </p>
+
+  <h2>2. Qué ofrecemos</h2>
+  <p>
+    {site.name} es una biblioteca de <strong>microapps</strong>: herramientas web chicas que se usan
+    desde el navegador, sin instalar nada. Cada microapp tiene su propia página con lo que hace, su
+    precio y su modalidad de cobro. Hay dos modalidades:
+  </p>
+  <ul>
+    <li>
+      <strong>Pago único:</strong> se paga una sola vez y se usa sin cargos mensuales.
+    </li>
+    <li>
+      <strong>Suscripción:</strong> se cobra por mes, porque la herramienta depende de servicios que
+      funcionan de forma continua (por ejemplo, recordatorios automáticos o generación de
+      contenido).
+    </li>
+  </ul>
+
+  <h2>3. Precios, pagos y comprobantes</h2>
+  <p>
+    Los precios están publicados en la página de cada microapp y pueden cambiar en cualquier
+    momento. El precio que vale es el que veías al momento de pagar: un cambio posterior no afecta
+    una compra ya hecha.
+  </p>
+  <p>Los pagos los procesan terceros. Nosotros nunca vemos ni guardamos los datos de tu tarjeta.</p>
+  <dl>
+    <dt>Pagos en dólares</dt>
+    <dd>
+      Los procesa <strong>{legal.processors.usd}</strong>, que actúa como <em>merchant of record</em>
+      (vendedor registrado). Eso significa que {legal.processors.usd} es quien figura en el resumen de
+      tu tarjeta, quien emite el comprobante de la operación y quien se encarga de los impuestos que
+      correspondan a la venta.
+    </dd>
+    <dt>Pagos en pesos argentinos</dt>
+    <dd>
+      Los procesa <strong>{legal.processors.ars}</strong>, con los medios de pago que esa plataforma
+      habilite en cada momento.
+    </dd>
+  </dl>
+  <p>
+    Cada procesador tiene sus propios términos y su propia política de privacidad, que se aplican a
+    la operación de pago.
+  </p>
+
+  <h2>4. Qué obtienes al comprar</h2>
+  <p>
+    Al pagar te damos una licencia de uso personal e intransferible de la microapp, para ti o para
+    tu negocio, sin límite de tiempo en las de pago único y mientras la suscripción esté activa en
+    las mensuales.
+  </p>
+  <p>No está permitido:</p>
+  <ul>
+    <li>revender, alquilar, sublicenciar o distribuir la microapp o su acceso;</li>
+    <li>compartir tu acceso con terceros ajenos a tu negocio;</li>
+    <li>copiar, descompilar o reutilizar el código para armar un producto parecido;</li>
+    <li>
+      quitar las marcas o avisos de autoría. El código, el diseño, los textos y la marca{' '}
+      {site.name} siguen siendo nuestros.
+    </li>
+  </ul>
+
+  <h2>5. Uso responsable</h2>
+  <p>
+    Te comprometes a usar las microapps de forma legal y a no intentar vulnerarlas, sobrecargarlas
+    ni usarlas para almacenar o distribuir contenido ilegal. Si cargas datos de terceros (por
+    ejemplo, de tus clientes), eres responsable de tener derecho a hacerlo y de informarles lo que
+    corresponda.
+  </p>
+  <p>
+    Podemos suspender el acceso de una cuenta que use el servicio para dañar a otras personas o para
+    romper estas reglas.
+  </p>
+
+  <h2>6. Disponibilidad y cambios</h2>
+  <p>
+    Trabajamos para que todo funcione, pero no podemos garantizar que el servicio esté disponible
+    sin interrupciones. Puede haber cortes por mantenimiento, por fallas nuestras o por fallas de
+    los proveedores de los que dependemos.
+  </p>
+  <p>
+    Las microapps se actualizan: podemos mejorar funciones, cambiarlas o retirar alguna de la
+    biblioteca. Si damos de baja definitivamente una microapp de suscripción, avisamos con
+    anticipación razonable y dejamos de cobrarla. Si se trata de una de pago único y la baja ocurre
+    poco después de tu compra, te devolvemos el dinero.
+  </p>
+
+  <h2>7. Tus datos</h2>
+  <p>
+    Las microapps de pago único guardan lo que escribes en tu propio navegador: esa información no
+    llega a nuestros servidores. Las de suscripción sí guardan datos en servidores nuestros, porque
+    los necesitan para funcionar. Está todo explicado en la{' '}
+    <a href="/privacidad/">política de privacidad</a>.
+  </p>
+
+  <h2>8. Reembolsos</h2>
+  <p>
+    Las microapps de pago único tienen {legal.refundDays} días de reembolso sin preguntas, y las
+    suscripciones se cancelan cuando quieras. Los detalles están en la{' '}
+    <a href="/reembolsos/">política de reembolsos</a>.
+  </p>
+
+  <h2>9. Responsabilidad</h2>
+  <p>
+    Las microapps son herramientas de apoyo. No son asesoramiento contable, legal, impositivo,
+    financiero ni profesional de ningún tipo. Los resultados que muestran dependen de los datos que
+    cargues, así que las decisiones que tomes a partir de ellos son tuyas.
+  </p>
+  <p>
+    En la medida en que la ley lo permita, nuestra responsabilidad por cualquier reclamo vinculado a
+    una microapp se limita al monto que hayas pagado por ella en los últimos doce meses. Nada de
+    esto limita los derechos que te reconoce la Ley 24.240 de Defensa del Consumidor ni la
+    responsabilidad por dolo o culpa grave.
+  </p>
+
+  <h2>10. Cambios en estos términos</h2>
+  <p>
+    Podemos actualizar este texto. La versión vigente es siempre la publicada en esta página, con su
+    fecha de última actualización arriba. Si el cambio es importante y afecta a una suscripción
+    activa, avisamos por correo antes de que entre en vigencia.
+  </p>
+
+  <h2>11. Ley aplicable</h2>
+  <p>
+    Estos términos se rigen por las leyes de la República Argentina. Ante cualquier conflicto, antes
+    que nada escríbenos: la mayoría de las cosas se resuelven con un correo. Si aun así hace falta
+    ir a la justicia, intervienen los tribunales ordinarios de {legal.city}, {legal.country}, sin
+    perjuicio del derecho del consumidor a demandar ante el tribunal de su domicilio.
+  </p>
+
+  <h2>12. Contacto</h2>
+  <p>
+    Escríbenos a <a href={`mailto:${site.email}`}>{site.email}</a>. Respondemos en días hábiles.
+  </p>
+</LegalLayout>

@@ -65,8 +65,8 @@ export const microapps: Microapp[] = [
     priceArs: 14900,
     checkoutUsd: 'https://futurislabs.lemonsqueezy.com/buy/00000000-0000-0000-0000-000000000001',
     checkoutArs: 'https://bis.uala.com.ar/futurislabs/calculadora-costos',
-    appUrl: 'https://app.futurislabs.com/calculadora-de-costos-y-precios',
-    demoUrl: 'https://app.futurislabs.com/calculadora-de-costos-y-precios/demo',
+    appUrl: 'https://app.futurislabs.net/calculadora-de-costos-y-precios',
+    demoUrl: 'https://app.futurislabs.net/calculadora-de-costos-y-precios/demo',
     image: 'calculadora-de-costos-y-precios.svg',
     screenshots: [
       'calculadora-de-costos-y-precios-1.svg',
@@ -149,8 +149,8 @@ export const microapps: Microapp[] = [
     priceArs: 17900,
     checkoutUsd: 'https://futurislabs.lemonsqueezy.com/buy/00000000-0000-0000-0000-000000000002',
     checkoutArs: 'https://bis.uala.com.ar/futurislabs/presupuestos-pdf',
-    appUrl: 'https://app.futurislabs.com/presupuestos-pdf-para-oficios',
-    demoUrl: 'https://app.futurislabs.com/presupuestos-pdf-para-oficios/demo',
+    appUrl: 'https://app.futurislabs.net/presupuestos-pdf-para-oficios',
+    demoUrl: 'https://app.futurislabs.net/presupuestos-pdf-para-oficios/demo',
     image: 'presupuestos-pdf-para-oficios.svg',
     screenshots: [
       'presupuestos-pdf-para-oficios-1.svg',

@@ -1,64 +1,75 @@
-@import 'tailwindcss';
+@import "tailwindcss";
 
 /* ===========================================================================
    FUTURISLABS — TOKENS DE DISEÑO
    Este es el único archivo que necesitas tocar para cambiar la identidad
    visual del sitio: colores, tipografías, radios y sombras.
    ---------------------------------------------------------------------------
-   Paleta: papel cálido + verde "laboratorio" como acento principal
-   + citrón como color de señal (solo para destacar, nunca para texto chico).
+   Paleta tomada del logo: navy + azul de marca como acento principal
+   + menta como color de señal (solo para destacar, nunca para texto chico).
    =========================================================================== */
 
 :root {
   /* --- Modo claro ------------------------------------------------------- */
-  --fl-paper: #f7f6f2; /* fondo de la página */
+  --fl-paper: #f6f8fb; /* fondo de la página */
   --fl-surface: #ffffff; /* tarjetas y bloques */
-  --fl-surface-2: #efede6; /* bloques secundarios */
-  --fl-line: #dedbd2; /* bordes suaves */
-  --fl-line-strong: #8a8678; /* bordes de controles (contraste 3:1) */
-  --fl-ink: #14181a; /* texto principal */
-  --fl-muted: #575e63; /* texto secundario */
+  --fl-surface-2: #eef2f8; /* bloques secundarios */
+  --fl-line: #dde4ee; /* bordes suaves */
+  --fl-line-strong: #7d8798; /* bordes de controles (contraste 3:1) */
+  --fl-ink: #0b1736; /* texto principal (navy del logo) */
+  --fl-muted: #4a5a72; /* texto secundario */
 
-  --fl-accent: #07706b; /* acento principal */
-  --fl-accent-hover: #055a56;
+  --fl-accent: #0b5ed7; /* azul de marca */
+  --fl-accent-hover: #0a4cb0;
   --fl-accent-ink: #ffffff; /* texto sobre el acento */
-  --fl-accent-soft: #dff0ee; /* fondo suave del acento */
+  --fl-accent-soft: #e3edfd; /* fondo suave del acento */
 
-  --fl-signal: #c8e64a; /* citrón: badges y highlights */
-  --fl-signal-ink: #14181a; /* texto sobre el citrón */
+  --fl-signal: #10e0b8; /* menta del logo: badges y highlights */
+  --fl-signal-ink: #0b1736; /* texto sobre la menta */
 
-  --fl-ring: #07706b; /* anillo de foco */
+  --fl-ring: #0b5ed7; /* anillo de foco */
+
+  /* Degradado de marca (mismo recorrido que el isotipo). */
+  --fl-brand-gradient: linear-gradient(
+    100deg,
+    #0a4cb0 0%,
+    #0b5ed7 38%,
+    #00a8f0 70%,
+    #10e0b8 100%
+  );
 
   /* --- Radios y sombras ------------------------------------------------- */
   --fl-radius: 0.875rem;
   --fl-radius-lg: 1.25rem;
-  --fl-shadow: 0 1px 2px rgb(20 24 26 / 0.04), 0 1px 3px rgb(20 24 26 / 0.06);
-  --fl-shadow-lift: 0 10px 20px -8px rgb(20 24 26 / 0.16), 0 2px 6px rgb(20 24 26 / 0.08);
+  --fl-shadow: 0 1px 2px rgb(11 23 54 / 0.05), 0 1px 3px rgb(11 23 54 / 0.07);
+  --fl-shadow-lift:
+    0 10px 20px -8px rgb(11 23 54 / 0.18), 0 2px 6px rgb(11 23 54 / 0.09);
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
     /* --- Modo oscuro ---------------------------------------------------- */
-    --fl-paper: #0b0f10;
-    --fl-surface: #14191b;
-    --fl-surface-2: #1c2224;
-    --fl-line: #2a3134;
-    --fl-line-strong: #667377;
-    --fl-ink: #f2f3f0;
-    --fl-muted: #a2acb0;
+    --fl-paper: #080c14;
+    --fl-surface: #111726;
+    --fl-surface-2: #182032;
+    --fl-line: #232c42;
+    --fl-line-strong: #6e7c95;
+    --fl-ink: #eef3fa;
+    --fl-muted: #9aa7bd;
 
-    --fl-accent: #2fc9b8;
-    --fl-accent-hover: #55dcca;
-    --fl-accent-ink: #06231f;
-    --fl-accent-soft: #102c2a;
+    --fl-accent: #4ea8ff;
+    --fl-accent-hover: #7cc0ff;
+    --fl-accent-ink: #04142e;
+    --fl-accent-soft: #11223f;
 
-    --fl-signal: #c8e64a;
-    --fl-signal-ink: #14181a;
+    --fl-signal: #25f0c0;
+    --fl-signal-ink: #0b1736;
 
-    --fl-ring: #2fc9b8;
+    --fl-ring: #4ea8ff;
 
     --fl-shadow: 0 1px 2px rgb(0 0 0 / 0.4);
-    --fl-shadow-lift: 0 12px 24px -10px rgb(0 0 0 / 0.7), 0 2px 6px rgb(0 0 0 / 0.4);
+    --fl-shadow-lift:
+      0 12px 24px -10px rgb(0 0 0 / 0.7), 0 2px 6px rgb(0 0 0 / 0.4);
   }
 }
 
@@ -225,6 +236,21 @@
     box-shadow: var(--shadow-card);
   }
 
+  /* Wordmark del logo: tinta oscura en claro, tinta clara en oscuro. */
+  .fl-logo-word-dark {
+    display: none;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .fl-logo-word {
+      display: none;
+    }
+
+    .fl-logo-word-dark {
+      display: block;
+    }
+  }
+
   .fl-eyebrow {
     font-family: var(--font-display);
     font-size: 0.8125rem;
@@ -243,6 +269,97 @@
   @media (min-width: 768px) {
     .fl-prose-lead {
       font-size: 1.125rem;
+    }
+  }
+
+  /* Texto largo de lectura: lo usan las páginas legales. */
+  .fl-legal {
+    font-size: 0.9375rem;
+    line-height: 1.75;
+    color: var(--color-muted);
+  }
+
+  .fl-legal h2 {
+    margin-top: 3rem;
+    font-size: 1.375rem;
+    color: var(--color-ink);
+  }
+
+  .fl-legal h2:first-child {
+    margin-top: 0;
+  }
+
+  .fl-legal h3 {
+    margin-top: 2rem;
+    font-size: 1.0625rem;
+    color: var(--color-ink);
+  }
+
+  .fl-legal p,
+  .fl-legal ul,
+  .fl-legal ol {
+    margin-top: 1rem;
+  }
+
+  .fl-legal ul,
+  .fl-legal ol {
+    padding-left: 1.25rem;
+  }
+
+  .fl-legal ul {
+    list-style: disc;
+  }
+
+  .fl-legal ol {
+    list-style: decimal;
+  }
+
+  .fl-legal li + li {
+    margin-top: 0.5rem;
+  }
+
+  .fl-legal li::marker {
+    color: var(--color-line-strong);
+  }
+
+  .fl-legal strong {
+    font-weight: 600;
+    color: var(--color-ink);
+  }
+
+  .fl-legal a {
+    color: var(--color-accent);
+    font-weight: 500;
+    text-decoration: underline;
+    text-decoration-color: color-mix(in srgb, var(--color-accent) 40%, transparent);
+    text-underline-offset: 4px;
+    border-radius: 2px;
+  }
+
+  .fl-legal a:hover {
+    text-decoration-color: var(--color-accent);
+  }
+
+  .fl-legal dl {
+    margin-top: 1rem;
+    display: grid;
+    gap: 0.75rem 1.5rem;
+  }
+
+  @media (min-width: 640px) {
+    .fl-legal dl {
+      grid-template-columns: auto 1fr;
+    }
+  }
+
+  .fl-legal dt {
+    font-weight: 600;
+    color: var(--color-ink);
+  }
+
+  @media (min-width: 768px) {
+    .fl-legal {
+      font-size: 1rem;
     }
   }
 }

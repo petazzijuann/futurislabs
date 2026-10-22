@@ -1,0 +1,157 @@
+---
+import LegalLayout from '../layouts/LegalLayout.astro';
+import { site, legal } from '../data/site';
+---
+
+<LegalLayout
+  title="Política de privacidad"
+  lead="Qué datos tocamos y cuáles nunca salen de tu dispositivo. La versión corta: cuanto menos sepamos de ti, mejor."
+>
+  <h2>1. Quién es responsable</h2>
+  <p>
+    El responsable del tratamiento de los datos es {legal.operator}, que opera {site.name} desde{' '}
+    {legal.city}, {legal.country}. Para cualquier consulta sobre privacidad, el correo es{' '}
+    <a href={`mailto:${site.email}`}>{site.email}</a>.
+  </p>
+
+  <h2>2. Lo más importante: dónde viven tus datos</h2>
+  <p>
+    No todas las microapps funcionan igual, y la diferencia importa mucho para tu privacidad:
+  </p>
+  <dl>
+    <dt>Microapps de pago único</dt>
+    <dd>
+      Funcionan por completo dentro de tu navegador. Lo que escribes en ellas (precios, clientes,
+      productos, lo que sea) se guarda en tu propio dispositivo y <strong>nunca se nos envía</strong>.
+      Nosotros no lo vemos, no lo guardamos y no podemos recuperarlo. Eso sí: si borras los
+      datos del navegador o cambias de dispositivo, esa información se pierde. Conviene exportarla
+      cuando la microapp lo permita.
+    </dd>
+    <dt>Microapps de suscripción</dt>
+    <dd>
+      Necesitan guardar información en la nube para hacer lo que prometen (por ejemplo, enviarle un
+      recordatorio a tu cliente mañana por la mañana). Esos datos se almacenan en servidores que
+      tenemos contratados con <strong>Supabase</strong>, con acceso restringido y cifrado en
+      tránsito.
+    </dd>
+  </dl>
+
+  <h2>3. Qué datos tratamos</h2>
+  <ul>
+    <li>
+      <strong>Datos de la compra:</strong> tu nombre, tu correo electrónico y los datos de la
+      operación (microapp comprada, monto, fecha, país). Los recibimos del procesador de pago.
+    </li>
+    <li>
+      <strong>Datos de la cuenta,</strong> solo en las microapps de suscripción: correo electrónico
+      y los datos que cargues para usar la herramienta.
+    </li>
+    <li>
+      <strong>Correos que nos escribes:</strong> tu dirección y el contenido del mensaje, para poder
+      responderte.
+    </li>
+    <li>
+      <strong>Datos de tarjeta:</strong> ninguno. Nunca los vemos ni pasan por nuestros servidores.
+    </li>
+  </ul>
+
+  <h2>4. Para qué los usamos</h2>
+  <ul>
+    <li>entregarte lo que compraste y darte soporte;</li>
+    <li>hacer funcionar las microapps de suscripción;</li>
+    <li>cobrar y gestionar reembolsos;</li>
+    <li>avisarte de cambios importantes en el servicio o en estas políticas;</li>
+    <li>cumplir con obligaciones legales y contables.</li>
+  </ul>
+  <p>
+    No vendemos ni cedemos datos personales a terceros para publicidad, y no te mandamos correos
+    comerciales salvo que los pidas expresamente.
+  </p>
+
+  <h2>5. Con quién los compartimos</h2>
+  <p>
+    Solo con los proveedores que necesitamos para que el servicio funcione, y únicamente con los
+    datos que a cada uno le hacen falta:
+  </p>
+  <dl>
+    <dt>{legal.processors.usd}</dt>
+    <dd>
+      Procesa los pagos en dólares como <em>merchant of record</em>. Recibe tus datos de facturación
+      y de pago directamente de ti.
+    </dd>
+    <dt>{legal.processors.ars}</dt>
+    <dd>Procesa los pagos en pesos argentinos.</dd>
+    <dt>Supabase</dt>
+    <dd>Aloja la base de datos y las cuentas de las microapps de suscripción.</dd>
+    <dt>Proveedores de hosting y correo</dt>
+    <dd>Sirven este sitio y transportan los correos que intercambiamos.</dd>
+  </dl>
+  <p>
+    Cada uno trata los datos según sus propias políticas. También podemos entregar información si
+    una autoridad competente nos lo exige por una vía legal válida.
+  </p>
+
+  <h2>6. Transferencias fuera de Argentina</h2>
+  <p>
+    Algunos de estos proveedores tienen sus servidores fuera del país, así que parte de los datos se
+    procesa en el exterior. Elegimos proveedores que ofrecen garantías contractuales de
+    confidencialidad y seguridad equivalentes a las que exige la normativa argentina.
+  </p>
+
+  <h2>7. Cuánto tiempo los guardamos</h2>
+  <ul>
+    <li>
+      Los datos de compra y facturación, mientras lo exijan las obligaciones contables e
+      impositivas.
+    </li>
+    <li>
+      Los datos de una cuenta de suscripción, mientras la suscripción esté activa y hasta 90 días
+      después de darla de baja, para que puedas recuperarla si cambias de idea. Pasado ese plazo se
+      eliminan.
+    </li>
+    <li>Los correos de soporte, mientras sean útiles para dar seguimiento al caso.</li>
+  </ul>
+
+  <h2>8. Cookies y medición</h2>
+  <p>
+    Este sitio <strong>no usa cookies</strong> de analítica, de publicidad ni de seguimiento. No hay
+    Google Analytics ni píxeles de redes sociales. Lo único que hacemos es leer la zona horaria de
+    tu navegador para decidir si mostramos primero el botón de pago en pesos o el de dólares; ese
+    dato no se guarda ni se envía a ningún lado.
+  </p>
+  <p>
+    Aparte de eso, las microapps pueden usar el almacenamiento local de tu navegador para guardar tu
+    trabajo, como se explica en el punto 2.
+  </p>
+
+  <h2>9. Tus derechos</h2>
+  <p>
+    Puedes pedir acceso a tus datos, su rectificación, su actualización o su eliminación, y también
+    oponerte a determinados tratamientos. Para ejercer cualquiera de estos derechos escribe a{' '}
+    <a href={`mailto:${site.email}`}>{site.email}</a> y respondemos dentro de los plazos legales.
+  </p>
+  <p>
+    En Argentina, la Agencia de Acceso a la Información Pública es el organismo de control de la Ley
+    25.326 de Protección de los Datos Personales y atiende las denuncias de quien considere
+    afectados sus derechos.
+  </p>
+
+  <h2>10. Seguridad</h2>
+  <p>
+    Usamos conexiones cifradas, acceso restringido a los sistemas y proveedores con buenas prácticas
+    de seguridad. Aun así, ningún sistema es infalible: si llegara a ocurrir un incidente que afecte
+    tus datos, te avisamos y lo informamos a quien corresponda.
+  </p>
+
+  <h2>11. Menores de edad</h2>
+  <p>
+    El servicio está pensado para personas mayores de 18 años o que manejan un negocio. No
+    recolectamos datos de menores a sabiendas. Si detectamos uno, lo eliminamos.
+  </p>
+
+  <h2>12. Cambios</h2>
+  <p>
+    Si cambiamos esta política, publicamos la nueva versión aquí con su fecha. Cuando el cambio sea
+    importante, avisamos por correo a quienes tengan una suscripción activa.
+  </p>
+</LegalLayout>

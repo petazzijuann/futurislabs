@@ -4,7 +4,7 @@ import sitemap from '@astrojs/sitemap';
 import tailwindcss from '@tailwindcss/vite';
 
 // La URL del sitio. Cámbiala por tu dominio real cuando lo conectes.
-const SITE_URL = 'https://futurislabs.com';
+const SITE_URL = 'https://futurislabs.net';
 
 export default defineConfig({
   site: SITE_URL,

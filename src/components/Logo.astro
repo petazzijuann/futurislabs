@@ -1,9 +1,15 @@
 ---
 /**
- * Isotipo + wordmark de Futurislabs.
- * El isotipo es un matraz de laboratorio dibujado con geometría simple.
- * Los trazos usan `currentColor`, así que hereda el color del contexto.
+ * Lockup horizontal de Futurislabs: isotipo + wordmark.
+ * Los archivos de marca viven en `src/assets/brand/` y Astro los optimiza.
+ * El wordmark tiene dos versiones (tinta oscura / tinta clara) y se cambia
+ * por `prefers-color-scheme` desde `.fl-logo-word*` en global.css.
  */
+import { Image } from 'astro:assets';
+import icon from '../assets/brand/futurislabs-icon.png';
+import wordmark from '../assets/brand/futurislabs-wordmark.png';
+import wordmarkDark from '../assets/brand/futurislabs-wordmark-dark.png';
+
 interface Props {
   /** Solo el isotipo, sin el nombre. */
   iconOnly?: boolean;
@@ -14,26 +20,34 @@ const { iconOnly = false, class: className = '' } = Astro.props;
 ---
 
 <span class={`inline-flex items-center gap-2.5 ${className}`}>
-  <svg
-    viewBox="0 0 24 24"
-    aria-hidden="true"
-    focusable="false"
-    class="size-7 shrink-0 text-accent"
-    fill="none"
-    stroke="currentColor"
-    stroke-width="1.7"
-    stroke-linecap="round"
-    stroke-linejoin="round"
-  >
-    <path d="M8.2 2.9h7.6" />
-    <path d="M9.9 2.9v5.7L4.6 18.4a2.1 2.1 0 0 0 1.9 3.1h11a2.1 2.1 0 0 0 1.9-3.1L14.1 8.6V2.9" />
-    <path d="M6.6 15.4h10.8" stroke="var(--fl-signal)" stroke-width="2.1" />
-  </svg>
+  <Image
+    src={icon}
+    alt={iconOnly ? 'Futurislabs' : ''}
+    width={128}
+    densities={[1, 2]}
+    loading="eager"
+    class="h-8 w-auto shrink-0"
+  />
   {
     !iconOnly && (
-      <span class="font-display text-[1.0625rem] font-bold tracking-tight text-ink">
-        Futuris<span class="text-accent">labs</span>
-      </span>
+      <>
+        <Image
+          src={wordmark}
+          alt="Futurislabs"
+          width={440}
+          densities={[1, 2]}
+          loading="eager"
+          class="fl-logo-word h-[1.125rem] w-auto"
+        />
+        <Image
+          src={wordmarkDark}
+          alt="Futurislabs"
+          width={440}
+          densities={[1, 2]}
+          loading="eager"
+          class="fl-logo-word-dark h-[1.125rem] w-auto"
+        />
+      </>
     )
   }
 </span>

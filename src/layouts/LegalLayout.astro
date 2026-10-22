@@ -1,0 +1,81 @@
+---
+/**
+ * Envoltorio de las páginas legales (/terminos, /privacidad, /reembolsos).
+ * El contenido va en el slot como HTML normal: los estilos de lectura los
+ * pone la clase `.fl-legal` definida en global.css.
+ */
+import BaseLayout from './BaseLayout.astro';
+import { site, legal } from '../data/site';
+import { clampText } from '../lib/format';
+
+interface Props {
+  title: string;
+  /** Bajada que se muestra debajo del título y se usa como meta description. */
+  lead: string;
+}
+
+const { title, lead } = Astro.props;
+
+const updated = new Intl.DateTimeFormat('es-AR', {
+  day: 'numeric',
+  month: 'long',
+  year: 'numeric',
+  timeZone: 'UTC',
+}).format(new Date(`${legal.updated}T00:00:00Z`));
+
+const path = Astro.url.pathname;
+const others = legal.nav.filter((item) => item.href !== path);
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  name: title,
+  description: clampText(lead),
+  url: new URL(path, Astro.site ?? site.url).href,
+  inLanguage: 'es',
+  dateModified: legal.updated,
+  publisher: {
+    '@type': 'Organization',
+    name: site.name,
+    url: site.url,
+    email: site.email,
+  },
+};
+---
+
+<BaseLayout title={title} description={clampText(lead)} socialDescription={lead} jsonLd={jsonLd}>
+  <section class="border-b border-line bg-surface">
+    <div class="fl-container py-16 md:py-20">
+      <p class="fl-eyebrow">Legales</p>
+      <h1 class="mt-3 max-w-2xl text-3xl md:text-4xl">{title}</h1>
+      <p class="fl-prose-lead mt-4 max-w-2xl">{lead}</p>
+      <p class="mt-6 text-sm text-muted">Última actualización: {updated}</p>
+    </div>
+  </section>
+
+  <div class="fl-container py-14 md:py-20">
+    <article class="fl-legal max-w-2xl">
+      <slot />
+    </article>
+
+    <nav aria-label="Otras páginas legales" class="mt-16 max-w-2xl border-t border-line pt-8">
+      <h2 class="font-display text-xs font-semibold tracking-widest text-ink uppercase">
+        Seguir leyendo
+      </h2>
+      <ul class="mt-4 flex flex-col gap-2.5 sm:flex-row sm:gap-8">
+        {
+          others.map((item) => (
+            <li>
+              <a
+                href={item.href}
+                class="rounded text-sm font-semibold text-accent underline decoration-accent/40 underline-offset-4 transition-colors hover:decoration-accent"
+              >
+                {item.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+  </div>
+</BaseLayout>

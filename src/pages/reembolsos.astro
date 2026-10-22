@@ -1,0 +1,101 @@
+---
+import LegalLayout from '../layouts/LegalLayout.astro';
+import { site, legal } from '../data/site';
+---
+
+<LegalLayout
+  title="Política de reembolsos"
+  lead={`Si una microapp no te sirve, te devolvemos el dinero. Tienes ${legal.refundDays} días en las de pago único y las suscripciones se cancelan cuando quieras.`}
+>
+  <h2>Pago único: {legal.refundDays} días sin preguntas</h2>
+  <p>
+    Si compraste una microapp de pago único y no te sirve —no importa el motivo— escríbenos dentro
+    de los <strong>{legal.refundDays} días corridos</strong> desde la compra y te devolvemos el
+    100% de lo que pagaste.
+  </p>
+  <p>
+    No hace falta justificar nada ni completar formularios. No te vamos a pedir que nos expliques
+    por qué, ni a ofrecerte tres alternativas antes de aceptar. Lo pides y lo devolvemos.
+  </p>
+  <p>
+    Lo único que te pedimos es que no sigas usando la microapp después del reembolso: con la
+    devolución termina la licencia de uso.
+  </p>
+
+  <h2>Suscripciones: cancelas cuando quieras</h2>
+  <p>
+    Las microapps de suscripción no tienen permanencia mínima ni costo de cancelación. Puedes darlas
+    de baja en cualquier momento y <strong>no se te cobra el mes siguiente</strong>.
+  </p>
+  <p>
+    Cuando cancelas, sigues usando la herramienta hasta que termine el período que ya pagaste.
+    Después de esa fecha, el acceso se cierra. El mes en curso no se prorratea: si cancelas a mitad
+    de mes, no devolvemos la parte proporcional, pero tampoco pierdes los días que te quedan.
+  </p>
+  <p>
+    Si te cobramos un mes por error —por ejemplo, porque cancelaste y la baja no se procesó— avísanos y
+    te devolvemos ese cobro completo.
+  </p>
+
+  <h2>Cómo pedir un reembolso</h2>
+  <ol>
+    <li>
+      Escribe a <a href={`mailto:${site.email}`}>{site.email}</a> desde el correo con el que
+      compraste.
+    </li>
+    <li>Dinos qué microapp fue y, si lo tienes a mano, el número de la operación.</li>
+    <li>Te confirmamos por correo, normalmente dentro de las 72 horas hábiles.</li>
+  </ol>
+  <p>
+    Si quieres contarnos qué no funcionó, lo leemos con atención: así es como mejoramos las
+    herramientas. Pero es opcional y no condiciona la devolución.
+  </p>
+
+  <h2>Cuándo ves el dinero de vuelta</h2>
+  <p>
+    El reembolso vuelve siempre por el mismo medio de pago que usaste. Los tiempos dependen del
+    procesador y de tu banco, no de nosotros:
+  </p>
+  <dl>
+    <dt>Pagos en dólares ({legal.processors.usd})</dt>
+    <dd>
+      La devolución se ordena desde {legal.processors.usd}, que es el vendedor registrado de la
+      operación. Suele acreditarse en la tarjeta dentro de 5 a 10 días hábiles.
+    </dd>
+    <dt>Pagos en pesos argentinos ({legal.processors.ars})</dt>
+    <dd>
+      La devolución se ordena desde {legal.processors.ars}. El plazo de acreditación depende del
+      medio que hayas usado y de tu banco o billetera.
+    </dd>
+  </dl>
+
+  <h2>Casos que no cubrimos</h2>
+  <ul>
+    <li>
+      Pedidos de reembolso de una microapp de pago único hechos después de los {legal.refundDays}{' '}
+      días.
+    </li>
+    <li>Meses de suscripción ya transcurridos y usados.</li>
+    <li>
+      Compras hechas con datos falsos o reembolsos pedidos de forma repetida sobre la misma
+      microapp.
+    </li>
+  </ul>
+  <p>
+    Fuera de eso, si tienes un caso que no encaja en ninguna de estas categorías, escríbenos igual.
+    Preferimos resolverlo antes que perder a alguien por una regla escrita de más.
+  </p>
+
+  <h2>Tus derechos como consumidor</h2>
+  <p>
+    Esta política suma garantías: no reemplaza ni limita los derechos que te da la Ley 24.240 de
+    Defensa del Consumidor, incluido el derecho de arrepentimiento de 10 días corridos para las
+    compras a distancia. Nuestro plazo de {legal.refundDays} días es más amplio que el mínimo legal
+    y se aplica sin exigirte un motivo.
+  </p>
+  <p>
+    El resto de las condiciones de compra están en los{' '}
+    <a href="/terminos/">términos y condiciones</a>. Cualquier duda, escríbenos a{' '}
+    <a href={`mailto:${site.email}`}>{site.email}</a>.
+  </p>
+</LegalLayout>

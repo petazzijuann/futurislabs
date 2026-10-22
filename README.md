@@ -131,6 +131,27 @@ Recomendaciones:
 
 ---
 
+## La marca
+
+Los archivos del logo están en `src/assets/brand/`:
+
+| Archivo                         | Para qué                                               |
+| ------------------------------- | ------------------------------------------------------ |
+| `futurislabs-icon.png`          | Isotipo solo (la "F"). Header, footer, favicons.        |
+| `futurislabs-wordmark.png`      | Nombre con tinta oscura, para fondos claros.            |
+| `futurislabs-wordmark-dark.png` | Nombre con tinta clara, para fondos oscuros.            |
+
+`src/components/Logo.astro` arma el lockup horizontal (isotipo + nombre) y cambia solo de
+wordmark según el modo claro/oscuro. Acepta `iconOnly` si querés únicamente la "F".
+
+Los favicons (`public/favicon.ico`, `favicon-32.png`, `icon-192.png`, `icon-512.png`,
+`apple-touch-icon.png`) se generan desde el isotipo sobre un cuadrado navy redondeado. Si cambia
+el logo, hay que volver a exportarlos.
+
+La paleta del sitio está tomada del propio logo: navy `#0b1736`, azul `#0b5ed7` y menta `#10e0b8`.
+
+---
+
 ## Cambiar colores y tipografías
 
 ### Colores
@@ -140,12 +161,12 @@ modo oscuro (`@media (prefers-color-scheme: dark)`). El sitio sigue el modo del 
 
 ```css
 :root {
-  --fl-paper: #f7f6f2;    /* fondo de la página */
+  --fl-paper: #f6f8fb;    /* fondo de la página */
   --fl-surface: #ffffff;  /* tarjetas */
-  --fl-ink: #14181a;      /* texto principal */
-  --fl-muted: #575e63;    /* texto secundario */
-  --fl-accent: #07706b;   /* color de acento: botones, links, detalles */
-  --fl-signal: #c8e64a;   /* color de señal: badge "Próximamente" */
+  --fl-ink: #0b1736;      /* texto principal (navy del logo) */
+  --fl-muted: #4a5a72;    /* texto secundario */
+  --fl-accent: #0b5ed7;   /* azul de marca: botones, links, detalles */
+  --fl-signal: #10e0b8;   /* menta de marca: badge "Próximamente" */
   ...
 }
 ```
@@ -191,13 +212,13 @@ Para cambiarlas, reemplaza `name` por cualquier familia de Google Fonts y ajusta
 ### Conectar el dominio
 
 1. En el proyecto de Pages: **Custom domains → Set up a custom domain** y escribe tu dominio
-   (por ejemplo `futurislabs.com`).
+   (por ejemplo `futurislabs.net`).
 2. Si el dominio ya está en Cloudflare, los registros DNS se crean solos. Si está en otro
    proveedor, Cloudflare te muestra el `CNAME` que tienes que cargar allá.
 3. El certificado HTTPS se emite solo; puede tardar unos minutos.
 4. **Importante:** cambia la URL del sitio en los dos lugares donde está:
-   - `astro.config.mjs` → `const SITE_URL = 'https://futurislabs.com'`
-   - `src/data/site.ts` → `url: 'https://futurislabs.com'`
+   - `astro.config.mjs` → `const SITE_URL = 'https://futurislabs.net'`
+   - `src/data/site.ts` → `url: 'https://futurislabs.net'`
    - y también en `public/robots.txt`, en la línea del `Sitemap:`.
 
    De esa URL salen el canonical, el sitemap y las vistas previas de redes sociales.

@@ -7,12 +7,12 @@ export const site = {
   /** Se usa en los títulos: "Microapp — Futurislabs" */
   shortName: 'Futurislabs',
   /** Debe coincidir con `site` en astro.config.mjs */
-  url: 'https://futurislabs.com',
+  url: 'https://futurislabs.net',
   tagline: 'Herramientas web simples para problemas concretos de tu negocio.',
   description:
     'Futurislabs es una biblioteca de microapps: herramientas online chicas y directas para emprendedores y pymes. Las abres en el navegador, sin instalar nada.',
   /** Mail de contacto y destino de los avisos de "Avísame cuando salga" */
-  email: 'hola@futurislabs.com',
+  email: 'hola@futurislabs.net',
   locale: 'es',
   /** Para la Twitter card */
   twitterHandle: '@futurislabs',
@@ -26,6 +26,33 @@ export const site = {
     { label: 'Microapps', href: '/#microapps' },
     { label: 'Cómo funciona', href: '/#como-funciona' },
     { label: 'Preguntas', href: '/#preguntas' },
+  ],
+} as const;
+
+/**
+ * Datos del responsable del sitio y enlaces a las páginas legales.
+ * Si cambia el titular, la ciudad o el plazo de reembolso, cámbialo acá:
+ * los textos legales leen estos valores.
+ */
+export const legal = {
+  /** Persona que opera Futurislabs. */
+  operator: 'Juan Cruz Petazzi Cardetti',
+  /** Ciudad y país desde donde se opera el servicio. */
+  city: 'Rosario',
+  country: 'Argentina',
+  /** Días para pedir el reembolso de una microapp de pago único. */
+  refundDays: 14,
+  /** Procesadores de pago. Nosotros no vemos ni guardamos los datos de la tarjeta. */
+  processors: {
+    usd: 'Lemon Squeezy',
+    ars: 'Ualá Bis',
+  },
+  /** Fecha de la última revisión de los textos legales (AAAA-MM-DD). */
+  updated: '2026-10-21',
+  nav: [
+    { label: 'Términos y condiciones', href: '/terminos/' },
+    { label: 'Política de privacidad', href: '/privacidad/' },
+    { label: 'Política de reembolsos', href: '/reembolsos/' },
   ],
 } as const;
 
