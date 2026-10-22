@@ -2,9 +2,12 @@
  * Resuelve los nombres de archivo de `src/data/microapps.ts` a imágenes
  * optimizables por Astro. Al importar todo con `import.meta.glob`, agregar
  * una portada nueva es solo copiar el archivo a `src/assets/microapps/`.
+ * El glob entra en subcarpetas, así que una microapp con mucho material
+ * puede tener la suya (por ejemplo `costos/`). Como la búsqueda es por
+ * nombre de archivo, esos nombres tienen que ser únicos en todo el proyecto.
  */
 const files = import.meta.glob<{ default: ImageMetadata }>(
-  '/src/assets/microapps/*.{svg,png,jpg,jpeg,webp,avif,gif}',
+  '/src/assets/microapps/**/*.{svg,png,jpg,jpeg,webp,avif,gif}',
   { eager: true },
 );
 

@@ -1,0 +1,287 @@
+---
+/**
+ * Galería de capturas.
+ *
+ * - En el celular es un carrusel horizontal con scroll-snap.
+ * - En pantalla grande, una grilla.
+ * - Al tocar una imagen se abre en grande dentro de un <dialog>. El visor
+ *   reusa la imagen que el navegador ya descargó, así que no pesa de más.
+ * - Sin JavaScript las imágenes se ven igual; solo no se agrandan.
+ */
+import Cover from './Cover.astro';
+import { microappImage } from '../lib/images';
+
+interface Props {
+  items: { src: string; alt: string }[];
+}
+
+const { items } = Astro.props;
+const images = items.map((item) => ({ ...item, image: microappImage(item.src) }));
+---
+
+<div data-gallery>
+  <ul class="fl-gallery">
+    {
+      images.map((item, index) => (
+        <li class="fl-gallery-item">
+          <button
+            type="button"
+            class="fl-gallery-btn"
+            data-open={index}
+            aria-label={`Ampliar: ${item.alt}`}
+          >
+            <Cover
+              src={item.image}
+              alt={item.alt}
+              widths={[320, 480, 760]}
+              sizes="(min-width: 1024px) 340px, (min-width: 640px) 45vw, 78vw"
+              class="fl-gallery-img"
+            />
+          </button>
+        </li>
+      ))
+    }
+  </ul>
+
+  <dialog class="fl-lightbox" data-lightbox aria-label="Vista ampliada">
+    <img data-lightbox-img alt="" />
+    <p class="fl-lightbox-caption" data-lightbox-caption></p>
+    <button type="button" class="fl-lightbox-close" data-close aria-label="Cerrar">
+      <svg
+        viewBox="0 0 24 24"
+        aria-hidden="true"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        class="size-5"
+      >
+        <path d="M6 6l12 12M18 6L6 18" />
+      </svg>
+    </button>
+    <button type="button" class="fl-lightbox-nav fl-lightbox-prev" data-prev aria-label="Anterior">
+      <svg
+        viewBox="0 0 24 24"
+        aria-hidden="true"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="size-5"
+      >
+        <path d="M15 5l-7 7 7 7" />
+      </svg>
+    </button>
+    <button type="button" class="fl-lightbox-nav fl-lightbox-next" data-next aria-label="Siguiente">
+      <svg
+        viewBox="0 0 24 24"
+        aria-hidden="true"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="size-5"
+      >
+        <path d="M9 5l7 7-7 7" />
+      </svg>
+    </button>
+  </dialog>
+</div>
+
+<style>
+  .fl-gallery {
+    display: flex;
+    gap: 1rem;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scroll-padding-inline: 1.25rem;
+    /* El carrusel sangra hasta el borde de la pantalla en el celular. */
+    margin-inline: calc(var(--fl-gallery-bleed, 1.25rem) * -1);
+    padding-inline: var(--fl-gallery-bleed, 1.25rem);
+    padding-bottom: 0.5rem;
+  }
+
+  .fl-gallery-item {
+    flex: 0 0 auto;
+    width: min(78vw, 22rem);
+    scroll-snap-align: center;
+  }
+
+  .fl-gallery-btn {
+    display: block;
+    width: 100%;
+    overflow: hidden;
+    border-radius: var(--fl-radius-lg);
+    border: 1px solid var(--color-line);
+    background-color: var(--color-surface);
+    box-shadow: var(--fl-shadow);
+    cursor: zoom-in;
+    transition:
+      border-color 0.2s ease,
+      box-shadow 0.2s ease,
+      transform 0.2s ease;
+  }
+
+  .fl-gallery-btn:hover {
+    border-color: color-mix(in srgb, var(--color-accent) 35%, transparent);
+    box-shadow: var(--fl-shadow-lift);
+    transform: translateY(-2px);
+  }
+
+  .fl-gallery-img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  @media (min-width: 768px) {
+    .fl-gallery {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1.5rem;
+      overflow: visible;
+      margin-inline: 0;
+      padding-inline: 0;
+      padding-bottom: 0;
+    }
+
+    .fl-gallery-item {
+      width: auto;
+    }
+  }
+
+  /* ----------------------------- visor ----------------------------- */
+  .fl-lightbox {
+    width: min(92vw, 60rem);
+    max-width: none;
+    max-height: 92dvh;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    overflow: visible;
+  }
+
+  .fl-lightbox::backdrop {
+    background-color: rgb(4 8 15 / 0.86);
+    backdrop-filter: blur(3px);
+  }
+
+  .fl-lightbox img {
+    display: block;
+    width: 100%;
+    max-height: 78dvh;
+    object-fit: contain;
+    border-radius: var(--fl-radius-lg);
+    background-color: var(--color-surface);
+  }
+
+  .fl-lightbox-caption {
+    margin-top: 0.875rem;
+    color: #e6edf6;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    text-align: center;
+    text-wrap: pretty;
+  }
+
+  .fl-lightbox-close,
+  .fl-lightbox-nav {
+    position: absolute;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: 999px;
+    color: #f7fafc;
+    background-color: rgb(8 12 20 / 0.7);
+    cursor: pointer;
+    transition: background-color 0.18s ease;
+  }
+
+  .fl-lightbox-close:hover,
+  .fl-lightbox-nav:hover {
+    background-color: rgb(8 12 20 / 0.95);
+  }
+
+  .fl-lightbox-close {
+    top: -0.75rem;
+    right: -0.25rem;
+  }
+
+  .fl-lightbox-nav {
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  .fl-lightbox-prev {
+    left: -0.25rem;
+  }
+
+  .fl-lightbox-next {
+    right: -0.25rem;
+  }
+
+  @media (min-width: 768px) {
+    .fl-lightbox-close {
+      top: -1.75rem;
+      right: -1.75rem;
+    }
+
+    .fl-lightbox-prev {
+      left: -2rem;
+    }
+
+    .fl-lightbox-next {
+      right: -2rem;
+    }
+  }
+</style>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-gallery]').forEach((root) => {
+    const dialog = root.querySelector<HTMLDialogElement>('[data-lightbox]');
+    const view = root.querySelector<HTMLImageElement>('[data-lightbox-img]');
+    const caption = root.querySelector<HTMLElement>('[data-lightbox-caption]');
+    const thumbs = [...root.querySelectorAll<HTMLButtonElement>('[data-open]')];
+    if (!dialog || !view || !thumbs.length || typeof dialog.showModal !== 'function') return;
+
+    let current = 0;
+
+    const show = (index: number) => {
+      current = (index + thumbs.length) % thumbs.length;
+      const img = thumbs[current].querySelector('img');
+      if (!img) return;
+      // currentSrc es la variante que el navegador ya eligió y descargó.
+      view.src = img.currentSrc || img.src;
+      view.alt = img.alt;
+      if (caption) caption.textContent = img.alt;
+    };
+
+    thumbs.forEach((thumb, index) =>
+      thumb.addEventListener('click', () => {
+        show(index);
+        dialog.showModal();
+      }),
+    );
+
+    root.querySelector('[data-close]')?.addEventListener('click', () => dialog.close());
+    root.querySelector('[data-prev]')?.addEventListener('click', () => show(current - 1));
+    root.querySelector('[data-next]')?.addEventListener('click', () => show(current + 1));
+
+    dialog.addEventListener('keydown', (event) => {
+      if (event.key === 'ArrowLeft') show(current - 1);
+      if (event.key === 'ArrowRight') show(current + 1);
+    });
+
+    // Un clic sobre el fondo oscuro cierra el visor.
+    dialog.addEventListener('click', (event) => {
+      if (event.target === dialog) dialog.close();
+    });
+
+    dialog.addEventListener('close', () => thumbs[current]?.focus());
+  });
+</script>

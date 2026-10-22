@@ -13,10 +13,12 @@ import wordmarkDark from '../assets/brand/futurislabs-wordmark-dark.png';
 interface Props {
   /** Solo el isotipo, sin el nombre. */
   iconOnly?: boolean;
+  /** El del header va `eager`; el del pie puede esperar. */
+  loading?: 'eager' | 'lazy';
   class?: string;
 }
 
-const { iconOnly = false, class: className = '' } = Astro.props;
+const { iconOnly = false, loading = 'lazy', class: className = '' } = Astro.props;
 ---
 
 <span class={`inline-flex items-center gap-2.5 ${className}`}>
@@ -25,7 +27,7 @@ const { iconOnly = false, class: className = '' } = Astro.props;
     alt={iconOnly ? 'Futurislabs' : ''}
     width={128}
     densities={[1, 2]}
-    loading="eager"
+    loading={loading}
     class="h-8 w-auto shrink-0"
   />
   {
@@ -36,7 +38,7 @@ const { iconOnly = false, class: className = '' } = Astro.props;
           alt="Futurislabs"
           width={440}
           densities={[1, 2]}
-          loading="eager"
+          loading={loading}
           class="fl-logo-word h-[1.125rem] w-auto"
         />
         <Image
@@ -44,7 +46,7 @@ const { iconOnly = false, class: className = '' } = Astro.props;
           alt="Futurislabs"
           width={440}
           densities={[1, 2]}
-          loading="eager"
+          loading={loading}
           class="fl-logo-word-dark h-[1.125rem] w-auto"
         />
       </>

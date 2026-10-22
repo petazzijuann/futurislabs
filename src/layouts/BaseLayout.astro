@@ -14,6 +14,8 @@ interface Props {
   /** Portada de la página. Se rasteriza a JPEG 1200x630 para Open Graph. */
   ogImage?: ImageMetadata;
   ogType?: 'website' | 'article' | 'product';
+  /** Reemplaza el título completo, sin agregarle el nombre del sitio. */
+  exactTitle?: string;
   /** Objeto JSON-LD que se inyecta en el head. */
   jsonLd?: Record<string, unknown>;
   noindex?: boolean;
@@ -25,6 +27,7 @@ const {
   socialDescription = description,
   ogImage,
   ogType = 'website',
+  exactTitle,
   jsonLd,
   noindex = false,
 } = Astro.props;
@@ -33,7 +36,7 @@ const {
 const path = Astro.url.pathname.endsWith('/') ? Astro.url.pathname : `${Astro.url.pathname}/`;
 const canonical = new URL(path, Astro.site ?? site.url).href;
 
-const fullTitle = title === site.name ? title : `${title} — ${site.name}`;
+const fullTitle = exactTitle ?? (title === site.name ? title : `${title} — ${site.name}`);
 
 const ogSource = ogImage ?? (await import('../assets/og-default.svg')).default;
 const og = await getImage({

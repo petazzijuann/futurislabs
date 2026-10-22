@@ -5,6 +5,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Badge from '../components/Badge.astro';
 import Cover from '../components/Cover.astro';
 import CheckoutButtons from '../components/CheckoutButtons.astro';
+import Gallery from '../components/Gallery.astro';
+import HeroVideo from '../components/HeroVideo.astro';
 import FaqList from '../components/FaqList.astro';
 import MicroappCard from '../components/MicroappCard.astro';
 import SectionHeading from '../components/SectionHeading.astro';
@@ -28,6 +30,8 @@ interface Props {
 const { app } = Astro.props;
 
 const cover = microappImage(app.image);
+/** Las vistas previas sociales recortan a 1200x630: ahí va la apaisada. */
+const social = microappImage(app.cardImage ?? app.image);
 const shots = microappImages(app.screenshots);
 const related = relatedMicroapps(app, 3);
 const soon = app.status === 'proximamente';
@@ -36,7 +40,7 @@ const priceArs = formatArs(app);
 const canonical = new URL(`/${app.slug}/`, Astro.site ?? site.url).href;
 
 const ogImage = await getImage({
-  src: cover,
+  src: social,
   format: 'jpeg',
   width: 1200,
   height: 630,
@@ -119,7 +123,7 @@ const jsonLd = {
   title={app.name}
   description={clampText(`${app.tagline} ${app.description}`)}
   socialDescription={app.description}
-  ogImage={cover}
+  ogImage={social}
   ogType="product"
   jsonLd={jsonLd}
 >
@@ -162,15 +166,25 @@ const jsonLd = {
         </div>
 
         <div class="lg:col-start-2 lg:row-start-1 lg:row-span-2 lg:self-center">
-          <div class="overflow-hidden rounded-card-lg border border-line bg-surface shadow-card">
-            <Cover
-              src={cover}
-              alt={`Vista de ${app.name}`}
-              loading="eager"
-              sizes="(min-width: 1024px) 580px, 100vw"
-              class="aspect-[1200/630] w-full object-cover"
-            />
-          </div>
+          {
+            app.video ? (
+              <HeroVideo
+                video={app.video}
+                name={app.name}
+                class="mx-auto w-full max-w-[18rem] sm:max-w-[20rem]"
+              />
+            ) : (
+              <div class="overflow-hidden rounded-card-lg border border-line bg-surface shadow-card">
+                <Cover
+                  src={cover}
+                  alt={`Vista de ${app.name}`}
+                  loading="eager"
+                  sizes="(min-width: 1024px) 580px, 100vw"
+                  class="aspect-[1200/630] w-full object-cover"
+                />
+              </div>
+            )
+          }
         </div>
 
         <div class="lg:col-start-1 lg:row-start-2">
@@ -302,25 +316,72 @@ const jsonLd = {
 
   <!-- =========================== CAPTURAS ========================== -->
   {
-    shots.length > 0 && (
+    app.gallery?.length ? (
       <section class="border-y border-line bg-surface">
         <div class="fl-container py-20 md:py-24">
           <SectionHeading
             eyebrow="Capturas"
             title="Cómo se ve"
-            lead="Las pantallas reales de la herramienta, sin maquillaje."
+            lead="Las pantallas reales de la herramienta, sin maquillaje. Tócalas para verlas en grande."
           />
-          <div class="mt-12 grid gap-6 lg:grid-cols-2">
-            {shots.map((shot, index) => (
-              <figure class="overflow-hidden rounded-card-lg border border-line bg-paper shadow-card">
-                <Cover
-                  src={shot}
-                  alt={`Captura ${index + 1} de ${app.name}`}
-                  sizes="(min-width: 1024px) 560px, 100vw"
-                  class="w-full object-cover"
-                />
-              </figure>
-            ))}
+          <div class="mt-12">
+            <Gallery items={app.gallery} />
+          </div>
+        </div>
+      </section>
+    ) : (
+      shots.length > 0 && (
+        <section class="border-y border-line bg-surface">
+          <div class="fl-container py-20 md:py-24">
+            <SectionHeading
+              eyebrow="Capturas"
+              title="Cómo se ve"
+              lead="Las pantallas reales de la herramienta, sin maquillaje."
+            />
+            <div class="mt-12 grid gap-6 lg:grid-cols-2">
+              {shots.map((shot, index) => (
+                <figure class="overflow-hidden rounded-card-lg border border-line bg-paper shadow-card">
+                  <Cover
+                    src={shot}
+                    alt={`Captura ${index + 1} de ${app.name}`}
+                    sizes="(min-width: 1024px) 560px, 100vw"
+                    class="w-full object-cover"
+                  />
+                </figure>
+              ))}
+            </div>
+          </div>
+        </section>
+      )
+    )
+  }
+
+  <!-- ====================== FUNCIONA EN TU CELULAR ================== -->
+  {
+    app.mobile && (
+      <section class="fl-container py-20 md:py-24">
+        <div class="grid items-center gap-10 lg:grid-cols-[1fr_auto] lg:gap-16">
+          <div class="max-w-xl">
+            <p class="fl-eyebrow">En el bolsillo</p>
+            <h2 class="mt-3 text-2xl md:text-3xl">{app.mobile.title}</h2>
+            <p class="fl-prose-lead mt-5">{app.mobile.text}</p>
+            {app.guideUrl && (
+              <a
+                href={app.guideUrl}
+                class="fl-btn fl-btn-secondary mt-7"
+              >
+                Cómo instalarla, paso a paso
+              </a>
+            )}
+          </div>
+          <div class="mx-auto w-full max-w-[15rem] lg:max-w-[17rem]">
+            <Cover
+              src={microappImage(app.mobile.image)}
+              alt={app.mobile.alt}
+              widths={[240, 480, 736]}
+              sizes="(min-width: 1024px) 272px, 240px"
+              class="w-full rounded-card-lg border border-line shadow-lift"
+            />
           </div>
         </div>
       </section>

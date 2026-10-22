@@ -1,0 +1,447 @@
+---
+/**
+ * Guía de uso de la Calculadora de Costos.
+ * El contenido vive en el array `sections`: cada sección tiene sus pasos,
+ * una nota opcional y las capturas que la acompañan.
+ */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Cover from '../../components/Cover.astro';
+import { microappImage } from '../../lib/images';
+import { microapps } from '../../data/microapps';
+import { site } from '../../data/site';
+
+const app = microapps.find((item) => item.slug === 'costos')!;
+
+type Figure = { src: string; alt: string; shape: 'wide' | 'phone' };
+type Section = {
+  id: string;
+  title: string;
+  intro?: string;
+  steps?: string[];
+  note?: string;
+  list?: { term: string; text: string }[];
+  figures?: Figure[];
+};
+
+const sections: Section[] = [
+  {
+    id: 'activar',
+    title: 'Activar tu licencia',
+    intro:
+      'Cuando compras Costos te llega un correo con tu clave de licencia. Tiene cuatro bloques y empieza con FL, por ejemplo FL-XQ43-SJBY-HGW3.',
+    steps: [
+      'Abre costos.futurislabs.net en el navegador.',
+      'Busca el correo de la compra y copia la clave completa, con los guiones.',
+      'Pégala en el campo «Tu clave de licencia» y toca Activar.',
+      'Listo: la app queda habilitada en ese dispositivo y no te la vuelve a pedir.',
+    ],
+    note: 'La misma clave te sirve para hasta 3 dispositivos. Por ejemplo, la computadora del taller, tu celular y una tablet.',
+    figures: [
+      {
+        src: 'costos-guia-activar.webp',
+        alt: 'Pantalla de activación con el campo «Tu clave de licencia» y el botón Activar.',
+        shape: 'wide',
+      },
+    ],
+  },
+  {
+    id: 'instalar',
+    title: 'Instalar la app en tu celular',
+    intro:
+      'Costos funciona en el navegador, pero conviene instalarla: queda como una app más en la pantalla de inicio, abre sin la barra del navegador y funciona sin internet.',
+    list: [
+      {
+        term: 'iPhone (Safari)',
+        text: 'Abre costos.futurislabs.net en Safari, toca el botón Compartir (el cuadrado con la flecha hacia arriba) y elige «Agregar a inicio».',
+      },
+      {
+        term: 'Android (Chrome)',
+        text: 'Abre costos.futurislabs.net en Chrome, toca el menú de los tres puntos y elige «Instalar app» o «Agregar a pantalla principal».',
+      },
+    ],
+    note: 'Además de la comodidad, instalarla protege tus datos: quedan guardados en el teléfono y no se pierden si cierras una pestaña por error.',
+    figures: [
+      {
+        src: 'costos-cel-6-inicio.webp',
+        alt: 'La app Costos ya instalada, con su ícono en la pantalla de inicio del celular.',
+        shape: 'phone',
+      },
+    ],
+  },
+  {
+    id: 'configuracion',
+    title: 'Configuración inicial',
+    intro:
+      'Antes de cargar productos conviene dejar lista la pestaña Ajustes. Son cuatro datos y se cargan una sola vez.',
+    steps: [
+      'Elige tu moneda. Se usa para mostrar todos los importes y para redondear los precios.',
+      'Carga tus costos fijos mensuales: alquiler, servicios, internet, herramientas. Todo lo que pagas vendas mucho o poco.',
+      'Indica cuántas unidades vendes por mes. Con eso la app reparte los costos fijos entre cada unidad.',
+      'Pon cuánto vale tu hora de trabajo. Si no lo tienes claro, empieza por lo que te pagarían por hacer eso mismo para otra persona.',
+    ],
+    figures: [
+      {
+        src: 'costos-guia-config.webp',
+        alt: 'Pestaña Ajustes con la moneda seleccionada y la lista de costos fijos mensuales cargados.',
+        shape: 'phone',
+      },
+    ],
+  },
+  {
+    id: 'producto',
+    title: 'Cargar un producto',
+    intro:
+      'Cada producto se arma con tres cosas: los insumos que lleva, el tiempo de trabajo y los otros costos.',
+    steps: [
+      'Toca «+ Agregar» en Materiales e insumos y ponle nombre al insumo.',
+      'Carga el precio del paquete entero y cuánto trae, tal como lo compras.',
+      'Indica cuánto usas por unidad. El costo proporcional lo calcula la app.',
+      'Suma los minutos de trabajo que te lleva una unidad.',
+      'Agrega los otros costos: packaging, etiqueta, envío.',
+    ],
+    note: 'Ejemplo: compras 1 kg de cera a $ 8.000 y usas 180 g por vela. No hace falta que saques la cuenta: cargas el kilo a $ 8.000, pones 180 g por unidad y la app calcula $ 1.440 por vela.',
+    figures: [
+      {
+        src: 'costos-guia-insumo.webp',
+        alt: 'Formulario de insumos con la cera de soja: precio del paquete, cantidad que trae y cantidad usada por unidad.',
+        shape: 'wide',
+      },
+      {
+        src: 'costos-cel-1-costo.webp',
+        alt: 'Resultado del costo unitario: $ 11.290 repartidos entre materiales, mano de obra, otros costos y costos fijos.',
+        shape: 'phone',
+      },
+    ],
+  },
+  {
+    id: 'precio',
+    title: 'Elegir el precio',
+    intro:
+      'La app funciona en los dos sentidos. Puedes decirle qué margen quieres y te da el precio, o escribir un precio y ver qué margen te deja.',
+    steps: [
+      'Elige «Quiero un margen» y escribe el porcentaje que buscas: la app te muestra el precio sugerido.',
+      'O elige «Tengo un precio», escribe el que querías cobrar y fíjate si el margen te cierra.',
+    ],
+    note: 'Margen y markup no son lo mismo. El margen se mide sobre el precio de venta y el markup sobre el costo. Si algo te cuesta $ 10.000 y lo vendes a $ 20.000, el markup es 100 % (le sumaste otros $ 10.000) pero el margen es 50 % (de cada $ 100 que cobras, $ 50 son ganancia). La app te muestra los dos para que no te confundas.',
+    figures: [
+      {
+        src: 'costos-cel-2-precio.webp',
+        alt: 'Pantalla de precio de venta: margen deseado del 40 % y precio sugerido de $ 18.900.',
+        shape: 'phone',
+      },
+    ],
+  },
+  {
+    id: 'canales',
+    title: 'Canales de venta',
+    intro:
+      'Cada lugar donde vendes se queda con una parte. Si publicas el mismo precio en todos lados, en algunos ganas menos de lo que creías.',
+    steps: [
+      'Carga cada canal por el que vendes y su comisión: venta directa 0 %, Mercado Libre, tarjeta o posnet, tienda online.',
+      'Mira la columna «Precio necesario»: es lo que tienes que publicar en ese canal para quedarte con el mismo margen.',
+      'Usa ese precio al publicar, en lugar de repetir el precio base en todas partes.',
+    ],
+    figures: [
+      {
+        src: 'costos-cel-3-canales.webp',
+        alt: 'Tabla de canales de venta con el precio necesario en venta directa, Mercado Libre, tarjeta e Instagram.',
+        shape: 'phone',
+      },
+    ],
+  },
+  {
+    id: 'equilibrio',
+    title: 'Punto de equilibrio',
+    intro:
+      'Es la cantidad de unidades que necesitas vender en el mes para cubrir tus costos fijos. Por debajo de ese número estás poniendo plata de tu bolsillo; por encima, empiezas a ganar.',
+    steps: [
+      'Fíjate en el número grande: son las unidades por mes de ese producto.',
+      'Debajo vas a ver cuánto aporta cada unidad y la facturación equivalente.',
+      'Si el número te parece alto, tienes tres caminos: bajar costos fijos, subir el precio o bajar el costo del producto.',
+    ],
+    figures: [
+      {
+        src: 'costos-cel-4-equilibrio.webp',
+        alt: 'Punto de equilibrio: 20 unidades por mes para cubrir $ 200.000 de costos fijos.',
+        shape: 'phone',
+      },
+    ],
+  },
+  {
+    id: 'pdf',
+    title: 'Descargar la ficha en PDF',
+    intro:
+      'La ficha reúne el desglose del costo, el precio por canal y el margen. Sirve para guardarla, mandársela a un socio o revisarla sin abrir la app.',
+    steps: [
+      'Entra al producto que quieres.',
+      'Toca «Descargar PDF», arriba a la derecha.',
+      'El archivo se guarda en tu dispositivo como cualquier otra descarga.',
+    ],
+    figures: [
+      {
+        src: 'costos-guia-pdf.webp',
+        alt: 'Vista previa de la ficha en PDF: insumos, costo unitario, precio y canales de venta en una hoja.',
+        shape: 'wide',
+      },
+    ],
+  },
+  {
+    id: 'copias',
+    title: 'Pasar tus datos a otro dispositivo y hacer copias',
+    intro:
+      'Tus datos se guardan en el dispositivo donde los cargaste. No viajan solos entre la computadora y el celular: los pasas vos con Exportar e Importar.',
+    steps: [
+      'En el dispositivo que tiene los datos, abre el Menú y toca «Exportar datos». Se descarga un archivo.',
+      'Pásalo al otro dispositivo como pasarías cualquier archivo: por mail, WhatsApp o la nube que uses.',
+      'En el otro dispositivo, abre el Menú y toca «Importar datos». Elige el archivo y listo.',
+    ],
+    note: 'Ese mismo archivo es tu copia de seguridad. Conviene exportar cada 14 días, y siempre antes de cambiar de teléfono o de limpiar el navegador.',
+    figures: [
+      {
+        src: 'costos-guia-exportar.webp',
+        alt: 'Menú abierto con las opciones Exportar datos, Importar datos y Desactivar en este dispositivo.',
+        shape: 'wide',
+      },
+    ],
+  },
+  {
+    id: 'cambiar-dispositivo',
+    title: 'Cambiar de celular o de computadora',
+    intro:
+      'La licencia vale para 3 dispositivos. Si vas a dejar de usar uno, libera el lugar antes de activar el nuevo.',
+    steps: [
+      'En el dispositivo viejo, exporta tus datos (ver el punto anterior).',
+      'Abre el Menú y toca «Desactivar en este dispositivo». Confirma.',
+      'En el dispositivo nuevo, pega tu clave de licencia y activa.',
+      'Importa el archivo que exportaste y seguís donde habías quedado.',
+    ],
+    note: `¿Se te perdió o se rompió el celular antes de desactivarlo? Escríbenos a ${site.email} con tu clave de licencia y liberamos el lugar nosotros.`,
+    figures: [
+      {
+        src: 'costos-guia-desactivar.webp',
+        alt: 'Aviso para confirmar la desactivación de la licencia en el dispositivo actual.',
+        shape: 'wide',
+      },
+    ],
+  },
+  {
+    id: 'problemas',
+    title: 'Problemas frecuentes',
+    list: [
+      {
+        term: '«Llegaste al máximo de dispositivos»',
+        text: 'Ya tienes las 3 activaciones usadas. Desactiva la licencia en alguno de los dispositivos que no uses (Menú → Desactivar en este dispositivo). Si no tienes acceso a ninguno, escríbenos y lo resolvemos.',
+      },
+      {
+        term: 'No me llegó la clave',
+        text: `Revisa la carpeta de spam o correo no deseado, y busca por «Futurislabs». Si no aparece, escríbenos a ${site.email} desde el correo con el que compraste y te la reenviamos.`,
+      },
+      {
+        term: 'Borré los datos del navegador',
+        text: 'Si limpiaste el navegador, los productos cargados se pierden, porque viven en tu dispositivo. Vuelve a importar tu último archivo exportado. Si no tenías ninguno, hay que cargarlos de nuevo: por eso conviene exportar seguido.',
+      },
+      {
+        term: 'La clave no es válida',
+        text: 'Casi siempre es un error de copiado: fíjate que estén los guiones y que no haya espacios al principio ni al final. Copia y pega la clave entera desde el correo en lugar de escribirla a mano.',
+      },
+    ],
+  },
+];
+
+const lead =
+  'Todo lo que necesitas saber para usar la Calculadora de Costos: activar tu licencia, instalarla en el celular, cargar tu primer producto y poner el precio que te deja la ganancia que buscas.';
+
+const canonical = new URL('/costos/guia/', Astro.site ?? site.url).href;
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'HowTo',
+  name: 'Guía de uso de Costos',
+  description: lead,
+  url: canonical,
+  inLanguage: 'es',
+  step: sections
+    .filter((section) => section.steps?.length)
+    .map((section, index) => ({
+      '@type': 'HowToStep',
+      position: index + 1,
+      name: section.title,
+      text: section.intro ?? section.title,
+      url: `${canonical}#${section.id}`,
+    })),
+};
+---
+
+<BaseLayout
+  title="Guía de uso de Costos"
+  exactTitle="Guía de uso de Costos | Futurislabs"
+  description="Guía paso a paso de la Calculadora de Costos: activar la licencia, instalarla en el celular, cargar productos, elegir el precio y pasar tus datos de un dispositivo a otro."
+  socialDescription={lead}
+  jsonLd={jsonLd}
+>
+  <!-- ============================ HERO ============================ -->
+  <section class="border-b border-line bg-surface">
+    <div class="fl-container py-14 md:py-20">
+      <a
+        href="/costos/"
+        class="inline-flex items-center gap-1.5 rounded-lg text-sm font-medium text-muted transition-colors hover:text-ink"
+      >
+        <svg
+          viewBox="0 0 16 16"
+          aria-hidden="true"
+          class="size-4"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.8"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="M13 8H3M7 4 3 8l4 4" />
+        </svg>
+        Volver a {app.name}
+      </a>
+
+      <p class="fl-eyebrow mt-8">Guía de uso</p>
+      <h1 class="mt-3 max-w-2xl text-3xl leading-[1.12] sm:text-4xl">Cómo usar Costos</h1>
+      <p class="fl-prose-lead mt-5 max-w-2xl">{lead}</p>
+
+      <div class="mt-8 flex flex-col gap-3 sm:flex-row">
+        <a
+          href={app.appUrl}
+          rel="noopener"
+          class="fl-btn fl-btn-primary px-5 py-3.5 text-base"
+        >
+          Abrir la app
+        </a>
+        <a href="/costos/" class="fl-btn fl-btn-secondary px-5 py-3.5 text-base">
+          Ver qué hace Costos
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================ ÍNDICE =========================== -->
+  <section class="fl-container py-12 md:py-16">
+    <nav aria-labelledby="indice" class="fl-card max-w-2xl p-6 md:p-7">
+      <h2 id="indice" class="font-display text-xs font-semibold tracking-widest text-ink uppercase">
+        En esta guía
+      </h2>
+      <ol class="mt-5 grid gap-x-8 gap-y-2.5 sm:grid-cols-2">
+        {
+          sections.map((section, index) => (
+            <li class="flex gap-2.5 text-[0.9375rem] leading-snug">
+              <span class="font-display text-sm font-semibold text-accent tabular-nums">
+                {index + 1}.
+              </span>
+              <a
+                href={`#${section.id}`}
+                class="rounded text-muted transition-colors hover:text-ink"
+              >
+                {section.title}
+              </a>
+            </li>
+          ))
+        }
+      </ol>
+    </nav>
+  </section>
+
+  <!-- =========================== SECCIONES ========================= -->
+  <div class="fl-container pb-8">
+    {
+      sections.map((section, index) => (
+        <section id={section.id} class="max-w-2xl scroll-mt-24 border-t border-line py-12 md:py-16">
+          <p class="font-display text-sm font-bold text-accent">Paso {index + 1}</p>
+          <h2 class="mt-2 text-2xl md:text-3xl">{section.title}</h2>
+
+          {section.intro && (
+            <p class="mt-4 text-[0.9375rem] leading-relaxed text-muted md:text-base">
+              {section.intro}
+            </p>
+          )}
+
+          {section.steps && (
+            <ol class="mt-7 space-y-4">
+              {section.steps.map((step, stepIndex) => (
+                <li class="flex gap-3.5">
+                  <span class="flex size-7 shrink-0 items-center justify-center rounded-full bg-accent-soft font-display text-[0.8125rem] font-bold text-accent tabular-nums">
+                    {stepIndex + 1}
+                  </span>
+                  <span class="pt-0.5 text-[0.9375rem] leading-relaxed text-ink md:text-base">
+                    {step}
+                  </span>
+                </li>
+              ))}
+            </ol>
+          )}
+
+          {section.list && (
+            <dl class="mt-7 space-y-5">
+              {section.list.map((item) => (
+                <div class="border-l-2 border-accent/30 pl-4">
+                  <dt class="font-display text-[0.9375rem] font-semibold text-ink md:text-base">
+                    {item.term}
+                  </dt>
+                  <dd class="mt-1.5 text-[0.9375rem] leading-relaxed text-muted">{item.text}</dd>
+                </div>
+              ))}
+            </dl>
+          )}
+
+          {section.note && (
+            <p class="mt-7 rounded-card border border-line bg-surface p-4 text-[0.9375rem] leading-relaxed text-muted">
+              {section.note}
+            </p>
+          )}
+
+          {section.figures && (
+            <div class="mt-8 grid gap-5 sm:grid-cols-[repeat(auto-fit,minmax(0,1fr))]">
+              {section.figures.map((figure) => (
+                <figure
+                  class:list={[
+                    'overflow-hidden rounded-card-lg border border-line bg-surface shadow-card',
+                    figure.shape === 'phone' && 'mx-auto w-full max-w-[13rem] sm:max-w-[14rem]',
+                  ]}
+                >
+                  <Cover
+                    src={microappImage(figure.src)}
+                    alt={figure.alt}
+                    widths={figure.shape === 'phone' ? [240, 480, 736] : [480, 768, 1200]}
+                    sizes={
+                      figure.shape === 'phone'
+                        ? '(min-width: 640px) 224px, 208px'
+                        : '(min-width: 768px) 672px, 92vw'
+                    }
+                    class="w-full"
+                  />
+                </figure>
+              ))}
+            </div>
+          )}
+        </section>
+      ))
+    }
+  </div>
+
+  <!-- ========================== CTA FINAL ========================== -->
+  <section class="fl-container pb-20 md:pb-24">
+    <div class="max-w-2xl rounded-card-lg border border-accent/25 bg-accent-soft p-8 md:p-10">
+      <h2 class="text-2xl">¿Lista la teoría?</h2>
+      <p class="mt-3 text-[0.9375rem] leading-relaxed text-muted">
+        Abre la app y carga tu primer producto. Si algo no se entiende o algo no funciona como
+        esperabas, escríbenos: contestamos nosotros, no un formulario.
+      </p>
+      <div class="mt-7 flex flex-col gap-3 sm:flex-row">
+        <a href={app.appUrl} rel="noopener" class="fl-btn fl-btn-primary px-5 py-3.5 text-base">
+          Abrir la app
+        </a>
+        <a
+          href={`mailto:${site.email}`}
+          class="fl-btn fl-btn-secondary px-5 py-3.5 text-base"
+        >
+          Escribirnos
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

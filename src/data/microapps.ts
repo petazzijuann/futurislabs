@@ -39,12 +39,42 @@ export type Microapp = {
   demoUrl?: string;
   /** Nombre del archivo dentro de `src/assets/microapps/`. */
   image: string;
+  /**
+   * Versión apaisada de la portada, para la tarjeta de la biblioteca y las
+   * vistas previas de redes. Si falta, se usa `image`. Conviene definirla
+   * cuando `image` es vertical: esos recuadros recortan al centro.
+   */
+  cardImage?: string;
   /** Más archivos de `src/assets/microapps/`, en orden. */
   screenshots?: string[];
+  /** Galería de la landing: capturas y piezas con su texto alternativo. */
+  gallery?: { src: string; alt: string }[];
+  /**
+   * Video de presentación del hero. Las rutas salen de `public/`.
+   * Se reproduce en bucle y sin sonido; `hasAudio` agrega el botón para
+   * activarlo. Con `prefers-reduced-motion` solo se muestra el póster.
+   */
+  video?: {
+    webm: string;
+    mp4: string;
+    poster: string;
+    /** Relación de aspecto del archivo, para reservar el espacio. */
+    width: number;
+    height: number;
+    hasAudio?: boolean;
+    /** Archivo .vtt en `public/`, si hay subtítulos aparte. */
+    captions?: string;
+    /** Texto para quien no puede ver el video. */
+    description: string;
+  };
+  /** Bloque "Funciona en tu celular". */
+  mobile?: { title: string; text: string; image: string; alt: string };
+  /** Guía de uso propia, si la microapp tiene una. */
+  guideUrl?: string;
   problem: { title: string; points: string[] };
   features: { title: string; text: string }[];
   steps?: string[];
-  faqs?: { q: string; a: string }[];
+  faqs?: { q: string; a: string; link?: { href: string; label: string } }[];
   status: MicroappStatus;
   /** Las destacadas aparecen primero en la biblioteca. */
   featured?: boolean;
@@ -67,8 +97,51 @@ export const microapps: Microapp[] = [
       'https://futurislabs.lemonsqueezy.com/checkout/buy/e9985b8c-1fe2-49fe-a0cb-f14b0c6efaf2',
     appUrl: 'https://costos.futurislabs.net',
     demoUrl: 'https://costos.futurislabs.net/?demo',
-    image: 'costos.svg',
-    screenshots: ['costos-1.svg', 'costos-2.svg'],
+    image: 'costos-mk-1-costo.webp',
+    cardImage: 'costos-mk-1-costo-wide.webp',
+    guideUrl: '/costos/guia/',
+    video: {
+      webm: '/media/costos/costos-demo.webm',
+      mp4: '/media/costos/costos-demo.mp4',
+      poster: '/media/costos/poster.jpg',
+      width: 540,
+      height: 960,
+      hasAudio: true,
+      description:
+        'Video de presentación de la Calculadora de Costos: cómo se arma el costo real de un producto y cómo sale el precio de venta.',
+    },
+    gallery: [
+      {
+        src: 'costos-mk-1-costo.webp',
+        alt: 'Pantalla de costo unitario: $ 11.290 repartidos en materiales, mano de obra, otros costos y costos fijos.',
+      },
+      {
+        src: 'costos-mk-2-precio.webp',
+        alt: 'Pantalla de precio de venta con un margen deseado del 40 % y un precio sugerido de $ 18.900.',
+      },
+      {
+        src: 'costos-mk-3-canales.webp',
+        alt: 'Tabla de canales de venta con el precio necesario en venta directa, Mercado Libre, tarjeta e Instagram.',
+      },
+      {
+        src: 'costos-mk-4-equilibrio.webp',
+        alt: 'Punto de equilibrio: 20 unidades por mes para cubrir $ 200.000 de costos fijos.',
+      },
+      {
+        src: 'costos-pc-1-detalle.webp',
+        alt: 'La calculadora abierta en una computadora, con el detalle del costo y el precio de venta juntos en pantalla.',
+      },
+      {
+        src: 'costos-pc-2-pdf.webp',
+        alt: 'Ficha del producto lista para descargar en PDF, con el desglose del costo y el precio por canal.',
+      },
+    ],
+    mobile: {
+      title: 'Funciona en tu celular',
+      text: 'Se instala como una app más: queda en la pantalla de inicio y abre sin navegador. Después de la primera vez funciona sin internet, así que puedes usarla en el taller, en la feria o donde no haya señal. Tus datos quedan guardados en el teléfono.',
+      image: 'costos-cel-6-inicio.webp',
+      alt: 'La app Costos instalada en la pantalla de inicio de un iPhone, junto al resto de las aplicaciones.',
+    },
     status: 'disponible',
     featured: true,
     problem: {
@@ -121,6 +194,11 @@ export const microapps: Microapp[] = [
       'Compara tus canales de venta y descarga la ficha en PDF.',
     ],
     faqs: [
+      {
+        q: '¿Hay una guía de uso?',
+        a: 'Sí. Está todo explicado paso a paso, con capturas: activar la licencia, instalarla en el celular, cargar un producto, elegir el precio y pasar tus datos de un dispositivo a otro.',
+        link: { href: '/costos/guia/', label: 'Ver la guía de uso →' },
+      },
       {
         q: '¿Mis datos se pasan solos entre la compu y el celu?',
         a: 'No, se guardan en cada dispositivo. Usa Exportar e Importar para pasarlos.',

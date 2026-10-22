@@ -1,0 +1,249 @@
+---
+/**
+ * Video de presentación del hero.
+ *
+ * - Arranca solo, en silencio y en bucle; en el celular también, gracias a
+ *   `playsinline`.
+ * - `preload="metadata"` y la reproducción arranca recién en el evento `load`:
+ *   así los bytes del video no compiten con lo que pinta la página. Por eso el
+ *   arranque lo hace el script y no el atributo `autoplay`.
+ * - Se pausa cuando queda fuera de pantalla.
+ * - Si el navegador bloquea la reproducción automática, aparece el póster con
+ *   un botón de play.
+ * - Si la persona pidió menos movimiento (`prefers-reduced-motion`), se queda
+ *   el póster con un botón de play y el video no se reproduce solo.
+ * - Si el video tiene voz, aparece un botón para activar el sonido.
+ */
+import type { Microapp } from '../data/microapps';
+
+interface Props {
+  video: NonNullable<Microapp['video']>;
+  /** Nombre de la microapp, para el texto accesible. */
+  name: string;
+  class?: string;
+}
+
+const { video, name, class: className = '' } = Astro.props;
+---
+
+<figure class={`fl-video ${className}`} data-video>
+  <div class="fl-video-frame">
+    <video
+      data-player
+      class="fl-video-el"
+      width={video.width}
+      height={video.height}
+      poster={video.poster}
+      muted
+      loop
+      playsinline
+      preload="metadata"
+      aria-label={`Video de presentación de ${name}`}
+    >
+      <source src={video.webm} type="video/webm" />
+      <source src={video.mp4} type="video/mp4" />
+      {
+        video.captions && (
+          <track kind="captions" src={video.captions} srclang="es" label="Español" default />
+        )
+      }
+    </video>
+
+    <div class="fl-video-still" data-still hidden>
+      <img src={video.poster} alt="" width={video.width} height={video.height} />
+      <button type="button" class="fl-video-play" data-play>
+        <svg viewBox="0 0 24 24" aria-hidden="true" fill="currentColor" class="size-5">
+          <path d="M8 5.2v13.6a.8.8 0 0 0 1.22.68l11-6.8a.8.8 0 0 0 0-1.36l-11-6.8A.8.8 0 0 0 8 5.2Z"
+          ></path>
+        </svg>
+        Ver el video
+      </button>
+    </div>
+
+    {
+      video.hasAudio && (
+        <button type="button" class="fl-video-sound" data-sound aria-pressed="false">
+          <svg
+            viewBox="0 0 24 24"
+            aria-hidden="true"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.8"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="size-4"
+          >
+            <path d="M11 5 6.5 8.8H3v6.4h3.5L11 19V5Z" />
+            <path data-sound-off d="m16 9.5 4 5M20 9.5l-4 5" />
+            <path data-sound-on d="M15.2 9.3a3.6 3.6 0 0 1 0 5.4M18 7a7 7 0 0 1 0 10" />
+          </svg>
+          <span data-sound-label>Activar sonido</span>
+        </button>
+      )
+    }
+  </div>
+
+  <figcaption class="sr-only">{video.description}</figcaption>
+</figure>
+
+<style>
+  .fl-video-frame {
+    position: relative;
+    overflow: hidden;
+    border-radius: var(--fl-radius-lg);
+    border: 1px solid var(--color-line);
+    background-color: var(--color-surface);
+    box-shadow: var(--fl-shadow-lift);
+  }
+
+  .fl-video-el,
+  .fl-video-still img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  .fl-video-still {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .fl-video-still[hidden] {
+    display: none;
+  }
+
+  .fl-video-still img {
+    position: absolute;
+    inset: 0;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .fl-video-play,
+  .fl-video-sound {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    border-radius: 999px;
+    font-family: var(--font-display);
+    font-weight: 600;
+    line-height: 1;
+    cursor: pointer;
+    transition:
+      background-color 0.18s ease,
+      transform 0.18s ease;
+  }
+
+  .fl-video-play {
+    padding: 0.875rem 1.375rem;
+    font-size: 0.9375rem;
+    background-color: var(--color-accent);
+    color: var(--color-accent-ink);
+    box-shadow: var(--fl-shadow-lift);
+  }
+
+  .fl-video-play:hover {
+    background-color: var(--color-accent-hover);
+  }
+
+  .fl-video-sound {
+    position: absolute;
+    right: 0.75rem;
+    bottom: 0.75rem;
+    padding: 0.5rem 0.875rem;
+    font-size: 0.8125rem;
+    color: #f7fafc;
+    background-color: rgb(8 12 20 / 0.72);
+    backdrop-filter: blur(6px);
+  }
+
+  .fl-video-sound:hover {
+    background-color: rgb(8 12 20 / 0.88);
+  }
+
+  /* El ícono sigue al estado del botón, sin tocar nada desde el script. */
+  .fl-video-sound[aria-pressed='false'] [data-sound-on],
+  .fl-video-sound[aria-pressed='true'] [data-sound-off] {
+    display: none;
+  }
+
+  /* Menos movimiento: se muestra solo el póster hasta que lo pidan. */
+  @media (prefers-reduced-motion: reduce) {
+    .fl-video-still[hidden] {
+      display: flex;
+    }
+  }
+</style>
+
+<script>
+  const QUIET = '(prefers-reduced-motion: reduce)';
+
+  document.querySelectorAll<HTMLElement>('[data-video]').forEach((root) => {
+    const player = root.querySelector<HTMLVideoElement>('[data-player]');
+    const still = root.querySelector<HTMLElement>('[data-still]');
+    const play = root.querySelector<HTMLButtonElement>('[data-play]');
+    const sound = root.querySelector<HTMLButtonElement>('[data-sound]');
+    if (!player) return;
+
+    const showStill = () => still?.removeAttribute('hidden');
+    const hideStill = () => still?.setAttribute('hidden', '');
+
+    const start = () => {
+      hideStill();
+      player.preload = 'auto';
+      // Si el navegador la bloquea, queda el póster con el botón de play.
+      player.play().catch(showStill);
+    };
+
+    const quiet = window.matchMedia(QUIET).matches;
+
+    if (quiet) {
+      // Menos movimiento: no se reproduce solo, queda el póster.
+      showStill();
+    } else if (document.readyState === 'complete') {
+      start();
+    } else {
+      window.addEventListener('load', start, { once: true });
+    }
+
+    // Fuera de pantalla no tiene sentido que siga gastando batería.
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(
+        (entries) => {
+          for (const entry of entries) {
+            if (entry.isIntersecting) {
+              if (!quiet && player.dataset.started === 'yes') void player.play();
+            } else if (!player.paused) {
+              player.pause();
+            }
+          }
+        },
+        { threshold: 0.2 },
+      ).observe(player);
+    }
+
+    player.addEventListener('playing', () => {
+      player.dataset.started = 'yes';
+      hideStill();
+    });
+
+    play?.addEventListener('click', () => {
+      player.preload = 'auto';
+      hideStill();
+      void player.play();
+    });
+
+    sound?.addEventListener('click', () => {
+      player.muted = !player.muted;
+      const on = !player.muted;
+      sound.setAttribute('aria-pressed', String(on));
+      const label = sound.querySelector('[data-sound-label]');
+      if (label) label.textContent = on ? 'Silenciar' : 'Activar sonido';
+      if (on && player.paused) void player.play();
+    });
+  });
+</script>

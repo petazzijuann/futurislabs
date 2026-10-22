@@ -1,7 +1,7 @@
 ---
 /** Preguntas frecuentes con <details>: funciona sin JavaScript. */
 interface Props {
-  faqs: { q: string; a: string }[];
+  faqs: { q: string; a: string; link?: { href: string; label: string } }[];
 }
 
 const { faqs } = Astro.props;
@@ -27,7 +27,17 @@ const { faqs } = Astro.props;
             <path d="M8 3v10M3 8h10" />
           </svg>
         </summary>
-        <p class="px-5 pb-5 text-[0.9375rem] leading-relaxed text-muted">{faq.a}</p>
+        <div class="px-5 pb-5 text-[0.9375rem] leading-relaxed text-muted">
+          <p>{faq.a}</p>
+          {faq.link && (
+            <a
+              href={faq.link.href}
+              class="mt-2 inline-block rounded font-semibold text-accent underline decoration-accent/40 underline-offset-4 transition-colors hover:decoration-accent"
+            >
+              {faq.link.label}
+            </a>
+          )}
+        </div>
       </details>
     ))
   }

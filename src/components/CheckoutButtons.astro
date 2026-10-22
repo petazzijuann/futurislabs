@@ -14,6 +14,7 @@ import { formatArs, formatUsd, notifyMailto } from '../lib/format';
  *   que se marca en BaseLayout antes de pintar la página).
  * - Sin JavaScript se ven los dos botones, en orden USD y luego pesos.
  * - Si la microapp es "proximamente", en lugar de comprar se ofrece un aviso.
+ * - Si tiene guía de uso propia, se enlaza debajo de los botones.
  */
 interface Props {
   app: Microapp;
@@ -78,6 +79,21 @@ const big = size === 'hero' ? 'px-5 py-3.5 text-base' : '';
       >
         Probar demo gratis
       </a>
+    )
+  }
+
+  {
+    app.guideUrl && (
+      <p class="text-sm text-muted">
+        ¿Cómo se usa?{' '}
+        <a
+          href={app.guideUrl}
+          class="rounded font-semibold text-accent underline decoration-accent/40 underline-offset-4 hover:decoration-accent"
+        >
+          Mira la guía
+          <span aria-hidden="true"> →</span>
+        </a>
+      </p>
     )
   }
 

@@ -12,7 +12,8 @@ interface Props {
 }
 
 const { app, eager = false } = Astro.props;
-const cover = microappImage(app.image);
+// La tarjeta es apaisada: si hay versión para ese recuadro, va esa.
+const cover = microappImage(app.cardImage ?? app.image);
 const soon = app.status === 'proximamente';
 ---
 
