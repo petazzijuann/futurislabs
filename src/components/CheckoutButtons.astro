@@ -7,6 +7,8 @@ import { formatArs, formatUsd, notifyMailto } from '../lib/format';
  * Botones de compra de una microapp.
  *
  * - Si falta el link de checkout de una moneda, ese botón no se muestra.
+ * - Si todavía no hay ningún link de compra, el botón de la demo pasa a ser
+ *   el principal, para que la página no quede sin acción.
  * - Si la visita parece de Argentina, el botón en pesos va primero
  *   (el reordenamiento lo hace CSS a partir de `data-region` en <html>,
  *   que se marca en BaseLayout antes de pintar la página).
@@ -26,6 +28,8 @@ const priceUsd = formatUsd(app);
 const priceArs = formatArs(app);
 const showUsd = !soon && !!app.checkoutUsd;
 const showArs = !soon && !!app.checkoutArs && !!priceArs;
+/** Sin links de compra, la demo es la única acción: va como botón principal. */
+const demoIsPrimary = !soon && !showUsd && !showArs;
 const big = size === 'hero' ? 'px-5 py-3.5 text-base' : '';
 ---
 
@@ -36,36 +40,42 @@ const big = size === 'hero' ? 'px-5 py-3.5 text-base' : '';
         Avísame cuando salga
       </a>
     ) : (
-      <div data-checkout class="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-        {showUsd && (
-          <a
-            data-currency="usd"
-            href={app.checkoutUsd}
-            rel="noopener"
-            class={`fl-btn fl-btn-primary flex-col gap-0.5 ${big}`}
-          >
-            <span>Pagar en USD</span>
-            <span class="text-[0.8125rem] font-medium opacity-90">{priceUsd}</span>
-          </a>
-        )}
-        {showArs && (
-          <a
-            data-currency="ars"
-            href={app.checkoutArs}
-            rel="noopener"
-            class={`fl-btn fl-btn-primary flex-col gap-0.5 ${big}`}
-          >
-            <span>Pagar en pesos argentinos</span>
-            <span class="text-[0.8125rem] font-medium opacity-90">{priceArs}</span>
-          </a>
-        )}
-      </div>
+      (showUsd || showArs) && (
+        <div data-checkout class="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+          {showUsd && (
+            <a
+              data-currency="usd"
+              href={app.checkoutUsd}
+              rel="noopener"
+              class={`fl-btn fl-btn-primary flex-col gap-0.5 ${big}`}
+            >
+              <span>Pagar en USD</span>
+              <span class="text-[0.8125rem] font-medium opacity-90">{priceUsd}</span>
+            </a>
+          )}
+          {showArs && (
+            <a
+              data-currency="ars"
+              href={app.checkoutArs}
+              rel="noopener"
+              class={`fl-btn fl-btn-primary flex-col gap-0.5 ${big}`}
+            >
+              <span>Pagar en pesos argentinos</span>
+              <span class="text-[0.8125rem] font-medium opacity-90">{priceArs}</span>
+            </a>
+          )}
+        </div>
+      )
     )
   }
 
   {
     app.demoUrl && (
-      <a href={app.demoUrl} rel="noopener" class={`fl-btn fl-btn-secondary ${big}`}>
+      <a
+        href={app.demoUrl}
+        rel="noopener"
+        class={`fl-btn ${demoIsPrimary ? 'fl-btn-primary' : 'fl-btn-secondary'} ${big}`}
+      >
         Probar demo gratis
       </a>
     )

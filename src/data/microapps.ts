@@ -52,26 +52,21 @@ export type Microapp = {
 
 export const microapps: Microapp[] = [
   {
-    slug: 'calculadora-de-costos-y-precios',
+    slug: 'costos',
     name: 'Calculadora de Costos y Precios',
     tagline: 'Descubre cuánto te cuesta cada producto y a qué precio tienes que venderlo.',
     description:
-      'Cargas tus materiales, tus horas de trabajo y tus gastos fijos, y la calculadora te dice el costo real de cada producto y el precio de venta que necesitas para ganar lo que te propusiste. Incluye margen, impuestos y comisiones de venta.',
+      'Cargas tus insumos con el precio del envase entero, los minutos de trabajo que lleva cada unidad y tus costos fijos del mes. La app reparte todo y te dice el costo real por unidad y el precio que necesitas para ganar lo que te propusiste, canal de venta por canal de venta.',
     category: 'Finanzas',
     audience:
       'Emprendedores que fabrican o arman lo que venden: pastelería, cosmética, textil, carpintería, bisutería.',
     model: 'pago-unico',
     priceUsd: 12,
     priceArs: 14900,
-    checkoutUsd: 'https://futurislabs.lemonsqueezy.com/buy/00000000-0000-0000-0000-000000000001',
-    checkoutArs: 'https://bis.uala.com.ar/futurislabs/calculadora-costos',
-    appUrl: 'https://app.futurislabs.net/calculadora-de-costos-y-precios',
-    demoUrl: 'https://app.futurislabs.net/calculadora-de-costos-y-precios/demo',
-    image: 'calculadora-de-costos-y-precios.svg',
-    screenshots: [
-      'calculadora-de-costos-y-precios-1.svg',
-      'calculadora-de-costos-y-precios-2.svg',
-    ],
+    appUrl: 'https://costos.futurislabs.net',
+    demoUrl: 'https://costos.futurislabs.net/?demo',
+    image: 'costos.svg',
+    screenshots: ['costos-1.svg', 'costos-2.svg'],
     status: 'disponible',
     featured: true,
     problem: {
@@ -79,58 +74,78 @@ export const microapps: Microapp[] = [
       points: [
         'Calculas el precio sumando los materiales y nada más, así que tu tiempo de trabajo lo estás regalando.',
         'No tienes repartidos los gastos fijos (luz, alquiler, internet, envases) entre los productos que vendes.',
+        'Publicas el mismo precio en Mercado Libre y en Instagram, sin descontar la comisión que se lleva cada canal.',
         'Cuando suben los insumos no sabes cuánto tienes que ajustar cada precio y terminas vendiendo con pérdida.',
-        'Das descuentos sin saber a partir de qué punto el producto deja de ser rentable.',
       ],
     },
     features: [
       {
-        title: 'Costo real por unidad',
-        text: 'Cargas materiales con su precio por kilo, litro o unidad, y la app calcula cuánto entra en cada producto. Nada de reglas de tres a mano.',
+        title: 'Insumos con costo proporcional',
+        text: 'Cargas el envase como lo compras —el kilo de harina, el litro de esencia, el rollo de tela— y le indicas cuánto entra en cada unidad. La app saca la parte proporcional sola.',
       },
       {
-        title: 'Tu hora de trabajo, incluida',
-        text: 'Defines cuánto vale tu hora y cuánto tardas en producir. El costo de mano de obra entra en el cálculo como corresponde.',
+        title: 'Mano de obra por minutos',
+        text: 'Defines cuánto vale tu hora y cuántos minutos te lleva producir una unidad. Tu trabajo deja de ser invisible dentro del costo.',
       },
       {
-        title: 'Gastos fijos repartidos',
-        text: 'Pones tus gastos fijos del mes y tu producción estimada, y la app los distribuye entre tus productos de forma automática.',
+        title: 'Costos fijos prorrateados',
+        text: 'Pones los gastos fijos del mes y tu producción estimada, y la app reparte esa carga entre las unidades que vas a hacer.',
       },
       {
-        title: 'Precio por margen o por utilidad',
-        text: 'Elige si quieres un margen de ganancia en porcentaje o ganar un monto fijo por unidad, y mira el precio final al instante.',
+        title: 'Precio por margen o margen por precio',
+        text: 'Funciona en los dos sentidos: indicas el margen que quieres y ves el precio, o escribes el precio al que te gustaría vender y ves qué margen te deja.',
       },
       {
-        title: 'Comisiones e impuestos',
-        text: 'Suma comisiones de plataformas, costos de medios de pago e impuestos sobre la venta, para que el precio que publicas sea el que te deja ganancia.',
+        title: 'Canales de venta con su comisión',
+        text: 'Cargas los canales por los que vendes —Mercado Libre, tarjeta, Instagram— con su comisión, y ves cuánto te queda realmente en cada uno con el mismo precio publicado.',
       },
       {
-        title: 'Exporta tu lista de precios',
-        text: 'Descarga la lista completa en PDF o CSV para compartirla con clientes o usarla en tu tienda.',
+        title: 'Punto de equilibrio',
+        text: 'Te dice cuántas unidades necesitas vender para cubrir los costos fijos del mes y a partir de cuál empiezas a ganar.',
+      },
+      {
+        title: 'Ficha del producto en PDF',
+        text: 'Descargas una ficha con el desglose completo del costo, el precio por canal y el margen, para guardarla o mostrársela a alguien.',
+      },
+      {
+        title: 'Offline y en tu celular',
+        text: 'Funciona sin internet y se instala como app en el celular o la computadora, así la tienes a mano en el taller o en la feria. Trabaja en 8 monedas.',
       },
     ],
     steps: [
-      'Carga tus materiales y el precio al que los compras.',
-      'Arma tus productos indicando cuánto material y cuánto tiempo lleva cada uno.',
-      'Define tu margen de ganancia, impuestos y comisiones.',
-      'Descarga tu lista de precios lista para usar.',
+      'Carga tus insumos con el precio del envase y cuánto usas por unidad.',
+      'Suma los minutos de trabajo y tus costos fijos del mes.',
+      'Elige el margen que quieres, o escribe un precio y mira qué margen te deja.',
+      'Compara tus canales de venta y descarga la ficha en PDF.',
     ],
     faqs: [
       {
-        q: '¿Sirve si vendo servicios y no productos?',
-        a: 'Sí, pero está pensada para productos. Si vendes servicios, puedes cargar tu hora de trabajo y los insumos que usas, aunque no vas a aprovechar la parte de materiales por unidad.',
+        q: '¿Mis datos se pasan solos entre la compu y el celu?',
+        a: 'No, se guardan en cada dispositivo. Usa Exportar e Importar para pasarlos.',
+      },
+      {
+        q: '¿En cuántos dispositivos puedo usarla?',
+        a: 'La licencia te habilita hasta 3 dispositivos. Por ejemplo, la computadora del taller, tu celular y una tablet.',
+      },
+      {
+        q: '¿Necesito internet para usarla?',
+        a: 'No. Después de abrirla la primera vez funciona sin conexión, y puedes instalarla como app en el celular o la computadora.',
       },
       {
         q: '¿Puedo cargar precios en mi moneda?',
-        a: 'Sí. Eliges la moneda al empezar y todos los cálculos se hacen con ella. También puedes cambiarla después sin perder tus datos.',
+        a: 'Sí. Trabaja con 8 monedas y eliges la tuya al empezar. También puedes cambiarla después sin perder tus datos.',
       },
       {
         q: '¿Dónde quedan guardados mis datos?',
-        a: 'En tu propio navegador. No se suben a ningún servidor. Puedes exportar un archivo de respaldo cuando quieras y volver a cargarlo en otro dispositivo.',
+        a: 'En tu propio dispositivo. No se suben a ningún servidor ni los vemos nosotros. Puedes exportar un archivo de respaldo cuando quieras y volver a cargarlo donde lo necesites.',
       },
       {
         q: '¿Qué pasa cuando cambian los precios de mis insumos?',
-        a: 'Actualizas el precio del material una sola vez y todos los productos que lo usan se recalculan solos.',
+        a: 'Actualizas el precio del insumo una sola vez y todos los productos que lo usan se recalculan solos.',
+      },
+      {
+        q: '¿Sirve si vendo servicios y no productos?',
+        a: 'Sí, pero está pensada para productos. Si vendes servicios, puedes cargar tu hora de trabajo y los insumos que usas, aunque no vas a aprovechar la parte de costo proporcional por unidad.',
       },
     ],
   },
