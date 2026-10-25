@@ -1,27 +1,13 @@
 ---
 /**
  * Guía de uso de la Calculadora de Costos.
- * El contenido vive en el array `sections`: cada sección tiene sus pasos,
- * una nota opcional y las capturas que la acompañan.
+ * Acá viven solo los textos: el formato lo pone GuideLayout.
  */
-import BaseLayout from '../../layouts/BaseLayout.astro';
-import Cover from '../../components/Cover.astro';
-import { microappImage } from '../../lib/images';
+import GuideLayout, { type Section } from '../../layouts/GuideLayout.astro';
 import { microapps } from '../../data/microapps';
 import { site } from '../../data/site';
 
 const app = microapps.find((item) => item.slug === 'costos')!;
-
-type Figure = { src: string; alt: string; shape: 'wide' | 'phone' };
-type Section = {
-  id: string;
-  title: string;
-  intro?: string;
-  steps?: string[];
-  note?: string;
-  list?: { term: string; text: string }[];
-  figures?: Figure[];
-};
 
 const sections: Section[] = [
   {
@@ -189,7 +175,7 @@ const sections: Section[] = [
     id: 'copias',
     title: 'Pasar tus datos a otro dispositivo y hacer copias',
     intro:
-      'Tus datos se guardan en el dispositivo donde los cargaste. No viajan solos entre la computadora y el celular: los pasas vos con Exportar e Importar.',
+      'Tus datos se guardan en el dispositivo donde los cargaste. No viajan solos entre la computadora y el celular: los pasas tú con Exportar e Importar.',
     steps: [
       'En el dispositivo que tiene los datos, abre el Menú y toca «Exportar datos». Se descarga un archivo.',
       'Pásalo al otro dispositivo como pasarías cualquier archivo: por mail, WhatsApp o la nube que uses.',
@@ -251,197 +237,13 @@ const sections: Section[] = [
 const lead =
   'Todo lo que necesitas saber para usar la Calculadora de Costos: activar tu licencia, instalarla en el celular, cargar tu primer producto y poner el precio que te deja la ganancia que buscas.';
 
-const canonical = new URL('/costos/guia/', Astro.site ?? site.url).href;
-
-const jsonLd = {
-  '@context': 'https://schema.org',
-  '@type': 'HowTo',
-  name: 'Guía de uso de Costos',
-  description: lead,
-  url: canonical,
-  inLanguage: 'es',
-  step: sections
-    .filter((section) => section.steps?.length)
-    .map((section, index) => ({
-      '@type': 'HowToStep',
-      position: index + 1,
-      name: section.title,
-      text: section.intro ?? section.title,
-      url: `${canonical}#${section.id}`,
-    })),
-};
 ---
 
-<BaseLayout
-  title="Guía de uso de Costos"
-  exactTitle="Guía de uso de Costos | Futurislabs"
+<GuideLayout
+  app={app}
+  name="Costos"
+  heading="Cómo usar Costos"
+  lead={lead}
   description="Guía paso a paso de la Calculadora de Costos: activar la licencia, instalarla en el celular, cargar productos, elegir el precio y pasar tus datos de un dispositivo a otro."
-  socialDescription={lead}
-  jsonLd={jsonLd}
->
-  <!-- ============================ HERO ============================ -->
-  <section class="border-b border-line bg-surface">
-    <div class="fl-container py-14 md:py-20">
-      <a
-        href="/costos/"
-        class="inline-flex items-center gap-1.5 rounded-lg text-sm font-medium text-muted transition-colors hover:text-ink"
-      >
-        <svg
-          viewBox="0 0 16 16"
-          aria-hidden="true"
-          class="size-4"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="1.8"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        >
-          <path d="M13 8H3M7 4 3 8l4 4" />
-        </svg>
-        Volver a {app.name}
-      </a>
-
-      <p class="fl-eyebrow mt-8">Guía de uso</p>
-      <h1 class="mt-3 max-w-2xl text-3xl leading-[1.12] sm:text-4xl">Cómo usar Costos</h1>
-      <p class="fl-prose-lead mt-5 max-w-2xl">{lead}</p>
-
-      <div class="mt-8 flex flex-col gap-3 sm:flex-row">
-        <a
-          href={app.appUrl}
-          rel="noopener"
-          class="fl-btn fl-btn-primary px-5 py-3.5 text-base"
-        >
-          Abrir la app
-        </a>
-        <a href="/costos/" class="fl-btn fl-btn-secondary px-5 py-3.5 text-base">
-          Ver qué hace Costos
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============================ ÍNDICE =========================== -->
-  <section class="fl-container py-12 md:py-16">
-    <nav aria-labelledby="indice" class="fl-card max-w-2xl p-6 md:p-7">
-      <h2 id="indice" class="font-display text-xs font-semibold tracking-widest text-ink uppercase">
-        En esta guía
-      </h2>
-      <ol class="mt-5 grid gap-x-8 gap-y-2.5 sm:grid-cols-2">
-        {
-          sections.map((section, index) => (
-            <li class="flex gap-2.5 text-[0.9375rem] leading-snug">
-              <span class="font-display text-sm font-semibold text-accent tabular-nums">
-                {index + 1}.
-              </span>
-              <a
-                href={`#${section.id}`}
-                class="rounded text-muted transition-colors hover:text-ink"
-              >
-                {section.title}
-              </a>
-            </li>
-          ))
-        }
-      </ol>
-    </nav>
-  </section>
-
-  <!-- =========================== SECCIONES ========================= -->
-  <div class="fl-container pb-8">
-    {
-      sections.map((section, index) => (
-        <section id={section.id} class="max-w-2xl scroll-mt-24 border-t border-line py-12 md:py-16">
-          <p class="font-display text-sm font-bold text-accent">Paso {index + 1}</p>
-          <h2 class="mt-2 text-2xl md:text-3xl">{section.title}</h2>
-
-          {section.intro && (
-            <p class="mt-4 text-[0.9375rem] leading-relaxed text-muted md:text-base">
-              {section.intro}
-            </p>
-          )}
-
-          {section.steps && (
-            <ol class="mt-7 space-y-4">
-              {section.steps.map((step, stepIndex) => (
-                <li class="flex gap-3.5">
-                  <span class="flex size-7 shrink-0 items-center justify-center rounded-full bg-accent-soft font-display text-[0.8125rem] font-bold text-accent tabular-nums">
-                    {stepIndex + 1}
-                  </span>
-                  <span class="pt-0.5 text-[0.9375rem] leading-relaxed text-ink md:text-base">
-                    {step}
-                  </span>
-                </li>
-              ))}
-            </ol>
-          )}
-
-          {section.list && (
-            <dl class="mt-7 space-y-5">
-              {section.list.map((item) => (
-                <div class="border-l-2 border-accent/30 pl-4">
-                  <dt class="font-display text-[0.9375rem] font-semibold text-ink md:text-base">
-                    {item.term}
-                  </dt>
-                  <dd class="mt-1.5 text-[0.9375rem] leading-relaxed text-muted">{item.text}</dd>
-                </div>
-              ))}
-            </dl>
-          )}
-
-          {section.note && (
-            <p class="mt-7 rounded-card border border-line bg-surface p-4 text-[0.9375rem] leading-relaxed text-muted">
-              {section.note}
-            </p>
-          )}
-
-          {section.figures && (
-            <div class="mt-8 grid gap-5 sm:grid-cols-[repeat(auto-fit,minmax(0,1fr))]">
-              {section.figures.map((figure) => (
-                <figure
-                  class:list={[
-                    'overflow-hidden rounded-card-lg border border-line bg-surface shadow-card',
-                    figure.shape === 'phone' && 'mx-auto w-full max-w-[13rem] sm:max-w-[14rem]',
-                  ]}
-                >
-                  <Cover
-                    src={microappImage(figure.src)}
-                    alt={figure.alt}
-                    widths={figure.shape === 'phone' ? [240, 480, 736] : [480, 768, 1200]}
-                    sizes={
-                      figure.shape === 'phone'
-                        ? '(min-width: 640px) 224px, 208px'
-                        : '(min-width: 768px) 672px, 92vw'
-                    }
-                    class="w-full"
-                  />
-                </figure>
-              ))}
-            </div>
-          )}
-        </section>
-      ))
-    }
-  </div>
-
-  <!-- ========================== CTA FINAL ========================== -->
-  <section class="fl-container pb-20 md:pb-24">
-    <div class="max-w-2xl rounded-card-lg border border-accent/25 bg-accent-soft p-8 md:p-10">
-      <h2 class="text-2xl">¿Lista la teoría?</h2>
-      <p class="mt-3 text-[0.9375rem] leading-relaxed text-muted">
-        Abre la app y carga tu primer producto. Si algo no se entiende o algo no funciona como
-        esperabas, escríbenos: contestamos nosotros, no un formulario.
-      </p>
-      <div class="mt-7 flex flex-col gap-3 sm:flex-row">
-        <a href={app.appUrl} rel="noopener" class="fl-btn fl-btn-primary px-5 py-3.5 text-base">
-          Abrir la app
-        </a>
-        <a
-          href={`mailto:${site.email}`}
-          class="fl-btn fl-btn-secondary px-5 py-3.5 text-base"
-        >
-          Escribirnos
-        </a>
-      </div>
-    </div>
-  </section>
-</BaseLayout>
+  sections={sections}
+/>

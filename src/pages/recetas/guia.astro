@@ -1,0 +1,299 @@
+---
+/**
+ * Guía de uso de Recetas.
+ * Acá viven solo los textos: el formato lo pone GuideLayout.
+ */
+import GuideLayout, { type Section } from '../../layouts/GuideLayout.astro';
+import { microapps } from '../../data/microapps';
+import { site } from '../../data/site';
+
+const app = microapps.find((item) => item.slug === 'recetas')!;
+
+const sections: Section[] = [
+  {
+    id: 'activar',
+    title: 'Activar tu licencia',
+    intro:
+      'Cuando compras Recetas te llega un correo con tu clave de licencia. Tiene cuatro bloques y empieza con FL, por ejemplo FL-XQ43-SJBY-HGW3.',
+    steps: [
+      'Abre recetas.futurislabs.net en el navegador.',
+      'Busca el correo de la compra y copia la clave completa, con los guiones.',
+      'Pégala en el campo «Tu clave de licencia» y toca Activar.',
+      'Listo: la app queda habilitada en ese dispositivo y no te la vuelve a pedir.',
+    ],
+    note: 'La misma clave te sirve para hasta 3 dispositivos. Por ejemplo, la computadora de tu casa, el celular que usas en la cocina y una tablet.',
+    figures: [
+      {
+        src: 'recetas-guia-activar.webp',
+        alt: 'Pantalla de activación de Recetas con el campo «Tu clave de licencia» y el botón Activar.',
+        shape: 'phone',
+      },
+    ],
+  },
+  {
+    id: 'instalar',
+    title: 'Instalar la app en tu celular',
+    intro:
+      'Recetas funciona en el navegador, pero conviene instalarla: queda como una app más en la pantalla de inicio, abre sin la barra del navegador y funciona sin internet. En la cocina eso se nota.',
+    list: [
+      {
+        term: 'iPhone (Safari)',
+        text: 'Abre recetas.futurislabs.net en Safari, toca el botón Compartir (el cuadrado con la flecha hacia arriba) y elige «Agregar a inicio».',
+      },
+      {
+        term: 'Android (Chrome)',
+        text: 'Abre recetas.futurislabs.net en Chrome, toca el menú de los tres puntos y elige «Instalar app» o «Agregar a pantalla principal».',
+      },
+    ],
+    note: 'Además de la comodidad, instalarla protege tus datos: quedan guardados en el teléfono y no se pierden si cierras una pestaña por error.',
+    figures: [
+      {
+        src: 'recetas-cel-8-inicio.webp',
+        alt: 'La app Recetas ya instalada, con su ícono en la pantalla de inicio del celular.',
+        shape: 'phone',
+      },
+    ],
+  },
+  {
+    id: 'configuracion',
+    title: 'Configuración inicial',
+    intro:
+      'Antes de cargar recetas conviene dejar listos los Ajustes. Se hace una sola vez y es lo que permite que los costos y los presupuestos salgan bien.',
+    steps: [
+      'Pon el nombre de tu emprendimiento y, si tienes, sube tu logo: van en los PDF y en los presupuestos que le mandas al cliente.',
+      'Elige tu moneda. Se usa para mostrar todos los importes y para redondear los precios.',
+      'Carga el valor de tu hora de trabajo. Tu tiempo también es un costo.',
+      'Indica cuánto te cuesta una hora de horno, por el gas o la luz que consume.',
+      'Carga tus costos fijos mensuales y cuántas cosas vendes por mes, para que la app los reparta entre lo que produces.',
+    ],
+    note: 'El logo queda guardado solo en ese navegador: no se sube a ningún servidor.',
+    figures: [
+      {
+        src: 'recetas-guia-config.webp',
+        alt: 'Ajustes de Recetas: nombre del emprendimiento, logo, moneda, valor de la hora de trabajo y costo de la hora de horno.',
+        shape: 'phone',
+      },
+    ],
+  },
+  {
+    id: 'despensa',
+    title: 'Tu despensa',
+    intro:
+      'La despensa son tus ingredientes con el precio de la presentación en la que los compras. Se cargan una vez y se comparten entre todas las recetas.',
+    steps: [
+      'Toca «+ Nuevo» y ponle nombre al ingrediente.',
+      'Carga cuánto trae el paquete y en qué unidad: 900 mililitros, 1 kilo, 12 unidades.',
+      'Pon el precio de esa presentación, tal como lo pagas.',
+      'Si parte se descarta, carga el porcentaje de merma.',
+      'Si lo mides en tazas o cucharadas, completa las medidas caseras de ese ingrediente.',
+      'Cuando llegan los aumentos, marca los ingredientes que subieron —o toca «Seleccionar todos»—, usa «Actualizar precios» y pon el porcentaje. Todas las recetas que los usan quedan recalculadas al instante.',
+    ],
+    note: 'La merma es lo que compras y no llega al producto. Si de un kilo de frutillas usas 800 gramos porque el resto se descarta, cargas 20 % de merma y el costo real sube como corresponde. Y ojo con las medidas caseras: una taza de harina y una taza de azúcar no pesan lo mismo, por eso cada ingrediente tiene la suya.',
+    figures: [
+      {
+        src: 'recetas-guia-ingrediente.webp',
+        alt: 'Formulario de ingrediente: cantidad que trae, unidad, precio de la presentación, merma y medidas caseras.',
+        shape: 'phone',
+      },
+      {
+        src: 'recetas-cel-3-despensa.webp',
+        alt: 'La despensa con los ingredientes listados y los botones Seleccionar todos y Actualizar precios.',
+        shape: 'phone',
+      },
+    ],
+  },
+  {
+    id: 'preparaciones',
+    title: 'Recetas base y rendimiento',
+    intro:
+      'Una preparación es una receta base: el bizcochuelo, la ganache, el almíbar. La cargas una vez y después la usas en todos los productos que la lleven.',
+    steps: [
+      'Entra a Preparaciones y toca para crear una nueva.',
+      'Ponle nombre y, si quieres, notas: temperatura, tiempo de horno, trucos.',
+      'Agrega los ingredientes eligiéndolos de la despensa, con su cantidad en gramos, mililitros, unidades o en tazas y cucharadas.',
+      'Indica cuánto rinde la preparación, para que la app sepa cuánto entra en cada producto.',
+    ],
+    figures: [
+      {
+        src: 'recetas-guia-preparacion.webp',
+        alt: 'Una preparación con su nombre, sus notas y la lista de ingredientes tomados de la despensa.',
+        shape: 'phone',
+      },
+    ],
+  },
+  {
+    id: 'molde',
+    title: 'Escalar por molde',
+    intro:
+      'Tienes la receta para un molde y te piden otro tamaño. En vez de rehacer las cuentas, la app escala los ingredientes por superficie.',
+    steps: [
+      'Abre la preparación y busca el bloque «Molde y escalado».',
+      'Carga la forma y el diámetro del molde para el que está escrita la receta.',
+      'Carga el molde que necesitas ahora.',
+      'La app te muestra el factor y los ingredientes escalados. Puedes guardar la receta escalada o copiarla.',
+    ],
+    note: 'Ejemplo: de un molde de 20 cm a uno de 24 cm hay que multiplicar todo por 1,44. No es la diferencia de diámetro, es la de superficie, y es el error más común al escalar a ojo.',
+    figures: [
+      {
+        src: 'recetas-cel-4-molde.webp',
+        alt: 'Bloque de molde y escalado: de 20 cm a 24 cm, multiplicando los ingredientes por 1,44.',
+        shape: 'phone',
+      },
+    ],
+  },
+  {
+    id: 'producto',
+    title: 'Armar un producto',
+    intro:
+      'El producto es lo que vendes: la torta terminada. Se arma con las preparaciones que lleva más todo lo demás que sale de tu bolsillo.',
+    steps: [
+      'Crea el producto y ponle nombre, por ejemplo «Torta de chocolate 24 cm».',
+      'Agrega las preparaciones que lleva y cuánto entra de cada una.',
+      'Carga el packaging y la decoración: la caja, la base, el moño, las velas.',
+      'Suma los minutos de tu mano de obra y las horas de horno.',
+      'Indica en cuántas porciones se corta, para ver el costo por porción.',
+    ],
+    note: 'Los costos fijos del mes se reparten solos, con lo que cargaste en Ajustes. Por eso el total que ves es lo que de verdad te sale poner esa torta en la mesa, no solo los ingredientes.',
+    figures: [
+      {
+        src: 'recetas-cel-1-costo.webp',
+        alt: 'Costo del producto: $ 14.500 en total y $ 906 por porción, desglosado en ingredientes, preparaciones, packaging, mano de obra, horno y costos fijos.',
+        shape: 'phone',
+      },
+    ],
+  },
+  {
+    id: 'precio',
+    title: 'Precio y canales de venta',
+    intro:
+      'Con el costo listo, el precio sale de dos maneras: le dices qué margen quieres, o escribes el precio que tenías pensado y miras qué margen te deja.',
+    steps: [
+      'Elige «Quiero un margen» y escribe el porcentaje: la app te muestra el precio sugerido y la ganancia por unidad.',
+      'O elige «Tengo un precio», escribe el que querías cobrar y fíjate si el margen te cierra.',
+      'Carga los canales por los que vendes con su comisión: venta directa, PedidosYa o Rappi, Mercado Libre, tarjeta.',
+      'Mira la columna «Precio necesario»: es lo que tienes que cobrar en cada canal para quedarte con el mismo margen.',
+    ],
+    note: 'Las comisiones de las apps de delivery son altas. Si cobras lo mismo ahí que en venta directa, esa torta te deja mucho menos de lo que pensabas, o directamente pierde.',
+    figures: [
+      {
+        src: 'recetas-cel-2-precio.webp',
+        alt: 'Precio de venta con margen del 55 %, precio sugerido de $ 32.300 y la tabla de canales con PedidosYa y Rappi.',
+        shape: 'phone',
+      },
+    ],
+  },
+  {
+    id: 'presupuestos',
+    title: 'Presupuestos para clientes',
+    intro:
+      'Cuando el producto está costeado, el presupuesto sale solo y siempre igual: con la fecha de entrega, las porciones, el total, la seña y el saldo.',
+    steps: [
+      'Desde el producto, toca «Presupuestar» y completa los datos del pedido: para quién es, cuándo se entrega, si se retira o se envía.',
+      'Pon el porcentaje de seña que pides. La app calcula la seña y el saldo a pagar contra entrega.',
+      'Toca «Descargar PDF» para adjuntarlo, o «Copiar para WhatsApp» para pegar el texto en el chat.',
+      'Mándalo y listo. Abajo te queda a la vista cuánto te costó y qué margen te deja a ese precio.',
+    ],
+    figures: [
+      {
+        src: 'recetas-cel-5-presupuesto.webp',
+        alt: 'Presupuesto con total, seña y saldo, y los botones para descargar el PDF o copiar el texto para WhatsApp.',
+        shape: 'phone',
+      },
+      {
+        src: 'recetas-cel-6-whatsapp.webp',
+        alt: 'El presupuesto ya pegado en un chat de WhatsApp, con la entrega, las porciones, el total y la seña.',
+        shape: 'phone',
+      },
+    ],
+  },
+  {
+    id: 'compras',
+    title: 'Lista de compras',
+    intro:
+      'De los pedidos que tienes armados sale la lista de lo que hay que comprar, en la presentación en la que se compra.',
+    steps: [
+      'Entra a la lista de compras.',
+      'Vas a ver cuántos paquetes necesitas de cada ingrediente y cuánto vas a usar de cada uno.',
+      'Abajo tienes los dos totales: lo que vas a gastar comprando paquetes enteros y lo que de verdad entra en los pedidos.',
+      'Cópiala para WhatsApp o compártela, y vas al proveedor con la lista hecha.',
+    ],
+    note: 'Si algún ingrediente no tiene precio en la despensa, la app te avisa arriba: ese total va a quedar más bajo que el real hasta que lo cargues.',
+    figures: [
+      {
+        src: 'recetas-cel-7-compras.webp',
+        alt: 'Lista de compras con los paquetes a comprar, el total comprando paquetes enteros y el costo de lo que se va a usar.',
+        shape: 'phone',
+      },
+    ],
+  },
+  {
+    id: 'copias',
+    title: 'Pasar tus datos a otro dispositivo y hacer copias',
+    intro:
+      'Tus recetas se guardan en el dispositivo donde las cargaste. No viajan solas entre la computadora y el celular: las pasas tú con Exportar e Importar.',
+    steps: [
+      'En el dispositivo que tiene los datos, abre el Menú y toca «Exportar datos». Se descarga un archivo.',
+      'Pásalo al otro dispositivo como pasarías cualquier archivo: por mail, WhatsApp o la nube que uses.',
+      'En el otro dispositivo, abre el Menú y toca «Importar datos». Elige el archivo y listo.',
+    ],
+    note: 'Ese mismo archivo es tu copia de seguridad. Conviene exportar cada 14 días, y siempre antes de cambiar de teléfono o de limpiar el navegador. Perder la despensa entera por un borrado de datos duele.',
+    figures: [
+      {
+        src: 'recetas-guia-exportar.webp',
+        alt: 'Menú abierto con las opciones Exportar datos, Importar datos, Ayuda y Desactivar en este dispositivo.',
+        shape: 'phone',
+      },
+    ],
+  },
+  {
+    id: 'cambiar-dispositivo',
+    title: 'Cambiar de celular o de computadora',
+    intro:
+      'La licencia vale para 3 dispositivos. Si vas a dejar de usar uno, libera el lugar antes de activar el nuevo.',
+    steps: [
+      'En el dispositivo viejo, exporta tus datos (ver el punto anterior).',
+      'Abre el Menú y toca «Desactivar en este dispositivo». Confirma.',
+      'En el dispositivo nuevo, pega tu clave de licencia y activa.',
+      'Importa el archivo que exportaste y sigues donde habías quedado.',
+    ],
+    note: `¿Se te perdió o se rompió el celular antes de desactivarlo? Escríbenos a ${site.email} con tu clave de licencia y liberamos el lugar nosotros.`,
+  },
+  {
+    id: 'problemas',
+    title: 'Problemas frecuentes',
+    list: [
+      {
+        term: '«Llegaste al máximo de dispositivos»',
+        text: 'Ya tienes las 3 activaciones usadas. Desactiva la licencia en alguno de los dispositivos que no uses (Menú → Desactivar en este dispositivo). Si no tienes acceso a ninguno, escríbenos y lo resolvemos.',
+      },
+      {
+        term: 'No me llegó la clave',
+        text: `Revisa la carpeta de spam o correo no deseado, y busca por «Futurislabs». Si no aparece, escríbenos a ${site.email} desde el correo con el que compraste y te la reenviamos.`,
+      },
+      {
+        term: 'Los costos me dan en cero',
+        text: 'Casi siempre es que los ingredientes están en la despensa pero sin precio. La app te avisa arriba cuántos están así. Carga el precio de los que uses: el resto puede quedar en cero sin problema.',
+      },
+      {
+        term: 'Borré los datos del navegador',
+        text: 'Si limpiaste el navegador, la despensa y las recetas se pierden, porque viven en tu dispositivo. Vuelve a importar tu último archivo exportado. Si no tenías ninguno, hay que cargarlas de nuevo: por eso conviene exportar seguido.',
+      },
+      {
+        term: 'La clave no es válida',
+        text: 'Casi siempre es un error de copiado: fíjate que estén los guiones y que no haya espacios al principio ni al final. Copia y pega la clave entera desde el correo en lugar de escribirla a mano.',
+      },
+    ],
+  },
+];
+
+const lead =
+  'Todo lo que necesitas saber para usar Recetas: activar tu licencia, cargar la despensa, armar tus recetas, escalarlas a otro molde y mandar el presupuesto por WhatsApp con el precio que te deja ganancia.';
+---
+
+<GuideLayout
+  app={app}
+  heading="Cómo usar Recetas"
+  lead={lead}
+  description="Guía paso a paso de Recetas: activar la licencia, cargar la despensa, armar recetas, escalar por molde, poner el precio y mandar presupuestos por WhatsApp."
+  sections={sections}
+/>

@@ -29,9 +29,11 @@ interface Props {
 
 const { app } = Astro.props;
 
-const cover = microappImage(app.image);
-/** Las vistas previas sociales recortan a 1200x630: ahí va la apaisada. */
-const social = microappImage(app.cardImage ?? app.image);
+/**
+ * El recuadro del hero y las vistas previas sociales son apaisados, así que
+ * usan la versión para ese formato. `image` puede ser vertical.
+ */
+const cover = microappImage(app.cardImage ?? app.image);
 const shots = microappImages(app.screenshots);
 const related = relatedMicroapps(app, 3);
 const soon = app.status === 'proximamente';
@@ -40,7 +42,7 @@ const priceArs = formatArs(app);
 const canonical = new URL(`/${app.slug}/`, Astro.site ?? site.url).href;
 
 const ogImage = await getImage({
-  src: social,
+  src: cover,
   format: 'jpeg',
   width: 1200,
   height: 630,
@@ -123,7 +125,7 @@ const jsonLd = {
   title={app.name}
   description={clampText(`${app.tagline} ${app.description}`)}
   socialDescription={app.description}
-  ogImage={social}
+  ogImage={cover}
   ogType="product"
   jsonLd={jsonLd}
 >

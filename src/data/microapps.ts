@@ -231,6 +231,143 @@ export const microapps: Microapp[] = [
   },
 
   {
+    slug: 'recetas',
+    name: 'Recetas',
+    tagline: 'Calcula cuánto te cuesta cada torta y cuánto cobrarla.',
+    description:
+      'Cargas tus ingredientes una vez con el precio del paquete, armas tus recetas con medidas caseras o en gramos, y la app te dice cuánto te cuesta cada torta y cada porción. Incluye tu hora de trabajo, el horno, el packaging y los costos fijos, y te deja el presupuesto listo para mandar por WhatsApp.',
+    category: 'Finanzas',
+    audience:
+      'Pasteleros, reposteros y emprendedores gastronómicos que venden por encargo: tortas, mesas dulces, catering y viandas.',
+    model: 'pago-unico',
+    priceUsd: 14,
+    priceArs: 17900,
+    appUrl: 'https://recetas.futurislabs.net',
+    demoUrl: 'https://recetas.futurislabs.net/?demo',
+    image: 'recetas-mk-1-costo.webp',
+    cardImage: 'recetas-mk-1-costo-wide.webp',
+    guideUrl: '/recetas/guia/',
+    gallery: [
+      {
+        src: 'recetas-mk-1-costo.webp',
+        alt: 'Costo de una torta: $ 14.500 en total y $ 906 por porción, repartidos entre ingredientes, packaging, mano de obra, horno y costos fijos.',
+      },
+      {
+        src: 'recetas-mk-2-despensa.webp',
+        alt: 'La despensa con los ingredientes cargados y el botón Actualizar precios para subirlos todos por porcentaje.',
+      },
+      {
+        src: 'recetas-mk-3-presupuesto.webp',
+        alt: 'Presupuesto con total, seña y saldo, y los botones para descargar el PDF o copiar el texto para WhatsApp.',
+      },
+      {
+        src: 'recetas-mk-4-molde.webp',
+        alt: 'Escalado de molde: la misma receta pasada de 20 cm a 24 cm multiplicando los ingredientes por 1,44.',
+      },
+      {
+        src: 'recetas-cel-6-whatsapp.webp',
+        alt: 'El presupuesto ya pegado en un chat de WhatsApp, con la fecha de entrega, las porciones, el total y la seña.',
+      },
+      {
+        src: 'recetas-cel-7-compras.webp',
+        alt: 'Lista de compras con la cantidad de paquetes a comprar, el total comprando paquetes enteros y el costo de lo que vas a usar.',
+      },
+    ],
+    mobile: {
+      title: 'Funciona en tu celular',
+      text: 'Se instala como una app más y queda en la pantalla de inicio, al lado de WhatsApp. Después de la primera vez funciona sin internet, así que puedes consultar una receta o armar un presupuesto en plena producción, con las manos llenas de harina. Tus datos quedan guardados en el teléfono.',
+      image: 'recetas-cel-8-inicio.webp',
+      alt: 'La app Recetas instalada en la pantalla de inicio del celular, junto a la app Costos.',
+    },
+    status: 'disponible',
+    featured: true,
+    problem: {
+      title: 'Cobrar «lo que cobran todos» te puede estar costando dinero',
+      points: [
+        'Miras lo que cobra la competencia y copias ese precio, sin saber si a ti te cuesta lo mismo hacerlo.',
+        'En la cuenta entran los ingredientes, pero no el gas del horno, el packaging ni las horas que le pusiste.',
+        'Los precios de los insumos suben todos los meses y las recetas siguen costeadas con los valores del año pasado.',
+        'Los presupuestos salen a mano por WhatsApp, cada uno distinto, y después no te acuerdas qué le cotizaste a quién.',
+      ],
+    },
+    features: [
+      {
+        title: 'Una despensa, todas las recetas',
+        text: 'Cargas cada ingrediente una sola vez con el precio del paquete que compras. Cuando aumenta, lo actualizas ahí y todas las recetas que lo usan se recalculan solas.',
+      },
+      {
+        title: 'Actualizar precios por porcentaje',
+        text: 'Si aumentó todo, no hace falta tocar ingrediente por ingrediente: seleccionas los que quieras, pones el porcentaje y listo.',
+      },
+      {
+        title: 'Medidas caseras y merma',
+        text: 'Mides en gramos, mililitros, unidades o en tazas y cucharadas, con la equivalencia de cada ingrediente. Y si algo se descarta —la frutilla que se pasó, la cáscara— lo cargas como merma y entra en el costo.',
+      },
+      {
+        title: 'Escalado por molde',
+        text: 'Tienes la receta para un molde de 20 cm y te piden una de 26: cambias el diámetro y la app escala todos los ingredientes por superficie, sin reglas de tres.',
+      },
+      {
+        title: 'Costo por torta y por porción',
+        text: 'Suma las preparaciones, el packaging y la decoración, tu mano de obra y las horas de horno, y le reparte los costos fijos del mes. Ves el total y cuánto sale cada porción.',
+      },
+      {
+        title: 'Precio por margen y por canal',
+        text: 'Indicas el margen que quieres y te da el precio, o al revés. Cargas la comisión de cada canal —PedidosYa, Rappi, Mercado Libre, tarjeta— y ves cuánto tienes que cobrar en cada uno para que el margen no se te escape.',
+      },
+      {
+        title: 'Presupuestos listos para mandar',
+        text: 'El presupuesto sale en PDF con tu nombre y tu logo, o como texto listo para pegar en WhatsApp, con la fecha de entrega, las porciones, el total, la seña y el saldo.',
+      },
+      {
+        title: 'Lista de compras automática',
+        text: 'De los pedidos que tienes armados sale la lista de lo que hay que comprar, en la presentación en la que se compra, con el total de los paquetes enteros y el costo de lo que realmente vas a usar.',
+      },
+    ],
+    steps: [
+      'Carga tus ingredientes con el precio del paquete y lo que trae.',
+      'Arma tus preparaciones y productos con las cantidades de cada uno.',
+      'Suma tu mano de obra, el horno y el packaging.',
+      'Elige el margen, mira el precio por canal y manda el presupuesto.',
+    ],
+    faqs: [
+      {
+        q: '¿Hay una guía de uso?',
+        a: 'Sí. Está todo explicado paso a paso, con capturas: activar la licencia, cargar la despensa, armar una receta, escalarla a otro molde, poner el precio y mandar el presupuesto.',
+        link: { href: '/recetas/guia/', label: 'Ver la guía de uso →' },
+      },
+      {
+        q: '¿Puedo usar tazas y cucharadas?',
+        a: 'Sí. Cada ingrediente tiene su propia equivalencia, porque una taza de harina y una taza de azúcar no pesan lo mismo. Cargas cuántos gramos o mililitros son una taza, una cucharada y una cucharadita, y después mides como estás acostumbrado.',
+      },
+      {
+        q: '¿Qué pasa cuando aumentan los precios?',
+        a: 'No tienes que rehacer nada. Vas a la despensa, seleccionas los ingredientes que aumentaron, pones el porcentaje y se actualizan todos juntos. Todas las recetas que los usan quedan recalculadas al instante.',
+      },
+      {
+        q: '¿Sirve si no hago tortas?',
+        a: 'Sí. Está pensada para pastelería, pero funciona igual para cualquier cosa que se arme con una receta: panadería, catering, viandas, conservas, bombones. Lo único propio de las tortas es el escalado por molde.',
+      },
+      {
+        q: '¿Mis datos se pasan solos entre la compu y el celu?',
+        a: 'No, se guardan en cada dispositivo. Usa Exportar e Importar para pasarlos.',
+      },
+      {
+        q: '¿En cuántos dispositivos puedo usarla?',
+        a: 'La licencia te habilita hasta 3 dispositivos. Por ejemplo, la computadora de tu casa, el celular que usas en la cocina y una tablet.',
+      },
+      {
+        q: '¿Necesito internet para usarla?',
+        a: 'No. Después de abrirla la primera vez funciona sin conexión, y puedes instalarla como app en el celular o la computadora.',
+      },
+      {
+        q: '¿Dónde quedan guardados mis datos?',
+        a: 'En tu propio dispositivo. No se suben a ningún servidor ni los vemos nosotros. Puedes exportar un archivo de respaldo cuando quieras y volver a cargarlo donde lo necesites.',
+      },
+    ],
+  },
+
+  {
     slug: 'presupuestos-pdf-para-oficios',
     name: 'Presupuestos PDF para Oficios',
     tagline: 'Arma un presupuesto profesional en PDF desde el celular, en dos minutos.',
