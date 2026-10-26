@@ -92,7 +92,7 @@ export const microapps: Microapp[] = [
       'Emprendedores que fabrican o arman lo que venden: pastelería, cosmética, textil, carpintería, bisutería.',
     model: 'pago-unico',
     priceUsd: 12,
-    priceArs: 14900,
+    priceArs: 17900,
     checkoutUsd:
       'https://futurislabs.lemonsqueezy.com/checkout/buy/e9985b8c-1fe2-49fe-a0cb-f14b0c6efaf2',
     appUrl: 'https://costos.futurislabs.net',
@@ -242,6 +242,8 @@ export const microapps: Microapp[] = [
     model: 'pago-unico',
     priceUsd: 14,
     priceArs: 17900,
+    checkoutUsd:
+      'https://futurislabs.lemonsqueezy.com/checkout/buy/3746a744-2619-4481-b336-052444de8cc1',
     appUrl: 'https://recetas.futurislabs.net',
     demoUrl: 'https://recetas.futurislabs.net/?demo',
     image: 'recetas-mk-1-costo.webp',
