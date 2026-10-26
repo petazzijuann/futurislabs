@@ -1,0 +1,296 @@
+---
+/**
+ * Guía de uso de Presupuestos.
+ * Acá viven solo los textos: el formato lo pone GuideLayout.
+ */
+import GuideLayout, { type Section } from '../../layouts/GuideLayout.astro';
+import { microapps } from '../../data/microapps';
+import { site } from '../../data/site';
+
+const app = microapps.find((item) => item.slug === 'presupuestos')!;
+
+const sections: Section[] = [
+  {
+    id: 'activar',
+    title: 'Activar tu licencia',
+    intro:
+      'Cuando compras Presupuestos te llega un correo con tu clave de licencia. Tiene cuatro bloques y empieza con FL, por ejemplo FL-XQ43-SJBY-HGW3.',
+    steps: [
+      'Abre presupuestos.futurislabs.net en el navegador.',
+      'Busca el correo de la compra y copia la clave completa, con los guiones.',
+      'Pégala en el campo «Tu clave de licencia» y toca Activar.',
+      'Listo: la app queda habilitada en ese dispositivo y no te la vuelve a pedir.',
+    ],
+    note: 'La misma clave te sirve para hasta 3 dispositivos. Por ejemplo, el celular que llevas a la obra, la computadora de tu casa y una tablet.',
+    figures: [
+      {
+        src: 'presupuestos-guia-activar.webp',
+        alt: 'Pantalla de activación de Presupuestos con el campo «Tu clave de licencia» y el botón Activar.',
+        shape: 'phone',
+      },
+    ],
+  },
+  {
+    id: 'instalar',
+    title: 'Instalar la app en tu celular',
+    intro:
+      'Presupuestos funciona en el navegador, pero conviene instalarla: queda como una app más en la pantalla de inicio, abre sin la barra del navegador y funciona sin internet. En una obra sin señal eso se nota.',
+    list: [
+      {
+        term: 'iPhone (Safari)',
+        text: 'Abre presupuestos.futurislabs.net en Safari, toca el botón Compartir (el cuadrado con la flecha hacia arriba) y elige «Agregar a inicio».',
+      },
+      {
+        term: 'Android (Chrome)',
+        text: 'Abre presupuestos.futurislabs.net en Chrome, toca el menú de los tres puntos y elige «Instalar app» o «Agregar a pantalla principal».',
+      },
+    ],
+    note: 'Además de la comodidad, instalarla protege tus datos: quedan guardados en el teléfono y no se pierden si cierras una pestaña por error.',
+    figures: [
+      {
+        src: 'presupuestos-cel-7-inicio.webp',
+        alt: 'La app Presupuestos ya instalada, con su ícono en la pantalla de inicio del celular.',
+        shape: 'phone',
+      },
+    ],
+  },
+  {
+    id: 'negocio',
+    title: 'Configurar tu negocio',
+    intro:
+      'Son tres pasos y se hacen una sola vez. Esto es lo que después aparece en cada presupuesto, así que vale la pena completarlo bien.',
+    steps: [
+      'Tu negocio: nombre o razón social, teléfono o WhatsApp, zona de trabajo y moneda. Es lo que el cliente ve arriba del presupuesto.',
+      'Sube tu logo. Va en el encabezado del PDF, al lado de tus datos.',
+      'Tu oficio: elige el tuyo para que la app te deje el catálogo precargado con los ítems típicos.',
+      'Tus condiciones: el porcentaje de seña que pides, la garantía que das y la validez del presupuesto. Si facturas con IVA, actívalo acá.',
+    ],
+    note: 'La garantía y las notas se escriben una vez y salen en todos los presupuestos. Igual puedes cambiarlas en uno puntual sin tocar la configuración general.',
+    figures: [
+      {
+        src: 'presupuestos-guia-negocio.webp',
+        alt: 'Configuración «Mi negocio» con el nombre, el teléfono, la zona de trabajo y la moneda.',
+        shape: 'phone',
+      },
+    ],
+  },
+  {
+    id: 'catalogo',
+    title: 'Tu catálogo de ítems',
+    intro:
+      'El catálogo son los trabajos y materiales que usas siempre, con su precio. Se carga una vez y después armar un presupuesto es elegir de una lista.',
+    steps: [
+      'Entra a Catálogo. Vas a ver los ítems precargados de tu oficio.',
+      'Toca cualquiera para ponerle tu precio: la app te avisa arriba cuántos están todavía sin número.',
+      'Toca «+ Ítem» para agregar los tuyos: tipo (mano de obra o material), nombre, unidad, precio y categoría.',
+      'Cuando llegan los aumentos, usa «Actualizar precios»: eliges el porcentaje y el alcance, y sube todo junto.',
+    ],
+    note: 'En «Actualizar precios» tienes atajos de +5 %, +10 %, +15 %, +20 % y +30 %, y también puedes escribir el número a mano. Con un porcentaje negativo bajas precios. Los ítems que todavía no tienen precio quedan como están.',
+    figures: [
+      {
+        src: 'presupuestos-guia-item.webp',
+        alt: 'Formulario para editar un ítem del catálogo: tipo, nombre, unidad, precio unitario y categoría.',
+        shape: 'phone',
+      },
+      {
+        src: 'presupuestos-cel-5-catalogo.webp',
+        alt: 'El catálogo con la ventana de actualizar precios, los atajos de porcentaje y el alcance.',
+        shape: 'phone',
+      },
+    ],
+  },
+  {
+    id: 'armar',
+    title: 'Armar un presupuesto',
+    intro:
+      'Con el catálogo cargado, el presupuesto se arma en la casa del cliente, mientras miras el trabajo.',
+    steps: [
+      'Toca «+ Nuevo» y carga los datos del cliente: nombre, teléfono y dirección de la obra.',
+      'Escribe en una línea el trabajo a realizar y agrega los ítems con su cantidad.',
+      'Si corresponde, carga el descuento, en porcentaje o en monto, y el IVA.',
+      'Revisa la seña y el saldo: salen solos del porcentaje que configuraste.',
+      'Suma hasta tres fotos del trabajo para que quede claro de qué se trata.',
+    ],
+    note: 'La app separa sola el subtotal de mano de obra del de materiales. Al cliente le sirve para entender qué está pagando, y a ti para ver de dónde sale tu ganancia.',
+    figures: [
+      {
+        src: 'presupuestos-cel-1-items.webp',
+        alt: 'Carga de ítems con sus cantidades y precios, y los subtotales de mano de obra y materiales.',
+        shape: 'phone',
+      },
+      {
+        src: 'presupuestos-guia-fotos.webp',
+        alt: 'Bloque de garantía y notas, las fotos del trabajo y los botones para enviar y guardar.',
+        shape: 'phone',
+      },
+    ],
+  },
+  {
+    id: 'enviar',
+    title: 'Generar el PDF y mandarlo por WhatsApp',
+    intro:
+      'Este es el paso que marca la diferencia: el cliente recibe un PDF prolijo en lugar de un audio de tres minutos.',
+    steps: [
+      'Abajo del presupuesto, toca «Enviar por WhatsApp».',
+      'Se genera el PDF y se abre WhatsApp con el mensaje ya escrito: número de presupuesto, total y hasta cuándo vale.',
+      'Elige el chat del cliente y mándalo.',
+      'Si prefieres guardarlo o mandarlo por mail, usa «Descargar PDF». Y «Copiar resumen» te deja el texto solo, sin el archivo.',
+    ],
+    list: [
+      {
+        term: 'En iPhone',
+        text: 'Si aparece el menú de compartir, elige WhatsApp y después el contacto. El PDF se adjunta como documento.',
+      },
+      {
+        term: 'En Android',
+        text: 'Lo mismo: se abre el selector de apps, eliges WhatsApp y el chat. Si el teléfono pregunta, mándalo como documento y no como imagen.',
+      },
+    ],
+    figures: [
+      {
+        src: 'presupuestos-cel-3-whatsapp.webp',
+        alt: 'El PDF del presupuesto ya enviado en el chat de WhatsApp, con el mensaje que lo acompaña.',
+        shape: 'wide',
+      },
+    ],
+  },
+  {
+    id: 'plantillas',
+    title: 'Plantillas y duplicar',
+    intro:
+      'Si hay trabajos que haces todo el tiempo, no los armes de cero cada vez.',
+    steps: [
+      'Arma el presupuesto una vez y guárdalo como plantilla.',
+      'La próxima, parte de esa plantilla: ya vienen los ítems cargados.',
+      'Cambia el cliente y las cantidades, y el presupuesto queda listo.',
+      'También puedes duplicar un presupuesto viejo si el trabajo nuevo se parece.',
+    ],
+    note: 'Las plantillas toman los precios actuales del catálogo, así que si actualizaste precios no vas a mandar los del mes pasado por error.',
+  },
+  {
+    id: 'estados',
+    title: 'Estados y seguimiento',
+    intro:
+      'Cada presupuesto pasa por estados. Mantenerlos al día es lo que hace que la app te avise a quién hay que llamar.',
+    steps: [
+      'Un presupuesto nace como Borrador y pasa a Enviado cuando lo mandas.',
+      'Cuando el cliente te dice que sí, márcalo como Aceptado. Si te dice que no, Rechazado.',
+      'Al terminar el trabajo pásalo a Terminado, y cuando te paguen, a Cobrado.',
+      'Mira la pestaña «Para seguir»: ahí están los enviados que llevan tres días o más sin respuesta.',
+    ],
+    note: 'Esa pestaña es el recordatorio que normalmente no existe. La mayoría de los trabajos que se pierden no se pierden por precio: se pierden porque nadie volvió a llamar.',
+    figures: [
+      {
+        src: 'presupuestos-guia-estados.webp',
+        alt: 'Ventana para cambiar el estado: borrador, enviado, aceptado, rechazado, terminado y cobrado.',
+        shape: 'phone',
+      },
+    ],
+  },
+  {
+    id: 'resumen',
+    title: 'El resumen del mes',
+    intro:
+      'Arriba de la lista de presupuestos tienes cómo viene el mes, sin tener que sacar ninguna cuenta.',
+    steps: [
+      'Presupuestado: cuánto mandaste en total este mes.',
+      'Aceptado: cuánto de eso te dijeron que sí.',
+      'Aceptación: qué porcentaje de lo que presupuestas se convierte en trabajo.',
+      'Por cobrar: lo que ya terminaste y todavía no te pagaron.',
+    ],
+    note: 'El porcentaje de aceptación es el dato más útil de todos. Si es muy bajo, estás caro o el presupuesto no se entiende. Si es del 100 %, probablemente estés barato.',
+    figures: [
+      {
+        src: 'presupuestos-cel-6-resumen.webp',
+        alt: 'Resumen del mes con lo presupuestado, lo aceptado, el porcentaje de aceptación y lo que queda por cobrar.',
+        shape: 'phone',
+      },
+    ],
+  },
+  {
+    id: 'comprobante',
+    title: 'Comprobante de trabajo',
+    intro:
+      'Cuando terminas el trabajo, la app genera un comprobante para el cliente con lo que se hizo y lo que se pagó.',
+    steps: [
+      'Pasa el presupuesto a Terminado.',
+      'Genera el comprobante y mándalo igual que el presupuesto, por WhatsApp o descargándolo.',
+      'Queda guardado junto al presupuesto, por si el cliente lo pide más adelante.',
+    ],
+    note: 'Ojo: el comprobante no es una factura y lo dice en el pie. Sirve como constancia del trabajo y del pago entre tú y tu cliente; la facturación va por donde la hagas hoy.',
+  },
+  {
+    id: 'copias',
+    title: 'Pasar tus datos a otro dispositivo y hacer copias',
+    intro:
+      'Tus presupuestos, tu catálogo y tus clientes se guardan en el dispositivo donde los cargaste. No viajan solos: los pasas tú con Exportar e Importar.',
+    steps: [
+      'En el dispositivo que tiene los datos, abre el Menú y toca «Exportar datos». Se descarga un archivo.',
+      'Pásalo al otro dispositivo como pasarías cualquier archivo: por mail, WhatsApp o la nube que uses.',
+      'En el otro dispositivo, abre el Menú y toca «Importar datos». Elige el archivo y listo.',
+    ],
+    note: 'El archivo incluye tu logo y las fotos de los trabajos, así que puede pesar bastante más que un respaldo de texto. Conviene exportar cada 14 días, y siempre antes de cambiar de teléfono o de limpiar el navegador.',
+    figures: [
+      {
+        src: 'presupuestos-guia-exportar.webp',
+        alt: 'Menú abierto con las opciones Exportar datos, Importar datos, Ayuda y Desactivar en este dispositivo.',
+        shape: 'phone',
+      },
+    ],
+  },
+  {
+    id: 'cambiar-dispositivo',
+    title: 'Cambiar de celular o de computadora',
+    intro:
+      'La licencia vale para 3 dispositivos. Si vas a dejar de usar uno, libera el lugar antes de activar el nuevo.',
+    steps: [
+      'En el dispositivo viejo, exporta tus datos (ver el punto anterior).',
+      'Abre el Menú y toca «Desactivar en este dispositivo». Confirma.',
+      'En el dispositivo nuevo, pega tu clave de licencia y activa.',
+      'Importa el archivo que exportaste y sigues donde habías quedado.',
+    ],
+    note: `¿Se te perdió o se rompió el celular antes de desactivarlo? Escríbenos a ${site.email} con tu clave de licencia y liberamos el lugar nosotros.`,
+  },
+  {
+    id: 'problemas',
+    title: 'Problemas frecuentes',
+    list: [
+      {
+        term: 'No me deja compartir el PDF',
+        text: 'Algunos teléfonos bloquean el compartir directo. El PDF igual se descarga: búscalo en tus descargas y mándalo desde WhatsApp, con Adjuntar → Documento. Llega exactamente igual.',
+      },
+      {
+        term: '«Llegaste al máximo de dispositivos»',
+        text: 'Ya tienes las 3 activaciones usadas. Desactiva la licencia en alguno de los dispositivos que no uses (Menú → Desactivar en este dispositivo). Si no tienes acceso a ninguno, escríbenos y lo resolvemos.',
+      },
+      {
+        term: 'No me llegó la clave',
+        text: `Revisa la carpeta de spam o correo no deseado, y busca por «Futurislabs». Si no aparece, escríbenos a ${site.email} desde el correo con el que compraste y te la reenviamos.`,
+      },
+      {
+        term: 'El PDF sale sin logo',
+        text: 'El logo se carga en Mi negocio y se guarda solo en ese dispositivo. Si cambiaste de teléfono o importaste datos viejos, vuelve a subirlo desde ahí.',
+      },
+      {
+        term: 'Los ítems me dan en cero',
+        text: 'Son ítems del catálogo precargado a los que todavía no les pusiste precio. La app te avisa arriba cuántos quedan así. Carga los que uses: el resto puede quedar en cero sin problema.',
+      },
+      {
+        term: 'Borré los datos del navegador',
+        text: 'Si limpiaste el navegador, el catálogo y los presupuestos se pierden, porque viven en tu dispositivo. Vuelve a importar tu último archivo exportado. Si no tenías ninguno, hay que cargarlos de nuevo: por eso conviene exportar seguido.',
+      },
+    ],
+  },
+];
+
+const lead =
+  'Todo lo que necesitas saber para usar Presupuestos: activar tu licencia, configurar tu negocio, cargar el catálogo de tu oficio, armar un presupuesto y mandarlo por WhatsApp en PDF.';
+---
+
+<GuideLayout
+  app={app}
+  heading="Cómo usar Presupuestos"
+  lead={lead}
+  description="Guía paso a paso de Presupuestos: activar la licencia, configurar tu negocio, cargar el catálogo, armar presupuestos y mandarlos por WhatsApp en PDF."
+  sections={sections}
+/>

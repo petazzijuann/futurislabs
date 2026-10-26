@@ -1,3 +1,7 @@
 # La calculadora de costos cambió de /calculadora-de-costos-y-precios/ a /costos/.
 /calculadora-de-costos-y-precios     /costos/   301
 /calculadora-de-costos-y-precios/*   /costos/   301
+
+# La microapp de presupuestos reemplaza a la entrada vieja de la biblioteca.
+/presupuestos-pdf-para-oficios       /presupuestos/   301
+/presupuestos-pdf-para-oficios/*     /presupuestos/   301
