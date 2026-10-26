@@ -240,7 +240,7 @@ export const microapps: Microapp[] = [
     audience:
       'Pasteleros, reposteros y emprendedores gastronómicos que venden por encargo: tortas, mesas dulces, catering y viandas.',
     model: 'pago-unico',
-    priceUsd: 14,
+    priceUsd: 12,
     priceArs: 17900,
     checkoutUsd:
       'https://futurislabs.lemonsqueezy.com/checkout/buy/3746a744-2619-4481-b336-052444de8cc1',
