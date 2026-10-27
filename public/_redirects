@@ -9,3 +9,11 @@
 # La microapp de turnos reemplaza a la entrada vieja de la biblioteca.
 /turnos-online-para-peluquerias      /turnos/   301
 /turnos-online-para-peluquerias/*    /turnos/   301
+
+# Microapps de ejemplo que ya no están en la biblioteca.
+/calculadora-mercado-libre           /   301
+/calculadora-mercado-libre/*         /   301
+/control-de-stock-simple             /   301
+/control-de-stock-simple/*           /   301
+/generador-de-contenido-para-redes   /   301
+/generador-de-contenido-para-redes/* /   301

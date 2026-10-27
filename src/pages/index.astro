@@ -12,7 +12,10 @@ import { clampText } from '../lib/format';
 const apps = sortedMicroapps();
 const highlight = apps[0]!;
 const available = microapps.filter((app) => app.status === 'disponible').length;
-const cheapest = Math.min(...microapps.map((app) => app.priceUsd));
+/** Solo las que ya se pueden comprar: si no, el "desde" promete un precio que todavía no existe. */
+const cheapest = Math.min(
+  ...microapps.filter((app) => app.status === 'disponible').map((app) => app.priceUsd),
+);
 
 const steps = [
   {
