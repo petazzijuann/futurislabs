@@ -5,3 +5,7 @@
 # La microapp de presupuestos reemplaza a la entrada vieja de la biblioteca.
 /presupuestos-pdf-para-oficios       /presupuestos/   301
 /presupuestos-pdf-para-oficios/*     /presupuestos/   301
+
+# La microapp de turnos reemplaza a la entrada vieja de la biblioteca.
+/turnos-online-para-peluquerias      /turnos/   301
+/turnos-online-para-peluquerias/*    /turnos/   301

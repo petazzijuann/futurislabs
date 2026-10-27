@@ -15,6 +15,8 @@ import { formatArs, formatUsd, notifyMailto } from '../lib/format';
  * - Sin JavaScript se ven los dos botones, en orden USD y luego pesos.
  * - Si la microapp es "proximamente", en lugar de comprar se ofrece un aviso.
  * - Si tiene guía de uso propia, se enlaza debajo de los botones.
+ * - En las de suscripción con prueba gratis, el botón principal lleva a la
+ *   app: la suscripción se arranca ahí, no en un checkout del sitio.
  */
 interface Props {
   app: Microapp;
@@ -29,8 +31,13 @@ const priceUsd = formatUsd(app);
 const priceArs = formatArs(app);
 const showUsd = !soon && !!app.checkoutUsd;
 const showArs = !soon && !!app.checkoutArs && !!priceArs;
-/** Sin links de compra, la demo es la única acción: va como botón principal. */
-const demoIsPrimary = !soon && !showUsd && !showArs;
+/** Suscripción con prueba: se invita a probar en lugar de cobrar de entrada. */
+const trial = !soon && !!app.trialDays && !!app.appUrl;
+const showUsdButton = showUsd && !trial;
+const showArsButton = showArs && !trial;
+/** Sin ninguna otra acción, la demo pasa a ser el botón principal. */
+const demoIsPrimary = !soon && !trial && !showUsdButton && !showArsButton;
+const demoLabel = app.demoLabel ?? 'Probar demo gratis';
 const big = size === 'hero' ? 'px-5 py-3.5 text-base' : '';
 ---
 
@@ -40,10 +47,14 @@ const big = size === 'hero' ? 'px-5 py-3.5 text-base' : '';
       <a href={notifyMailto(app, site.email)} class={`fl-btn fl-btn-primary ${big}`}>
         Avísame cuando salga
       </a>
+    ) : trial ? (
+      <a href={app.appUrl} rel="noopener" class={`fl-btn fl-btn-primary ${big}`}>
+        Prueba {app.trialDays} días gratis
+      </a>
     ) : (
-      (showUsd || showArs) && (
+      (showUsdButton || showArsButton) && (
         <div data-checkout class="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-          {showUsd && (
+          {showUsdButton && (
             <a
               data-currency="usd"
               href={app.checkoutUsd}
@@ -54,7 +65,7 @@ const big = size === 'hero' ? 'px-5 py-3.5 text-base' : '';
               <span class="text-[0.8125rem] font-medium opacity-90">{priceUsd}</span>
             </a>
           )}
-          {showArs && (
+          {showArsButton && (
             <a
               data-currency="ars"
               href={app.checkoutArs}
@@ -77,7 +88,7 @@ const big = size === 'hero' ? 'px-5 py-3.5 text-base' : '';
         rel="noopener"
         class={`fl-btn ${demoIsPrimary ? 'fl-btn-primary' : 'fl-btn-secondary'} ${big}`}
       >
-        Probar demo gratis
+        {demoLabel}
       </a>
     )
   }
@@ -98,7 +109,7 @@ const big = size === 'hero' ? 'px-5 py-3.5 text-base' : '';
   }
 
   {
-    !soon && app.appUrl && (
+    !soon && !trial && app.appUrl && (
       <p class="text-sm text-muted">
         ¿Ya la compraste?{' '}
         <a

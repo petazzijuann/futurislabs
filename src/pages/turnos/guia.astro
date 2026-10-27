@@ -1,0 +1,298 @@
+---
+/**
+ * Guía de uso de Turnos.
+ * Acá viven solo los textos: el formato lo pone GuideLayout.
+ */
+import GuideLayout, { type Section } from '../../layouts/GuideLayout.astro';
+import { microapps } from '../../data/microapps';
+import { site } from '../../data/site';
+
+const app = microapps.find((item) => item.slug === 'turnos')!;
+
+const sections: Section[] = [
+  {
+    id: 'cuenta',
+    title: 'Crear tu cuenta y activar la prueba',
+    intro:
+      'Turnos no usa clave de licencia como las otras microapps: es una suscripción, así que entras con tu correo y la prueba arranca sola.',
+    steps: [
+      'Abre turnos.futurislabs.net y toca para crear tu cuenta.',
+      'Pon tu correo. Te llega un código de seis dígitos para confirmar que es tuyo.',
+      'Escribe el código y listo: ya estás adentro, con 14 días de prueba.',
+      'Durante la prueba funciona todo igual que en el plan pagado. No hay funciones bloqueadas.',
+    ],
+    note: 'No se te cobra nada hasta que termina la prueba, y recién si cargaste una tarjeta. Si cancelas antes de los 14 días, no pagas nada.',
+  },
+  {
+    id: 'negocio',
+    title: 'Configurar tu negocio',
+    intro:
+      'Son cuatro pasos y se hacen una sola vez. Es lo que define qué ve tu cliente cuando entra a reservar.',
+    steps: [
+      'Tu negocio: nombre, dirección y teléfono. Es lo que aparece arriba de tu página de reservas.',
+      'Tus servicios: qué haces, cuánto sale cada cosa y cuánto tiempo lleva. La duración es clave, porque con eso la app calcula los horarios libres.',
+      'Tu equipo: cargas a cada persona que atiende y qué servicios hace. Si trabajas solo, queda una sola.',
+      'Tus horarios: los días y las horas que atiende cada persona.',
+    ],
+    note: 'La duración de los servicios es lo que más conviene afinar. Si un color te lleva 90 minutos y lo cargas como 60, la agenda te va a ofrecer turnos que después no llegas a cumplir.',
+  },
+  {
+    id: 'horarios',
+    title: 'Horarios y bloques partidos',
+    intro:
+      'Cada persona del equipo tiene su propio horario, y cada día puede tener más de un bloque. Así se carga el clásico corte del mediodía.',
+    steps: [
+      'Entra a Ajustes → Horarios y elige la persona.',
+      'Abre el día que quieras y carga el primer bloque: de 9:00 a 13:00, por ejemplo.',
+      'Toca «+ Otro bloque» y carga el de la tarde: de 15:00 a 20:00.',
+      'Los días que no atiendes los dejas cerrados.',
+    ],
+    note: 'Entre las 13:00 y las 15:00 la página directamente no ofrece turnos, así que nadie te va a reservar en el horario del almuerzo.',
+    figures: [
+      {
+        src: 'turnos-guia-horarios.webp',
+        alt: 'Horarios de atención por persona, con dos bloques cargados en el mismo día y el botón para agregar otro.',
+        shape: 'wide',
+      },
+    ],
+  },
+  {
+    id: 'bloqueos',
+    title: 'Vacaciones, feriados y bloqueos',
+    intro:
+      'Un bloqueo es un rato que no atiendes sin tocar tus horarios de siempre: vacaciones, un feriado, el médico, una tarde que cierras.',
+    steps: [
+      'Entra a Ajustes → Bloqueos y toca para crear uno nuevo.',
+      'Elige desde cuándo y hasta cuándo, con día y hora.',
+      'Indica si es para todo el negocio o solo para una persona.',
+      'Escribe el motivo si quieres acordarte después, y agrégalo.',
+    ],
+    note: 'Los bloqueos sacan esos horarios de la página de reservas al instante. Si ya tenías turnos tomados ahí, la app no los borra: los ves en la agenda y decides tú si los reprogramas.',
+    figures: [
+      {
+        src: 'turnos-guia-bloqueos.webp',
+        alt: 'Formulario de nuevo bloqueo con el rango de fechas y horas, a quién aplica y el motivo.',
+        shape: 'wide',
+      },
+    ],
+  },
+  {
+    id: 'compartir',
+    title: 'Compartir tu página de reservas',
+    intro:
+      'Tu página tiene un link propio con el nombre de tu negocio. Esto es lo que hay que repartir para que empiecen a entrar turnos.',
+    list: [
+      {
+        term: 'El link',
+        text: 'Está en Inicio, arriba de todo. Tócalo para copiarlo y mándalo por donde quieras.',
+      },
+      {
+        term: 'Instagram',
+        text: 'Pégalo en el «link en bio» de tu perfil. Es el lugar donde más lo van a buscar: la mayoría de la gente entra a reservar desde ahí.',
+      },
+      {
+        term: 'WhatsApp Business',
+        text: 'Ponlo en el mensaje de bienvenida y en el de ausencia. Así, cuando te escriben fuera de hora, les llega el link solo y reservan sin esperarte.',
+      },
+      {
+        term: 'El QR del local',
+        text: 'Descarga el QR o imprime el cartel armado, y pégalo en el mostrador o en la vidriera. El cliente lo escanea con la cámara y reserva parado ahí.',
+      },
+    ],
+    figures: [
+      {
+        src: 'turnos-qr-local.webp',
+        alt: 'El link de la página de reservas con su código QR y los botones para descargarlo o imprimir el cartel.',
+        shape: 'wide',
+      },
+    ],
+  },
+  {
+    id: 'agenda',
+    title: 'Tu agenda',
+    intro:
+      'Los turnos que reservan entran solos. Los que te piden por teléfono o en el mostrador los cargas tú, y quedan todos en el mismo lugar.',
+    steps: [
+      'En el celular ves el día; en la computadora, la semana completa con todo el equipo.',
+      'Para cargar un turno a mano, toca el hueco libre y completa el cliente, el servicio y con quién.',
+      'Para reprogramar, abre el turno y cambia el día o la hora. El horario viejo queda libre al instante.',
+      'Marca cada turno como atendido o como ausente cuando termine el día.',
+    ],
+    note: 'Marcar los ausentes no es por llevar la cuenta: es lo que arma el historial de cada cliente y te deja ver a quién conviene confirmarle el día antes.',
+    figures: [
+      {
+        src: 'turnos-cel-4-agenda.webp',
+        alt: 'La agenda del día en el celular, con los turnos ubicados en su franja horaria.',
+        shape: 'phone',
+      },
+      {
+        src: 'turnos-pc-1-semana.webp',
+        alt: 'La agenda de la semana completa en una computadora, con todo el equipo en pantalla.',
+        shape: 'wide',
+      },
+    ],
+  },
+  {
+    id: 'recordatorios',
+    title: 'Recordatorios por WhatsApp',
+    intro:
+      'Este es el paso que baja los ausentes. No se mandan solos: salen de tu WhatsApp, con tu número, así el cliente te reconoce y te puede contestar.',
+    steps: [
+      'Entra a la pestaña Recordar. Vas a ver tres grupos: los de mañana, los de hoy y los que hace rato no vienen.',
+      'Toca «Recordar» al lado del cliente.',
+      'Se abre WhatsApp con el mensaje ya escrito y el link del turno adentro.',
+      'Le das enviar. Nada más.',
+      'Para cambiar lo que dicen, entra a Ajustes → Mensajes: hay cuatro plantillas, una para el recordatorio, otra para confirmar un turno que cargaste tú, otra para el mismo día y otra para los clientes que hace rato no vienen.',
+    ],
+    note: 'Dentro de los mensajes puedes usar las variables entre llaves: {nombre}, {dia}, {hora}, {servicio}, {persona}, {negocio} y {link}. La app las reemplaza por los datos reales de cada turno. Si algo queda mal, «Volver a los de fábrica» deja los originales. Y un consejo: manda los de mañana al final del día, así el cliente todavía está a tiempo de avisarte y llegas a ofrecerle ese horario a otro.',
+    figures: [
+      {
+        src: 'turnos-cel-5-recordatorios.webp',
+        alt: 'Pestaña Recordar con los turnos del día y un botón Recordar al lado de cada cliente.',
+        shape: 'phone',
+      },
+      {
+        src: 'turnos-cel-6-whatsapp.webp',
+        alt: 'El recordatorio ya enviado en el chat de WhatsApp del cliente, con el link del turno.',
+        shape: 'wide',
+      },
+      {
+        src: 'turnos-guia-mensajes.webp',
+        alt: 'Los cuatro mensajes de WhatsApp editables, con la lista de variables que se pueden usar.',
+        shape: 'wide',
+      },
+    ],
+  },
+  {
+    id: 'cliente',
+    title: 'Qué ve tu cliente',
+    intro:
+      'Conviene que sepas cómo se ve del otro lado, porque es lo que te van a preguntar. Son tres pantallas y no se descarga nada.',
+    steps: [
+      'Entra a tu link y elige el servicio, con el precio y la duración a la vista.',
+      'Elige el día y el horario entre los que están libres de verdad.',
+      'Pone su nombre y su teléfono, y el turno queda confirmado.',
+      'Le queda un link propio: desde ahí lo agrega a su calendario, te escribe o cancela si no llega.',
+    ],
+    note: 'Cuando un cliente cancela desde su link, el horario vuelve a quedar libre en tu agenda al instante y te aparece el aviso. Por eso conviene que el link viaje en todos los recordatorios.',
+    figures: [
+      {
+        src: 'turnos-cel-2-horario.webp',
+        alt: 'El cliente eligiendo el día y el horario entre los turnos libres.',
+        shape: 'phone',
+      },
+      {
+        src: 'turnos-cel-7-cliente.webp',
+        alt: 'La pantalla del turno del cliente, con los botones para agregarlo al calendario, escribir al negocio o cancelar.',
+        shape: 'phone',
+      },
+    ],
+  },
+  {
+    id: 'clientes',
+    title: 'Clientes e historial',
+    intro:
+      'Cada persona que reserva queda guardada. No hay que cargar una ficha: se arma sola con los turnos.',
+    steps: [
+      'Entra a la pestaña Clientes para ver la lista completa con su teléfono.',
+      'Abre uno y vas a ver todos sus turnos, los que vino y los que faltó.',
+      'Desde ahí le escribes por WhatsApp directamente, sin buscar el número.',
+      'Usa el grupo «Te extrañamos» para los que hace tiempo no aparecen.',
+    ],
+  },
+  {
+    id: 'resumen',
+    title: 'El resumen del mes',
+    intro:
+      'En Inicio tienes cómo viene el mes sin sacar ninguna cuenta.',
+    steps: [
+      'Turnos de hoy y turnos del mes.',
+      'Ingresos del mes, sumando los turnos que marcaste como atendidos.',
+      'Porcentaje de ausencias: cuántos reservaron y no vinieron.',
+      'Lo que sigue: el próximo turno, para saber si te da el tiempo.',
+    ],
+    note: 'El porcentaje de ausencias es el número para mirar. Si sube, empieza a mandar los recordatorios el día antes en lugar del mismo día: suele alcanzar con eso.',
+    figures: [
+      {
+        src: 'turnos-cel-8-resumen.webp',
+        alt: 'Inicio con los turnos de hoy, los del mes, los ingresos y el porcentaje de ausencias.',
+        shape: 'phone',
+      },
+    ],
+  },
+  {
+    id: 'instalar',
+    title: 'Instalar la app en tu celular',
+    intro:
+      'Turnos funciona en el navegador, pero conviene instalarla: queda en la pantalla de inicio y abre de una, sin buscar la pestaña mientras estás atendiendo.',
+    list: [
+      {
+        term: 'iPhone (Safari)',
+        text: 'Abre turnos.futurislabs.net en Safari, toca el botón Compartir (el cuadrado con la flecha hacia arriba) y elige «Agregar a inicio».',
+      },
+      {
+        term: 'Android (Chrome)',
+        text: 'Abre turnos.futurislabs.net en Chrome, toca el menú de los tres puntos y elige «Instalar app» o «Agregar a pantalla principal».',
+      },
+    ],
+    note: 'A diferencia de las otras microapps, tu agenda vive en nuestros servidores, no en el teléfono. Eso es lo que permite que los turnos entren solos desde tu página y que la veas igual desde el celular y la computadora.',
+  },
+  {
+    id: 'plan',
+    title: 'Mi plan: prueba, pagos y cancelación',
+    intro:
+      'Todo lo de la suscripción se maneja desde Ajustes → Mi plan. No hay que escribirnos para nada de esto.',
+    steps: [
+      'Durante la prueba ves cuántos días te quedan.',
+      'Para seguir después de los 14 días, carga tu tarjeta desde ahí.',
+      'Con «Cambiar tarjeta o cancelar» entras al panel de pagos: cambias los datos o das de baja.',
+      'Si cancelas, sigues usando Turnos hasta que termine el mes que ya pagaste.',
+    ],
+    note: 'Se cobran USD 15 por mes, sin permanencia. No hay costo de alta ni de baja, y no se cobra comisión por turno.',
+    figures: [
+      {
+        src: 'turnos-guia-plan.webp',
+        alt: 'Pantalla Mi plan con el estado de la prueba, los días restantes, el precio y el botón para cambiar tarjeta o cancelar.',
+        shape: 'wide',
+      },
+    ],
+  },
+  {
+    id: 'problemas',
+    title: 'Problemas frecuentes',
+    list: [
+      {
+        term: 'No me llega el código para entrar',
+        text: `Revisa la carpeta de spam o correo no deseado y busca por «Futurislabs». Fíjate también que el correo esté bien escrito. Si no aparece, pide el código de nuevo o escríbenos a ${site.email}.`,
+      },
+      {
+        term: 'Un cliente dice que no puede reservar',
+        text: 'Casi siempre es que no hay horarios libres: fíjate que el día esté abierto en tus horarios, que no haya un bloqueo encima y que la persona que hace ese servicio lo tenga asignado. Si el servicio dura más que el hueco disponible, la app no lo ofrece.',
+      },
+      {
+        term: 'Quiero cambiar mi link',
+        text: `El link se arma con el nombre de tu negocio. Si lo cambias en Ajustes, el link también cambia y el anterior deja de funcionar, así que acuérdate de actualizarlo en tu Instagram y de volver a imprimir el QR. Si necesitas una dirección distinta del nombre, escríbenos a ${site.email}.`,
+      },
+      {
+        term: 'Me reservaron en un horario que no atiendo',
+        text: 'Suele ser un horario cargado de más en Ajustes → Horarios, o un bloqueo que quedó sin guardar. Corrige el horario y reprograma ese turno desde la agenda.',
+      },
+      {
+        term: 'Se me superpusieron dos turnos',
+        text: 'La página no permite superponer reservas, así que casi siempre uno de los dos se cargó a mano. Al crear turnos manuales fíjate que el hueco esté realmente libre.',
+      },
+    ],
+  },
+];
+
+const lead =
+  'Todo lo que necesitas saber para usar Turnos: crear tu cuenta, cargar servicios y horarios, compartir tu página de reservas, manejar la agenda y mandar los recordatorios por WhatsApp.';
+---
+
+<GuideLayout
+  app={app}
+  heading="Cómo usar Turnos"
+  lead={lead}
+  description="Guía paso a paso de Turnos: crear la cuenta, configurar servicios y horarios, compartir tu link y tu QR, manejar la agenda y mandar recordatorios por WhatsApp."
+  sections={sections}
+/>

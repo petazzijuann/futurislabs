@@ -71,6 +71,25 @@ export type Microapp = {
   mobile?: { title: string; text: string; image: string; alt: string };
   /** Guía de uso propia, si la microapp tiene una. */
   guideUrl?: string;
+  /**
+   * Días de prueba gratis. En las de suscripción que la ofrecen, el botón
+   * principal invita a probar en vez de mandar al checkout: la suscripción
+   * se arranca desde la propia app.
+   */
+  trialDays?: number;
+  /** Texto del botón de demo, cuando "Probar demo gratis" no describe bien. */
+  demoLabel?: string;
+  /** Línea debajo del precio. Si falta, se arma según el modelo de cobro. */
+  priceNote?: string;
+  /** Bloque de precio con el detalle de lo que incluye. */
+  includes?: { title: string; items: string[] };
+  /** Sección "Así lo ven tus clientes": el otro lado de la herramienta. */
+  clientView?: {
+    title: string;
+    text: string;
+    ctaLabel: string;
+    images: { src: string; alt: string }[];
+  };
   problem: { title: string; points: string[] };
   features: { title: string; text: string }[];
   steps?: string[];
@@ -509,6 +528,178 @@ export const microapps: Microapp[] = [
   },
 
   {
+    slug: 'turnos',
+    name: 'Turnos',
+    tagline: 'Tu agenda de turnos online, con recordatorios por WhatsApp.',
+    description:
+      'Tus clientes entran a tu página de reservas, eligen el servicio, con quién y a qué hora, y el turno te entra solo en la agenda. Ves el día completo desde el celular y les mandas el recordatorio por WhatsApp con un toque.',
+    category: 'Turnos',
+    audience:
+      'Peluquerías, barberías, salones de uñas, centros de estética, masajistas y consultorios que trabajan con turno previo.',
+    model: 'suscripcion',
+    priceUsd: 15,
+    checkoutUsd:
+      'https://futurislabs.lemonsqueezy.com/checkout/buy/577b8827-29db-49b7-b1cd-4365d3cac4fa',
+    appUrl: 'https://turnos.futurislabs.net',
+    demoUrl: 'https://turnos.futurislabs.net/r/demo',
+    trialDays: 14,
+    demoLabel: 'Ver una página de reservas de ejemplo',
+    priceNote: '14 días gratis · Cancelas cuando quieras · Sin permanencia',
+    image: 'turnos-mk-1-reserva.webp',
+    cardImage: 'turnos-mk-1-reserva-wide.webp',
+    guideUrl: '/turnos/guia/',
+    includes: {
+      title: 'Todo incluido, sin extras ni comisiones',
+      items: [
+        'Tu página de reservas con link y QR',
+        'Turnos ilimitados, sin tope mensual',
+        'Todo el equipo, cada uno con sus horarios',
+        'Recordatorios por WhatsApp',
+        'Agenda por día y por semana',
+        'Clientes con historial y ausencias',
+        'Resumen del mes',
+        'Vacaciones, feriados y bloqueos',
+        'Funciona en el celular y sin internet',
+        'Soporte por mail, te contestamos nosotros',
+      ],
+    },
+    clientView: {
+      title: 'Así lo ven tus clientes',
+      text: 'Le mandas tu link o le muestras el QR del mostrador. Entra, elige y reserva en tres pantallas. No se descarga nada ni se crea ninguna cuenta.',
+      ctaLabel: 'Ver una página de reservas de ejemplo',
+      images: [
+        {
+          src: 'turnos-cel-1-servicio.webp',
+          alt: 'La página de reservas del negocio con la lista de servicios, cada uno con su precio y su duración.',
+        },
+        {
+          src: 'turnos-cel-2-horario.webp',
+          alt: 'Elección del día y del horario, con los turnos libres de cada jornada.',
+        },
+        {
+          src: 'turnos-cel-3-confirmado.webp',
+          alt: 'Pantalla de turno confirmado, con el botón para agregarlo al calendario y el link para cancelarlo.',
+        },
+      ],
+    },
+    gallery: [
+      {
+        src: 'turnos-mk-1-reserva.webp',
+        alt: 'La página de reservas mostrando los días disponibles y los horarios libres de cada uno.',
+      },
+      {
+        src: 'turnos-mk-2-recordatorios.webp',
+        alt: 'Pantalla de recordatorios con los turnos del día y un botón Recordar al lado de cada cliente.',
+      },
+      {
+        src: 'turnos-mk-3-agenda.webp',
+        alt: 'La agenda del día en el celular, con los turnos ubicados en su franja horaria.',
+      },
+      {
+        src: 'turnos-mk-4-qr.webp',
+        alt: 'El link de la página de reservas junto a su código QR, listo para descargar o imprimir.',
+      },
+      {
+        src: 'turnos-cel-8-resumen.webp',
+        alt: 'Inicio con los turnos de hoy, los del mes, los ingresos y el porcentaje de ausencias.',
+      },
+      {
+        src: 'turnos-pc-1-semana.webp',
+        alt: 'La agenda de la semana completa en una computadora, con todo el equipo en pantalla.',
+      },
+    ],
+    mobile: {
+      title: 'Funciona en tu celular',
+      text: 'Se instala como una app más y queda en la pantalla de inicio. Mientras estás trabajando ves el día sin cortar lo que estás haciendo, y los recordatorios salen de ahí mismo. Después de la primera vez abre sin internet.',
+      image: 'turnos-cel-4-agenda.webp',
+      alt: 'La agenda de Turnos abierta en el celular, con los turnos del día.',
+    },
+    status: 'disponible',
+    featured: true,
+    problem: {
+      title: 'El celular no para mientras estás trabajando',
+      points: [
+        'Estás con un cliente en la silla y el teléfono suena con alguien que quiere sacar turno.',
+        'Te escriben a las once de la noche y a las siete de la mañana, y si no contestas rápido se van a otro lado.',
+        'Reservan, no vienen y el horario queda vacío: nadie les recordó que tenían turno.',
+        'Anotas dos turnos a la misma hora y te das cuenta cuando ya están los dos en la puerta.',
+        'La agenda de papel se queda en el local y no tienes idea de cómo viene mañana hasta que llegas.',
+      ],
+    },
+    features: [
+      {
+        title: 'Tu propia página de reservas',
+        text: 'Tenés un link con el nombre de tu negocio y un QR para pegar en el mostrador o la vidriera. Lo pones en tu bio de Instagram y listo.',
+      },
+      {
+        title: 'Reservan solos, a cualquier hora',
+        text: 'El cliente elige el servicio, con quién lo quiere, el día y la hora entre los que están libres. A las dos de la mañana también, sin que hagas nada.',
+      },
+      {
+        title: 'Tu agenda, por día y por semana',
+        text: 'Ves el día completo en el celular y la semana entera en la computadora, con todo el equipo junto. Y cargas turnos a mano cuando alguien reserva por teléfono.',
+      },
+      {
+        title: 'Recordatorios por WhatsApp',
+        text: 'Un toque y se abre WhatsApp con el mensaje escrito, incluido el link para que el cliente confirme o cancele. Tú solo le das enviar.',
+      },
+      {
+        title: 'Te avisa cuando entra un turno',
+        text: 'Cada reserva nueva aparece en el momento, con el nombre, el servicio y el horario. Sin recargar nada ni estar mirando.',
+      },
+      {
+        title: 'Nunca dos turnos a la misma hora',
+        text: 'La página solo ofrece los horarios realmente libres, calculados con la duración de cada servicio y la agenda de cada persona.',
+      },
+      {
+        title: 'Clientes con historial',
+        text: 'Cada cliente guarda sus turnos anteriores y cuántas veces faltó. Así sabes a quién conviene confirmarle el día antes.',
+      },
+      {
+        title: 'Resumen, vacaciones y bloqueos',
+        text: 'Miras cómo viene el mes en turnos e ingresos, y cierras días por vacaciones, feriados o un rato que no atiendes, sin tocar tus horarios habituales.',
+      },
+    ],
+    steps: [
+      'Creas tu cuenta y arrancas la prueba de 14 días.',
+      'Cargas tus servicios, tu equipo y tus horarios.',
+      'Compartes tu link y tu QR con los clientes.',
+      'Ves los turnos entrar y mandas los recordatorios.',
+    ],
+    faqs: [
+      {
+        q: '¿Hay una guía de uso?',
+        a: 'Sí. Está todo explicado paso a paso, con capturas: crear la cuenta, configurar horarios, compartir tu link, manejar la agenda y mandar los recordatorios.',
+        link: { href: '/turnos/guia/', label: 'Ver la guía de uso →' },
+      },
+      {
+        q: '¿Mis clientes tienen que descargar algo?',
+        a: 'No. Abren tu link en el navegador del celular y reservan ahí mismo. No se instalan nada, no crean ninguna cuenta y no tienen que poner contraseña.',
+      },
+      {
+        q: '¿Cómo funcionan los recordatorios?',
+        a: 'Con un toque se abre WhatsApp con el mensaje ya escrito y el turno adentro, y tú le das enviar. No se mandan solos: sale de tu WhatsApp de siempre, con tu número, así el cliente te reconoce y te puede contestar.',
+      },
+      {
+        q: '¿Cobran seña o pagos online?',
+        a: 'No. Turnos organiza la agenda, no el cobro. Tu cliente te paga en el local como siempre, en efectivo, con transferencia o con tarjeta.',
+      },
+      {
+        q: '¿Puedo cancelar?',
+        a: 'Sí, cuando quieras, desde Mi plan dentro de la app. No hay permanencia ni costo de cancelación: dejas de pagar el mes siguiente.',
+      },
+      {
+        q: '¿Qué pasa cuando termina la prueba?',
+        a: 'A los 14 días se cobra USD 15 por mes a la tarjeta que cargaste, salvo que canceles antes. Si cancelas durante la prueba no se te cobra nada.',
+      },
+      {
+        q: '¿Funciona si somos varias personas?',
+        a: 'Sí. Cargas a cada una con sus propios horarios y los servicios que hace, y el cliente elige con quién se quiere atender. En la agenda los ves a todos juntos.',
+      },
+    ],
+  },
+
+  {
     slug: 'calculadora-mercado-libre',
     name: 'Calculadora de Comisiones para Mercado Libre',
     tagline: 'Descubre cuánto te queda realmente de cada venta en Mercado Libre.',
@@ -647,81 +838,6 @@ export const microapps: Microapp[] = [
       {
         q: '¿Puedo usarla sin internet?',
         a: 'Sí. Funciona sin conexión y es cómodo si tu local tiene mala señal.',
-      },
-    ],
-  },
-
-  {
-    slug: 'turnos-online-para-peluquerias',
-    name: 'Turnos Online para Peluquerías',
-    tagline: 'Tus clientes reservan solos y los recordatorios salen automáticos.',
-    description:
-      'Una página de reservas con tu agenda, tus servicios y tus horarios, lista para poner en tu Instagram. Tus clientes eligen día y hora sin escribirte, y la app manda el recordatorio antes del turno para que no falten.',
-    category: 'Turnos',
-    audience: 'Peluquerías, barberías, centros de estética, manicura, masajes y consultorios pequeños.',
-    model: 'suscripcion',
-    priceUsd: 20,
-    priceArs: 24900,
-    checkoutUsd: 'https://futurislabs.lemonsqueezy.com/buy/00000000-0000-0000-0000-000000000005',
-    checkoutArs: 'https://bis.uala.com.ar/futurislabs/turnos-online',
-    image: 'turnos-online-para-peluquerias.svg',
-    status: 'proximamente',
-    problem: {
-      title: 'Coordinar turnos por WhatsApp te consume el día',
-      points: [
-        'Contestas mensajes mientras estás atendiendo a alguien y cortas el servicio a cada rato.',
-        'Se superponen dos turnos porque uno quedó anotado en un cuaderno y el otro en un chat.',
-        'Los clientes que no avisan que no vienen te dejan huecos que podrías haber vendido.',
-        'No tienes idea de qué servicio te deja más dinero por hora de trabajo.',
-      ],
-    },
-    features: [
-      {
-        title: 'Página de reservas propia',
-        text: 'Un enlace con tu nombre y tus colores para poner en Instagram, en WhatsApp o en Google. Tus clientes reservan sin descargar nada.',
-      },
-      {
-        title: 'Recordatorios automáticos',
-        text: 'La app avisa 24 horas antes del turno y baja mucho la cantidad de personas que no se presentan.',
-      },
-      {
-        title: 'Tus horarios, tus reglas',
-        text: 'Defines días, franjas, duración de cada servicio y descansos. Nadie puede reservar donde no hay lugar.',
-      },
-      {
-        title: 'Varias personas en el equipo',
-        text: 'Cada profesional tiene su agenda y sus servicios, y el cliente elige con quién quiere atenderse.',
-      },
-      {
-        title: 'Anticipo opcional',
-        text: 'Pide un anticipo al reservar para los servicios largos y evita los huecos de último momento.',
-      },
-      {
-        title: 'Números que sirven',
-        text: 'Mira tus horas ocupadas, los servicios más pedidos y los clientes que hace tiempo no vuelven.',
-      },
-    ],
-    steps: [
-      'Cargas tus servicios, precios y horarios de atención.',
-      'Compartes tu enlace de reservas en tus redes.',
-      'Tus clientes reservan solos y tú solo miras la agenda del día.',
-    ],
-    faqs: [
-      {
-        q: '¿Por qué es por suscripción y no pago único?',
-        a: 'Porque tu página de reservas y los recordatorios funcionan todo el tiempo en un servidor, incluso cuando no estás usando la app. Ese costo es mensual.',
-      },
-      {
-        q: '¿Los recordatorios llegan por WhatsApp?',
-        a: 'Llegan por mail y por mensaje de texto. La integración con WhatsApp está en camino y entra en la misma suscripción.',
-      },
-      {
-        q: '¿Puedo cancelar cuando quiera?',
-        a: 'Sí, cancelas desde tu cuenta y no se vuelve a cobrar. Puedes exportar tu agenda y tus contactos antes de irte.',
-      },
-      {
-        q: '¿Se sincroniza con Google Calendar?',
-        a: 'Sí. Cada turno aparece en tu calendario y, si bloqueas una hora ahí, deja de ofrecerse para reservar.',
       },
     ],
   },
