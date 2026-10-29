@@ -113,7 +113,7 @@ export const microapps: Microapp[] = [
     priceUsd: 12,
     priceArs: 17900,
     checkoutUsd:
-      'https://futurislabs.lemonsqueezy.com/checkout/buy/e9985b8c-1fe2-49fe-a0cb-f14b0c6efaf2',
+      'https://futurislabs.lemonsqueezy.com/checkout/buy/bbd62d8b-7b36-406b-ac19-9b78a11d86f8',
     appUrl: 'https://costos.futurislabs.net',
     demoUrl: 'https://costos.futurislabs.net/?demo',
     image: 'costos-mk-1-costo.webp',
@@ -262,7 +262,7 @@ export const microapps: Microapp[] = [
     priceUsd: 12,
     priceArs: 17900,
     checkoutUsd:
-      'https://futurislabs.lemonsqueezy.com/checkout/buy/3746a744-2619-4481-b336-052444de8cc1',
+      'https://futurislabs.lemonsqueezy.com/checkout/buy/b323f860-9b5b-4c14-8b8b-4ef052c8d0ce',
     appUrl: 'https://recetas.futurislabs.net',
     demoUrl: 'https://recetas.futurislabs.net/?demo',
     image: 'recetas-mk-1-costo.webp',
@@ -401,7 +401,7 @@ export const microapps: Microapp[] = [
     priceUsd: 15,
     priceArs: 18900,
     checkoutUsd:
-      'https://futurislabs.lemonsqueezy.com/checkout/buy/1ee355eb-526e-4e51-ab58-52d3079b4a5d',
+      'https://futurislabs.lemonsqueezy.com/checkout/buy/c72367ea-d0a4-4c0a-bcb9-41fdef391473',
     appUrl: 'https://presupuestos.futurislabs.net',
     demoUrl: 'https://presupuestos.futurislabs.net/?demo',
     image: 'presupuestos-mk-1-pdf.webp',
@@ -539,7 +539,7 @@ export const microapps: Microapp[] = [
     model: 'suscripcion',
     priceUsd: 15,
     checkoutUsd:
-      'https://futurislabs.lemonsqueezy.com/checkout/buy/577b8827-29db-49b7-b1cd-4365d3cac4fa',
+      'https://futurislabs.lemonsqueezy.com/checkout/buy/be6c392a-6a49-4c90-8c6e-7b82e365ca03',
     appUrl: 'https://turnos.futurislabs.net',
     demoUrl: 'https://turnos.futurislabs.net/r/demo',
     trialDays: 14,
